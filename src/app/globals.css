@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #7c4dff;
+}
+
+html,
+body {
+  min-height: 100%;
+  background: #140a2e;
+  color: #fff;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+body {
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  word-break: keep-all;
+}
+
+.bg-night {
+  background: radial-gradient(120% 80% at 50% 0%, #3d2391 0%, #241356 45%, #140a2e 100%);
+}
+
+/* 판타지 달빛 세리프 타이틀 (첨부 레퍼런스 스타일) */
+.mystic-serif {
+  font-family: "Hahmlet", "Gowun Batang", "Batang", Georgia, serif;
+  filter: drop-shadow(0 3px 6px rgba(5, 2, 18, 0.92))
+    drop-shadow(0 0 18px rgba(135, 198, 255, 0.42));
+}
+
+.mystic-title-line {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f3f9ff 36%,
+    #b7ddff 72%,
+    #78b5f5 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.star {
+  position: absolute;
+  border-radius: 9999px;
+  background: #fff;
+  animation: twinkle 3s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+.card-3d {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.pill-btn {
+  min-height: 52px;
+  border-radius: 9999px;
+  font-weight: 700;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+.pill-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.pill-btn:disabled {
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star,
+  .float {
+    animation: none;
+  }
+}
