@@ -159,9 +159,10 @@ export default function ResultScreen({
     >
       {/* 상단: 4번 행운 수호 부적 캡슐 배지 + 타이틀 */}
       <motion.div {...item(0)} className="flex flex-col items-center text-center">
-        <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-amber-300/50 bg-amber-400/15 px-3.5 py-1 text-xs font-bold text-amber-200 shadow-sm backdrop-blur">
-          <span>🧧</span>
-          <span>오늘의 부엉이 부적 · {talismanTitle}</span>
+        <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-[#e8cf8c]/45 bg-[#e8cf8c]/10 px-3.5 py-1 text-xs font-semibold tracking-wide text-[#f3dc99] shadow-sm backdrop-blur">
+          <span className="text-[10px] text-[#e8cf8c]">✦</span>
+          <span>오늘의 수호 부적 · {talismanTitle}</span>
+          <span className="text-[10px] text-[#e8cf8c]">✦</span>
         </span>
         <p className="text-sm text-white/80">
           {result.team} {result.name}님은
@@ -281,30 +282,49 @@ export default function ResultScreen({
         {/* 동료에게 부적 선물하기 & 공유하기 전용 섹션 */}
         <motion.section
           {...item(5)}
-          className="rounded-3xl border border-amber-200/35 bg-gradient-to-br from-brand/35 to-purple-900/40 p-5 backdrop-blur"
+          className="rounded-3xl border border-[#e8cf8c]/25 bg-gradient-to-b from-white/[0.09] to-white/[0.03] p-5 backdrop-blur"
         >
-          <p className="text-center text-sm font-bold text-amber-100">
-            🎁 팀 동료에게 행운을 나눠보세요!
+          <p className="text-center text-[11px] font-medium tracking-[0.16em] text-[#e8cf8c]/80">
+            SHARE THE FORTUNE
           </p>
-          <p className="mt-1 text-center text-xs text-white/75">
+          <p className="mt-0.5 text-center text-[15px] font-bold text-white">
+            팀 동료에게도 오늘의 행운을 나눠보세요
+          </p>
+          <p className="mt-1 text-center text-xs text-white/65">
             동료 이름을 넣어 맞춤 부엉이 부적을 선물하거나 운세 링크를 공유할 수 있어요
           </p>
-          <div className="mt-3 flex flex-col gap-2">
+          <div className="mt-3.5 grid grid-cols-[1.25fr_1fr] gap-2.5">
             <button
               type="button"
               onClick={() => setGiftOpen(true)}
-              className="pill-btn flex w-full items-center justify-center gap-2 bg-gradient-to-r from-amber-300 to-amber-400 text-[15px] font-extrabold text-night-900 shadow-lg"
+              className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-[#f7e5b4]/50 bg-gradient-to-b from-[#f3dc99] to-[#d8b459] px-3.5 text-[13.5px] font-bold text-[#1b0e38] shadow-[0_8px_20px_-4px_rgba(216,180,89,0.35),inset_0_1px_0_rgba(255,255,255,0.65)] transition hover:brightness-105 active:scale-[0.98]"
             >
-              <span>🧧</span>
-              <span>동료에게 부엉이 부적 한 장 선물하기</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path
+                  d="M20 12V21H4V12M2 7H22V12H2V7ZM12 21V7M12 7H7.5C6.12 7 5 5.88 5 4.5C5 3.12 6.12 2 7.5 2C10 2 12 7 12 7ZM12 7H16.5C17.88 7 19 5.88 19 4.5C19 3.12 17.88 2 16.5 2C14 2 12 7 12 7Z"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span>동료에게 부적 선물</span>
             </button>
             <button
               type="button"
               onClick={copyInviteLink}
-              className="pill-btn flex w-full items-center justify-center gap-2 border border-white/25 bg-white/15 text-[14px] text-white"
+              className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-white/15 bg-white/[0.08] px-3 text-[13px] font-semibold text-white/90 transition hover:bg-white/[0.14] active:scale-[0.98]"
             >
-              <span>🔗</span>
-              <span>다른 사람도 해보게 공유 링크만 복사하기</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path
+                  d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span>운세 링크 복사</span>
             </button>
           </div>
         </motion.section>
@@ -313,7 +333,7 @@ export default function ResultScreen({
         <motion.section {...item(6)} className="rounded-3xl bg-white/10 p-4">
           <div className="mb-2 text-center">
             <p className="text-sm font-bold text-white/90">
-              🦉 부엉이 캐릭터 도감 ({collectedCount}/{total}종 발견)
+              부엉이 캐릭터 도감 ({collectedCount}/{total}종 발견)
             </p>
             <p className="mt-0.5 text-[11px] text-white/60">
               총 12가지 코스튬의 운세 부엉이가 숨어 있어요! 다시 뽑기로 모아보세요
@@ -332,7 +352,7 @@ export default function ResultScreen({
                       : "bg-white/10 text-white/40"
                   }`}
                 >
-                  {got ? `${f.hat} ${f.title}` : "🔒 미발견"}
+                  {got ? f.title : "미발견"}
                 </span>
               );
             })}
@@ -341,25 +361,73 @@ export default function ResultScreen({
       </div>
 
       <motion.div {...item(7)} className="mt-6 flex flex-col items-center gap-2.5">
-        <button onClick={onRetry} className="pill-btn w-full border-2 border-white/60 bg-white/10 text-lg text-white">
-          🔄 카드 다시 뽑기
-        </button>
-        <button
-          onClick={onEditName}
-          className="pill-btn w-full border border-white/25 bg-white/5 text-sm font-semibold text-white/80 hover:bg-white/15"
-        >
-          🏠 첫 화면으로 돌아가기 (이름·팀명 변경)
-        </button>
+        <div className="grid w-full grid-cols-2 gap-2.5">
+          <button
+            onClick={onRetry}
+            className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/10 text-[14px] font-semibold text-white transition hover:bg-white/15 active:scale-[0.98]"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path
+                d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span>카드 다시 뽑기</span>
+          </button>
+          <button
+            onClick={onEditName}
+            className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/[0.05] text-[13.5px] font-medium text-white/80 transition hover:bg-white/10 hover:text-white active:scale-[0.98]"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path
+                d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9.5Z"
+                stroke="currentColor"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span>첫 화면으로 (이름 변경)</span>
+          </button>
+        </div>
         <p className="mt-1 text-center text-xs text-white/50">재미로 보는 운세예요. 오늘도 힘내세요!</p>
       </motion.div>
 
       {/* 하단 고정 버튼: 내 운세 이미지 저장 + 내 결과 공유 */}
-      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[480px] gap-3 bg-gradient-to-t from-night-900 via-night-900/95 to-transparent px-5 pb-5 pt-8">
-        <button onClick={save} disabled={saving} className="pill-btn flex-1 bg-gray-100 text-[15px] text-night-800 shadow-lg">
-          {saving ? "부적 만드는 중…" : "📸 부적 이미지 저장"}
+      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[480px] gap-2.5 bg-gradient-to-t from-night-900 via-night-900/95 to-transparent px-5 pb-5 pt-8">
+        <button
+          onClick={save}
+          disabled={saving}
+          className="flex h-[52px] flex-1 items-center justify-center gap-2 rounded-2xl border border-white/80 bg-white/95 text-[14.5px] font-bold text-night-900 shadow-lg transition hover:bg-white active:scale-[0.98]"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path
+              d="M12 4V15M12 15L8 11M12 15L16 11M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span>{saving ? "저장 중…" : "부적 이미지 저장"}</span>
         </button>
-        <button onClick={shareResult} className="pill-btn flex-1 bg-brand text-[15px] text-white shadow-lg shadow-brand/40">
-          📤 내 운세 공유하기
+        <button
+          onClick={shareResult}
+          className="flex h-[52px] flex-1 items-center justify-center gap-2 rounded-2xl border border-purple-300/35 bg-gradient-to-b from-[#8b5cf6] to-[#6d28d9] text-[14.5px] font-bold text-white shadow-[0_8px_20px_-4px_rgba(109,40,217,0.55),inset_0_1px_0_rgba(255,255,255,0.25)] transition hover:brightness-105 active:scale-[0.98]"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path
+              d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span>내 운세 공유하기</span>
         </button>
       </div>
 
