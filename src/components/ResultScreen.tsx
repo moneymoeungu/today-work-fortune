@@ -328,13 +328,13 @@ export default function ResultScreen({
             onClick={onRetry}
             className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/10 text-[14px] font-semibold text-white transition hover:bg-white/15 active:scale-[0.98]"
           >
-            <span>🔄 카드 다시 뽑기</span>
+            <span>카드 다시 뽑기</span>
           </button>
           <button
             onClick={onEditName}
             className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/[0.05] text-[13.5px] font-medium text-white/80 transition hover:bg-white/10 hover:text-white active:scale-[0.98]"
           >
-            <span>🏠 첫 화면으로 (이름 변경)</span>
+            <span>첫 화면으로 (이름 변경)</span>
           </button>
         </div>
         <p className="mt-1 text-center text-xs text-white/50">재미로 보는 운세예요. 오늘도 힘내세요!</p>

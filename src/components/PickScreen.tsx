@@ -246,9 +246,8 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
         type="button"
         onClick={handleShuffle}
         disabled={picked !== null || shuffling || chargingIdx !== null}
-        className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-amber-200/45 bg-white/10 px-5 py-2 text-sm font-semibold text-amber-100 shadow-md backdrop-blur transition hover:bg-white/20 active:scale-95 disabled:opacity-40"
+        className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-amber-200/45 bg-white/10 px-6 py-2 text-sm font-semibold text-amber-100 shadow-md backdrop-blur transition hover:bg-white/20 active:scale-95 disabled:opacity-40"
       >
-        <span className={shuffling ? "inline-block animate-spin" : ""}>🔀</span>
         <span>{shuffling ? "카드 섞는 중…" : "카드 다시 섞기"}</span>
       </button>
 
