@@ -225,8 +225,9 @@ interface LuckyCardProps {
 }
 
 /**
- * 첨부 레퍼런스(토스 행운 카드) 레이아웃에 맞춘 밤하늘 벨벳 퍼플 행운 카드
- * - 번개 원형 배지 제거로 부엉이 소품과 3D 링이 깔끔하게 보이도록 구성
+ * 밤하늘 벨벳 퍼플 행운 카드
+ * - 인위적인 두꺼운 원형 링 대신, 카드 전체에 깔리는 은은한 성좌·다마스크 세공 무늬와
+ *   부엉이 주변으로 잔잔하게 반짝이는 별빛 플레어·오로라 광원 연출
  * - 결과 화면에서 부엉이를 클릭하면 말풍선(speechBubble)이 on/off 토글됨 (이미지 저장 시에는 미노출)
  */
 export function LuckyTalismanCard({
@@ -261,6 +262,140 @@ export function LuckyTalismanCard({
         style={{ background: "#d8b4fe" }}
       />
 
+      {/* 카드 전체에 잔잔하게 깔리는 은은한 성좌·세공 무늬 & 반짝이는 별빛 효과 */}
+      <svg
+        viewBox="0 0 320 420"
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        aria-hidden
+      >
+        <defs>
+          {/* 은은한 마름모·성좌 배경 패턴 */}
+          <pattern
+            id={`cardPattern-${themeKey}`}
+            width="40"
+            height="40"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 20 4 L 36 20 L 20 36 L 4 20 Z"
+              fill="none"
+              stroke="#f3e8ff"
+              strokeWidth="0.45"
+              strokeOpacity="0.06"
+            />
+            <circle cx="20" cy="20" r="0.7" fill="#f3e8ff" fillOpacity="0.09" />
+            <circle cx="0" cy="0" r="0.6" fill="#f3e8ff" fillOpacity="0.07" />
+            <circle cx="40" cy="0" r="0.6" fill="#f3e8ff" fillOpacity="0.07" />
+            <circle cx="0" cy="40" r="0.6" fill="#f3e8ff" fillOpacity="0.07" />
+            <circle cx="40" cy="40" r="0.6" fill="#f3e8ff" fillOpacity="0.07" />
+          </pattern>
+
+          {/* 카드 중앙 달빛·오로라 소프트 광원 */}
+          <radialGradient id={`centerGlow-${themeKey}`} cx="50%" cy="44%" r="48%">
+            <stop offset="0%" stopColor="#f5d0fe" stopOpacity="0.22" />
+            <stop offset="52%" stopColor="#c084fc" stopOpacity="0.09" />
+            <stop offset="100%" stopColor="#3b217d" stopOpacity="0" />
+          </radialGradient>
+
+          {/* 별빛 플레어 후광 */}
+          <radialGradient id={`starHalo-${themeKey}`} cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+            <stop offset="45%" stopColor="#f3e8ff" stopOpacity="0.28" />
+            <stop offset="100%" stopColor="#f3e8ff" stopOpacity="0" />
+          </radialGradient>
+
+          {/* 섬세한 내부 프레임 그라데이션 */}
+          <linearGradient id={`frameStroke-${themeKey}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#f3e8ff" stopOpacity="0.22" />
+            <stop offset="50%" stopColor="#e9d5ff" stopOpacity="0.08" />
+            <stop offset="100%" stopColor="#f7dca1" stopOpacity="0.2" />
+          </linearGradient>
+        </defs>
+
+        {/* 1) 잔잔한 지오메트릭 성좌 무늬 타일 */}
+        <rect width="320" height="420" fill={`url(#cardPattern-${themeKey})`} />
+
+        {/* 2) 부엉이 뒤쪽 은은한 달빛 오로라 번짐 */}
+        <ellipse cx="160" cy="182" rx="135" ry="125" fill={`url(#centerGlow-${themeKey})`} />
+
+        {/* 3) 아주 가느다란 카드 내부 세공 보더 & 코너 곡선 무늬 */}
+        <rect
+          x="13"
+          y="13"
+          width="294"
+          height="394"
+          rx="24"
+          fill="none"
+          stroke={`url(#frameStroke-${themeKey})`}
+          strokeWidth="0.75"
+        />
+        {/* 네 귀퉁이 은은한 세공 장식선 */}
+        <g stroke="#f3e8ff" strokeOpacity="0.18" strokeWidth="0.7" fill="none">
+          <path d="M 24 38 C 24 27 27 24 38 24" />
+          <path d="M 296 38 C 296 27 293 24 282 24" />
+          <path d="M 24 382 C 24 393 27 396 38 396" />
+          <path d="M 296 382 C 296 393 293 396 282 396" />
+        </g>
+
+        {/* 4) 배경에 흐릿하게 이어지는 별자리 실선 */}
+        <g stroke="#f3e8ff" strokeOpacity="0.14" strokeWidth="0.6" strokeDasharray="2 3" fill="none">
+          <path d="M 44 96 L 78 74 L 112 88" />
+          <path d="M 274 92 L 242 70 L 214 86" />
+          <path d="M 48 264 L 82 288 L 66 318" />
+          <path d="M 272 256 L 238 282 L 256 314" />
+        </g>
+
+        {/* 5) 카드 곳곳에 은은하게 반짝이는 십자 별빛(✦)과 별가루 */}
+        {/* 좌상단 큰 별빛 */}
+        <g transform="translate(56, 86)">
+          <circle cx="0" cy="0" r="8" fill={`url(#starHalo-${themeKey})`} />
+          <path
+            d="M 0 -6.5 Q 0 0 6.5 0 Q 0 0 0 6.5 Q 0 0 -6.5 0 Q 0 0 0 -6.5 Z"
+            fill="#ffffff"
+            fillOpacity="0.85"
+          />
+        </g>
+        {/* 우상단 큰 별빛 */}
+        <g transform="translate(262, 102)">
+          <circle cx="0" cy="0" r="9" fill={`url(#starHalo-${themeKey})`} />
+          <path
+            d="M 0 -7.5 Q 0 0 7.5 0 Q 0 0 0 7.5 Q 0 0 -7.5 0 Q 0 0 0 -7.5 Z"
+            fill="#fff7ed"
+            fillOpacity="0.9"
+          />
+        </g>
+        {/* 좌하단 작은 별빛 */}
+        <g transform="translate(62, 258)">
+          <circle cx="0" cy="0" r="6.5" fill={`url(#starHalo-${themeKey})`} />
+          <path
+            d="M 0 -5 Q 0 0 5 0 Q 0 0 0 5 Q 0 0 -5 0 Q 0 0 0 -5 Z"
+            fill="#f3e8ff"
+            fillOpacity="0.75"
+          />
+        </g>
+        {/* 우하단 중간 별빛 */}
+        <g transform="translate(254, 246)">
+          <circle cx="0" cy="0" r="7.5" fill={`url(#starHalo-${themeKey})`} />
+          <path
+            d="M 0 -6 Q 0 0 6 0 Q 0 0 0 6 Q 0 0 -6 0 Q 0 0 0 -6 Z"
+            fill="#fde68a"
+            fillOpacity="0.8"
+          />
+        </g>
+        {/* 상단/하단 미세 반짝이 점 */}
+        <g fill="#ffffff">
+          <circle cx="78" cy="74" r="1.2" fillOpacity="0.55" />
+          <circle cx="112" cy="88" r="0.9" fillOpacity="0.4" />
+          <circle cx="242" cy="70" r="1.2" fillOpacity="0.5" />
+          <circle cx="214" cy="86" r="0.9" fillOpacity="0.35" />
+          <circle cx="42" cy="176" r="1.3" fillOpacity="0.5" />
+          <circle cx="278" cy="172" r="1.1" fillOpacity="0.45" />
+          <circle cx="82" cy="288" r="1.1" fillOpacity="0.4" />
+          <circle cx="238" cy="282" r="1.2" fillOpacity="0.45" />
+        </g>
+      </svg>
+
       {/* 1. 상단 캡슐 배지 */}
       <div
         style={{ background: theme.pillBg }}
@@ -269,7 +404,7 @@ export function LuckyTalismanCard({
         {badgeText}
       </div>
 
-      {/* 2. 중앙 3D 링 아크 + 부엉이 + (토글 시 나타나는 부엉이 말풍선) */}
+      {/* 2. 중앙 은은한 별빛 후광 + 부엉이 + (토글 시 나타나는 부엉이 말풍선) */}
       <div
         onClick={onClickOwl}
         className={`relative my-3.5 flex items-center justify-center ${
@@ -286,7 +421,7 @@ export function LuckyTalismanCard({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 6, scale: 0.92 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className=" absolute -top-5 left-1/2 z-30 w-[238px] -translate-x-1/2 rounded-2xl bg-white px-3.5 py-2.5 text-center text-[12px] font-bold leading-snug text-[#231152] shadow-[0_10px_28px_rgba(0,0,0,0.38)]"
+              className="absolute -top-5 left-1/2 z-30 w-[238px] -translate-x-1/2 rounded-2xl bg-white px-3.5 py-2.5 text-center text-[12px] font-bold leading-snug text-[#231152] shadow-[0_10px_28px_rgba(0,0,0,0.38)]"
             >
               <span>{speechBubble}</span>
               {/* 말풍선 아래 꼬리 */}
@@ -298,33 +433,53 @@ export function LuckyTalismanCard({
           )}
         </AnimatePresence>
 
+        {/* 부엉이 뒤쪽 은은한 달빛 글로우 & 잔잔한 반짝임 (기존의 두꺼운 원형 링 제거) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-4 rounded-full opacity-40 blur-2xl"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(243,232,255,0.55) 0%, rgba(192,132,252,0.18) 55%, transparent 75%)",
+          }}
+        />
         <svg
           viewBox="0 0 220 220"
           className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
           aria-hidden
         >
-          <defs>
-            <linearGradient id={`ringGrad-${themeKey}`} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-              <stop offset="55%" stopColor="#e9d5ff" stopOpacity="0.85" />
-              <stop offset="100%" stopColor="#c084fc" stopOpacity="0.55" />
-            </linearGradient>
-            <filter id={`ringShadow-${themeKey}`} x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="6" stdDeviation="6" floodColor="#09031c" floodOpacity="0.4" />
-            </filter>
-          </defs>
-          <path
-            d="M 72 184 A 82 82 0 1 1 188 134"
-            fill="none"
-            stroke={`url(#ringGrad-${themeKey})`}
-            strokeWidth="10.5"
-            strokeLinecap="round"
-            filter={`url(#ringShadow-${themeKey})`}
-          />
+          {/* 부엉이 주변에 살포시 흩날리는 잔잔한 빛무리와 작은 별빛 */}
+          <g fill="#ffffff">
+            <path
+              d="M 34 72 Q 34 78 40 78 Q 34 78 34 84 Q 34 78 28 78 Q 34 78 34 72 Z"
+              fill="#fef3c7"
+              fillOpacity="0.85"
+            />
+            <path
+              d="M 188 64 Q 188 69 193 69 Q 188 69 188 74 Q 188 69 183 69 Q 188 69 188 64 Z"
+              fill="#f3e8ff"
+              fillOpacity="0.8"
+            />
+            <path
+              d="M 192 148 Q 192 152 196 152 Q 192 152 192 156 Q 192 152 188 152 Q 192 152 192 148 Z"
+              fill="#fef3c7"
+              fillOpacity="0.7"
+            />
+            <path
+              d="M 28 144 Q 28 147.5 31.5 147.5 Q 28 147.5 28 151 Q 28 147.5 24.5 147.5 Q 28 147.5 28 144 Z"
+              fill="#f3e8ff"
+              fillOpacity="0.7"
+            />
+            <circle cx="52" cy="44" r="1.4" fillOpacity="0.55" />
+            <circle cx="168" cy="42" r="1.3" fillOpacity="0.5" />
+            <circle cx="22" cy="110" r="1.2" fillOpacity="0.45" />
+            <circle cx="198" cy="108" r="1.4" fillOpacity="0.5" />
+            <circle cx="48" cy="176" r="1.1" fillOpacity="0.4" />
+            <circle cx="174" cy="178" r="1.2" fillOpacity="0.45" />
+          </g>
         </svg>
 
         <div className="relative z-10 translate-y-1">
-          <Owl src={owlSrc} alt={line1} size={compact ? 144 : 164} priority />
+          <Owl src={owlSrc} alt={line1} size={compact ? 148 : 168} priority />
         </div>
       </div>
 
