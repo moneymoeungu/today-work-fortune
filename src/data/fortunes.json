@@ -3,204 +3,408 @@
     "id": "presentation-king",
     "title": "회의에서 빛나는 발표왕",
     "mood": "great",
-    "cardColor": "gold",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/presentation-king.png",
     "hat": "🎩",
     "prop": "🎤",
     "lines": [
-      { "icon": "🎤", "text": "말하는 대로 설득력이 실려요." },
-      { "icon": "💡", "text": "핵심만 짚으면 박수를 받아요." },
-      { "icon": "🤝", "text": "질문이 오면 오히려 기회예요." }
+      { "icon": "🎤", "text": "말하는 대로 설득력이 실리고 시선이 집중돼요." },
+      { "icon": "💡", "text": "핵심만 딱 짚어내니 듣는 사람들이 고개를 끄덕여요." },
+      { "icon": "🤝", "text": "예상치 못한 질문이 와도 센스 있게 받아칠 수 있어요." }
     ],
     "scores": { "focus": 4, "teamwork": 4, "communication": 5 },
-    "luckyItem": "파란 펜",
+    "luckyItem": "파란색 볼펜",
     "message": "자신 있게 먼저 말을 꺼내 보세요."
   },
   {
     "id": "approval-smooth",
-    "title": "결재 스무스 통과운",
+    "title": "결재 스무스 하이패스운",
     "mood": "great",
-    "cardColor": "red",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/approval-smooth.png",
     "hat": "🔖",
     "prop": "📄",
     "lines": [
-      { "icon": "📝", "text": "올린 보고서가 한 번에 통과돼요." },
-      { "icon": "✅", "text": "미뤄 둔 승인 건이 시원하게 풀려요." },
-      { "icon": "🙌", "text": "깔끔한 정리가 신뢰를 만들어요." }
+      { "icon": "📝", "text": "올린 보고서와 기안서가 수정 없이 한 번에 통과돼요." },
+      { "icon": "✅", "text": "미뤄 두었던 승인 건도 오늘 올리면 시원하게 풀려요." },
+      { "icon": "🙌", "text": "깔끔한 두괄식 정리가 상사와 동료의 신뢰를 높여요." }
     ],
-    "scores": { "focus": 4, "teamwork": 3, "communication": 4 },
-    "luckyItem": "빨간 도장",
-    "message": "작은 마무리가 큰 신뢰를 만들어요."
+    "scores": { "focus": 4, "teamwork": 4, "communication": 5 },
+    "luckyItem": "인덱스 플래그 포스트잇",
+    "message": "망설이던 결재 건은 오늘 오전에 바로 올려보세요."
   },
   {
     "id": "idea-planner",
     "title": "아이디어가 샘솟는 기획왕",
-    "mood": "good",
-    "cardColor": "yellow",
+    "mood": "great",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/idea-planner.png",
     "hat": "💡",
     "prop": "📓",
     "lines": [
-      { "icon": "💡", "text": "샤워하다 떠오르듯 아이디어가 반짝여요." },
-      { "icon": "📓", "text": "메모해 둔 한 줄이 큰 힌트가 돼요." },
-      { "icon": "🚀", "text": "작게 시작한 제안이 빠르게 굴러가요." }
+      { "icon": "💡", "text": "막혔던 기획안의 실마리가 거짓말처럼 풀려나가요." },
+      { "icon": "📓", "text": "스쳐 지나가듯 메모해 둔 한 줄이 결정적 힌트가 돼요." },
+      { "icon": "🚀", "text": "가볍게 던진 아이디어가 프로젝트의 메인 안으로 채택돼요." }
     ],
-    "scores": { "focus": 3, "teamwork": 4, "communication": 4 },
+    "scores": { "focus": 4, "teamwork": 4, "communication": 4 },
     "luckyItem": "노란 포스트잇",
-    "message": "떠오른 생각은 바로 적어 두세요."
+    "message": "떠오른 생각은 지우지 말고 일단 적어 두세요."
   },
   {
     "id": "smart-growth",
-    "title": "매일 발전하는 똑똑이",
-    "mood": "good",
+    "title": "일머리 폭발하는 에이스",
+    "mood": "great",
     "cardColor": "purple",
     "characterImage": "/assets/owl/smart-growth.png",
     "hat": "🎓",
     "prop": "📚",
     "lines": [
-      { "icon": "📚", "text": "새로 배운 내용이 바로 업무에 쓰여요." },
-      { "icon": "🔎", "text": "어제보다 빨리 핵심이 눈에 들어와요." },
-      { "icon": "🌱", "text": "작은 성장이 눈에 띄는 하루예요." }
+      { "icon": "📚", "text": "복잡해 보이던 데이터와 구조가 한눈에 파악돼요." },
+      { "icon": "🔎", "text": "남들이 놓친 핵심 포인트를 정확하게 짚어내요." },
+      { "icon": "🌱", "text": "해내는 일마다 실력이 부쩍 늘었다는 칭찬을 들어요." }
     ],
-    "scores": { "focus": 5, "teamwork": 3, "communication": 3 },
+    "scores": { "focus": 5, "teamwork": 4, "communication": 4 },
     "luckyItem": "보라색 형광펜",
-    "message": "오늘 배운 것 하나를 동료와 나눠 보세요."
+    "message": "오늘 찾은 노하우 하나가 내일의 무기가 돼요."
   },
   {
     "id": "teamwork-synergy",
-    "title": "협업 시너지 폭발운",
+    "title": "호흡 척척 팀워크 시너지",
     "mood": "good",
-    "cardColor": "orange",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/teamwork-synergy.png",
     "hat": "🧢",
     "prop": "🙌",
     "lines": [
-      { "icon": "🙌", "text": "손발이 척척 맞는 동료를 만나요." },
-      { "icon": "🧩", "text": "각자의 아이디어가 딱 맞게 합쳐져요." },
-      { "icon": "🎉", "text": "함께 끝낸 일이 두 배로 뿌듯해요." }
+      { "icon": "🙌", "text": "말하지 않아도 손발이 척척 맞는 동료를 만나요." },
+      { "icon": "🧩", "text": "서로의 강점이 퍼즐처럼 맞물려 작업 속도가 2배가 돼요." },
+      { "icon": "🎉", "text": "혼자 끙끙대던 일도 함께 나누면 금방 끝나요." }
     ],
-    "scores": { "focus": 3, "teamwork": 5, "communication": 4 },
-    "luckyItem": "팀 단체 머그컵",
-    "message": "도움이 필요하면 먼저 손을 내밀어 보세요."
+    "scores": { "focus": 4, "teamwork": 5, "communication": 5 },
+    "luckyItem": "팀 머그컵",
+    "message": "도움이 필요할 땐 편하게 먼저 손을 내밀어 보세요."
   },
   {
     "id": "focus-master",
-    "title": "집중력 만렙 몰입왕",
-    "mood": "good",
-    "cardColor": "blue",
+    "title": "집중력 만렙 초몰입 모드",
+    "mood": "great",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/focus-master.png",
     "hat": "🎧",
     "prop": "☕",
     "lines": [
-      { "icon": "🎧", "text": "한 번 앉으면 시간이 순삭돼요." },
-      { "icon": "⏱️", "text": "미뤄 둔 일이 거뜬히 정리돼요." },
-      { "icon": "☕", "text": "따뜻한 커피가 집중력을 높여 줘요." }
+      { "icon": "🎧", "text": "한 번 자리에 앉으면 잡념 없이 시간이 순삭돼요." },
+      { "icon": "⏱️", "text": "사흘 걸릴 것 같던 업무량을 반나절 만에 해치워요." },
+      { "icon": "☕", "text": "좋아하는 플레이리스트가 몰입도를 끝까지 지켜줘요." }
     ],
-    "scores": { "focus": 5, "teamwork": 3, "communication": 3 },
+    "scores": { "focus": 5, "teamwork": 3, "communication": 4 },
     "luckyItem": "노이즈 캔슬링 이어폰",
-    "message": "중요한 일부터 한 가지씩 끝내 보세요."
+    "message": "가장 중요한 일 하나를 정해 먼저 끝내 보세요."
   },
   {
     "id": "early-leave-fairy",
-    "title": "칼퇴 요정의 날",
-    "mood": "good",
-    "cardColor": "mint",
+    "title": "정시 퇴근 칼퇴 요정의 날",
+    "mood": "great",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/early-leave-fairy.png",
     "hat": "🎒",
     "prop": "⏰",
     "lines": [
-      { "icon": "⏰", "text": "일이 술술 풀려서 제시간에 마무리돼요." },
-      { "icon": "🎒", "text": "퇴근길 발걸음이 가벼워요." },
-      { "icon": "🌇", "text": "저녁 시간을 여유롭게 쓸 수 있어요." }
+      { "icon": "⏰", "text": "오늘 할 일이 예정보다 일찍 깔끔하게 마무리돼요." },
+      { "icon": "🎒", "text": "퇴근 직전 갑작스러운 추가 업무가 비껴가는 행운이 따라요." },
+      { "icon": "🌇", "text": "가벼운 발걸음으로 여유로운 저녁 시간을 만끽해요." }
     ],
-    "scores": { "focus": 4, "teamwork": 4, "communication": 3 },
-    "luckyItem": "민트색 텀블러",
-    "message": "오늘 할 일 목록을 아침에 먼저 정리해 보세요."
+    "scores": { "focus": 5, "teamwork": 4, "communication": 4 },
+    "luckyItem": "가벼운 에코백",
+    "message": "오후 4시에 마감 체크리스트만 한 번 점검해 두세요."
   },
   {
     "id": "communication-pro",
-    "title": "소통의 달인",
-    "mood": "normal",
-    "cardColor": "pink",
+    "title": "센스 만점 소통의 달인",
+    "mood": "good",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/communication-pro.png",
     "hat": "💬",
     "prop": "📱",
     "lines": [
-      { "icon": "💬", "text": "메시지 하나가 분위기를 부드럽게 해요." },
-      { "icon": "👂", "text": "잘 들어주면 답이 먼저 보여요." },
-      { "icon": "😊", "text": "오해가 있었다면 오늘 풀리기 좋아요." }
+      { "icon": "💬", "text": "다정한 메신저 한마디가 딱딱한 분위기를 사르르 녹여요." },
+      { "icon": "👂", "text": "상대방의 의도를 정확히 캐치해 재작업이 없어요." },
+      { "icon": "😊", "text": "타 부서와의 협업 요청도 오늘은 유독 매끄럽게 풀려요." }
     ],
-    "scores": { "focus": 3, "teamwork": 4, "communication": 5 },
-    "luckyItem": "분홍 이모티콘",
-    "message": "감사 인사 한마디를 먼저 건네 보세요."
+    "scores": { "focus": 4, "teamwork": 5, "communication": 5 },
+    "luckyItem": "웃는 표정 이모티콘",
+    "message": "고마운 동료에게 짧은 감사 인사를 먼저 건네 보세요."
   },
   {
     "id": "double-check",
-    "title": "꼼꼼 체크가 필요한 날",
-    "mood": "caution",
-    "cardColor": "green",
+    "title": "디테일 철벽 방어 마스터",
+    "mood": "normal",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/double-check.png",
     "hat": "🔍",
     "prop": "📋",
     "lines": [
-      { "icon": "🔍", "text": "작은 오타가 숨바꼭질을 하자고 해요." },
-      { "icon": "📋", "text": "체크리스트가 든든한 방패가 돼요." },
-      { "icon": "📧", "text": "메일은 보내기 전 한 번만 더 확인해요." }
+      { "icon": "🔍", "text": "남들이 못 본 작은 오타나 숫자 오류를 귀신같이 찾아내요." },
+      { "icon": "📋", "text": "차분하게 체크리스트를 짚어가면 실수할 일이 제로예요." },
+      { "icon": "📧", "text": "메일 보내기 전 3초 확인이 오늘 나의 완벽함을 지켜줘요." }
     ],
-    "scores": { "focus": 3, "teamwork": 3, "communication": 2 },
-    "luckyItem": "체크리스트 노트",
-    "message": "천천히 한 번 더 보면 실수 없이 지나가요."
+    "scores": { "focus": 4, "teamwork": 3, "communication": 3 },
+    "luckyItem": "체크리스트 메모패드",
+    "message": "천천히 한 번만 더 확인하면 완벽한 하루가 돼요."
   },
   {
     "id": "recharge-day",
-    "title": "잠깐 쉬어가는 충전의 날",
+    "title": "여유를 챙기는 힐링 충전일",
     "mood": "caution",
-    "cardColor": "lavender",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/recharge-day.png",
     "hat": "🌙",
     "prop": "🧸",
     "lines": [
-      { "icon": "🌙", "text": "속도를 조금 늦추면 오히려 효율이 올라요." },
-      { "icon": "🫖", "text": "따뜻한 차 한 잔이 머리를 맑게 해요." },
-      { "icon": "🚶", "text": "잠깐 걷고 오면 생각이 정리돼요." }
+      { "icon": "🌙", "text": "호흡을 조금만 늦추면 오히려 오후 효율이 쑥 올라가요." },
+      { "icon": "🫖", "text": "따뜻한 차 한 잔과 스트레칭이 머리를 맑게 해줘요." },
+      { "icon": "🚶", "text": "점심시간 짧은 산책이 뜻밖의 좋은 해결책을 데려와요." }
     ],
-    "scores": { "focus": 2, "teamwork": 3, "communication": 3 },
-    "luckyItem": "포근한 무릎담요",
-    "message": "중간중간 쉬어 가는 것도 실력이에요."
+    "scores": { "focus": 3, "teamwork": 4, "communication": 4 },
+    "luckyItem": "포근한 가디건·담요",
+    "message": "오늘만큼은 나를 다그치지 말고 여유 있게 가요."
   },
   {
     "id": "coffee-monday",
-    "title": "커피가 필요한 월요일 모드",
+    "title": "카페인 수혈 후 각성 모드",
     "mood": "humor",
-    "cardColor": "brown",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/coffee-monday.png",
     "hat": "😴",
     "prop": "☕",
     "lines": [
-      { "icon": "☕", "text": "커피가 들어가야 시동이 걸려요." },
-      { "icon": "😴", "text": "오전엔 눈이 반쯤 감겨도 괜찮아요." },
-      { "icon": "🍪", "text": "오후 간식이 에너지를 채워 줘요." }
+      { "icon": "☕", "text": "시원한 커피 한 모금이 들어가면 엔진이 본격 가동돼요." },
+      { "icon": "😴", "text": "오전엔 워밍업하듯 가벼운 메일 정리부터 시작해 보세요." },
+      { "icon": "🍪", "text": "오후 3시 달콤한 간식이 놀라운 막판 스퍼트를 만들어줘요." }
     ],
-    "scores": { "focus": 2, "teamwork": 3, "communication": 3 },
-    "luckyItem": "큼직한 커피잔",
-    "message": "일단 커피부터, 그다음은 천천히 가요."
+    "scores": { "focus": 3, "teamwork": 4, "communication": 4 },
+    "luckyItem": "아이스 텀블러",
+    "message": "일단 커피부터 한 모금 마시고 천천히 시작해요."
   },
   {
     "id": "hidden-mvp",
-    "title": "숨은 조력자 MVP",
-    "mood": "good",
-    "cardColor": "navy",
+    "title": "팀을 살리는 숨은 MVP",
+    "mood": "great",
+    "cardColor": "purple",
     "characterImage": "/assets/owl/hidden-mvp.png",
     "hat": "🦸",
     "prop": "🏆",
     "lines": [
-      { "icon": "🦸", "text": "묵묵히 한 일이 드디어 빛나요." },
-      { "icon": "🏆", "text": "동료가 고마운 마음을 전해 와요." },
-      { "icon": "✨", "text": "뒤에서 챙긴 디테일이 팀을 살려요." }
+      { "icon": "🦸", "text": "묵묵히 챙겨 두었던 디테일이 결정적인 순간에 빛을 발해요." },
+      { "icon": "🏆", "text": "상사나 동료가 내 노력을 알아보고 진심으로 고마워해요." },
+      { "icon": "✨", "text": "평판과 신뢰가 차곡차곡 쌓여 좋은 기회로 이어져요." }
     ],
-    "scores": { "focus": 4, "teamwork": 5, "communication": 3 },
+    "scores": { "focus": 4, "teamwork": 5, "communication": 4 },
     "luckyItem": "네이비 노트북 파우치",
-    "message": "당신의 작은 도움이 팀의 큰 힘이에요."
+    "message": "당신이 챙긴 작은 디테일이 오늘 팀 전체를 빛내줘요."
+  },
+  {
+    "id": "bonus-windfall",
+    "title": "성과와 보상이 따르는 대박운",
+    "mood": "great",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/hidden-mvp.png",
+    "hat": "💰",
+    "prop": "🏆",
+    "lines": [
+      { "icon": "💰", "text": "공들여 진행해 온 프로젝트에서 기대 이상의 성과가 나와요." },
+      { "icon": "📈", "text": "핵심 지표나 실적이 기분 좋게 우상향하는 소식이 들려요." },
+      { "icon": "🎁", "text": "커피 쿠폰이나 맛있는 점심 등 뜻밖의 작은 행운도 따라요." }
+    ],
+    "scores": { "focus": 5, "teamwork": 4, "communication": 5 },
+    "luckyItem": "골드 포인트 명함지갑",
+    "message": "오늘 찾아오는 좋은 흐름을 기분 좋게 만끽하세요."
+  },
+  {
+    "id": "meeting-shortener",
+    "title": "회의가 일찍 끝나는 행운의 날",
+    "mood": "good",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/presentation-king.png",
+    "hat": "⚡",
+    "prop": "🎤",
+    "lines": [
+      { "icon": "⚡", "text": "길어질 줄 알았던 회의가 핵심만 짚고 빠르게 끝나요." },
+      { "icon": "🎯", "text": "내 의견이 군더더기 없이 받아들여져 결론이 바로 나요." },
+      { "icon": "🕒", "text": "아낀 시간 덕분에 내 개인 업무를 여유롭게 처리해요." }
+    ],
+    "scores": { "focus": 4, "teamwork": 4, "communication": 5 },
+    "luckyItem": "깔끔한 1페이지 요약본",
+    "message": "결론부터 먼저 제시하면 회의 시간이 절반으로 줄어요."
+  },
+  {
+    "id": "praise-relay",
+    "title": "칭찬 세례가 쏟아지는 주인공",
+    "mood": "great",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/approval-smooth.png",
+    "hat": "🌟",
+    "prop": "👏",
+    "lines": [
+      { "icon": "🌟", "text": "“역시 일 잘하시네요!”라는 기분 좋은 한마디를 듣게 돼요." },
+      { "icon": "👏", "text": "작게 도와준 일에도 동료들이 크게 감동하며 고마워해요." },
+      { "icon": "💌", "text": "사내 메신저에서 내 이름이 좋은 일로 언급되는 날이에요." }
+    ],
+    "scores": { "focus": 4, "teamwork": 5, "communication": 5 },
+    "luckyItem": "산뜻한 핸드크림",
+    "message": "칭찬을 들으면 겸손해하기보다 활짝 웃으며 받아보세요."
+  },
+  {
+    "id": "creative-spark",
+    "title": "막힌 문서가 술술 써지는 문장가",
+    "mood": "good",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/idea-planner.png",
+    "hat": "✍️",
+    "prop": "📓",
+    "lines": [
+      { "icon": "✍️", "text": "빈 화면만 보며 고민하던 보고서 첫 문장이 시원하게 풀려요." },
+      { "icon": "📑", "text": "목차와 논리 흐름이 물 흐르듯 자연스럽게 이어져요." },
+      { "icon": "✨", "text": "센스 있는 제목 선정으로 문서의 매력도가 확 올라가요." }
+    ],
+    "scores": { "focus": 5, "teamwork": 3, "communication": 4 },
+    "luckyItem": "무소음 키보드",
+    "message": "완벽한 첫 줄보다 일단 끝까지 적어 내려가는 게 비결이에요."
+  },
+  {
+    "id": "career-jump",
+    "title": "커리어 레벨업 성장통 돌파",
+    "mood": "good",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/smart-growth.png",
+    "hat": "🚀",
+    "prop": "📘",
+    "lines": [
+      { "icon": "🚀", "text": "조금 까다로워 보이던 과제를 멋지게 해내며 자신감이 붙어요." },
+      { "icon": "🔑", "text": "새로운 툴이나 AI 기능을 활용해 업무 시간을 대폭 단축해요." },
+      { "icon": "🌈", "text": "오늘의 경험이 내 포트폴리오의 든든한 한 줄이 되어줘요." }
+    ],
+    "scores": { "focus": 5, "teamwork": 4, "communication": 4 },
+    "luckyItem": "모니터 스탠드",
+    "message": "새로운 방식을 시도해 보면 생각보다 훨씬 쉽게 풀려요."
+  },
+  {
+    "id": "lucky-helper",
+    "title": "뜻밖의 귀인 동료를 만나는 날",
+    "mood": "good",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/teamwork-synergy.png",
+    "hat": "🍀",
+    "prop": "🤝",
+    "lines": [
+      { "icon": "🍀", "text": "필요했던 자료나 정보를 가진 동료가 마침 먼저 도와줘요." },
+      { "icon": "🗣️", "text": "티타임 중 나눈 가벼운 대화에서 중요한 실마리를 얻어요." },
+      { "icon": "💛", "text": "서로 밀어주고 끌어주는 든든한 동료애를 느끼는 하루예요." }
+    ],
+    "scores": { "focus": 4, "teamwork": 5, "communication": 5 },
+    "luckyItem": "나눠 먹는 미니 약과·쿠키",
+    "message": "가벼운 간식 하나를 건네면 두 배의 도움으로 돌아와요."
+  },
+  {
+    "id": "deadline-clear",
+    "title": "밀린 숙제 올클리어 쾌감의 날",
+    "mood": "good",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/focus-master.png",
+    "hat": "✅",
+    "prop": "🎧",
+    "lines": [
+      { "icon": "✅", "text": "투두리스트의 항목들을 하나씩 지워나가는 쾌감이 짜릿해요." },
+      { "icon": "🧹", "text": "마음 한구석을 무겁게 하던 묵은 업무가 드디어 끝나요." },
+      { "icon": "🌟", "text": "퇴근 전 깨끗해진 책상과 메일함을 보며 뿌듯함을 느껴요." }
+    ],
+    "scores": { "focus": 5, "teamwork": 4, "communication": 3 },
+    "luckyItem": "데스크 타이머",
+    "message": "가장 작은 일부터 하나만 지워도 탄력이 붙기 시작해요."
+  },
+  {
+    "id": "evening-freedom",
+    "title": "퇴근 후 저녁이 있는 삶 수호자",
+    "mood": "good",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/early-leave-fairy.png",
+    "hat": "🧚",
+    "prop": "🌇",
+    "lines": [
+      { "icon": "🌇", "text": "근무 시간 안에 에너지를 딱 집중하고 깔끔하게 마침표를 찍어요." },
+      { "icon": "🏃", "text": "운동이나 취미, 약속을 기분 좋게 즐길 에너지가 충분해요." },
+      { "icon": "🌙", "text": "일과 일상의 균형이 완벽하게 맞아떨어지는 산뜻한 날이에요." }
+    ],
+    "scores": { "focus": 4, "teamwork": 4, "communication": 4 },
+    "luckyItem": "편안한 스니커즈",
+    "message": "오늘 저녁엔 나를 위한 기분 좋은 약속을 만들어 보세요."
+  },
+  {
+    "id": "negotiation-master",
+    "title": "부드러운 카리스마 협상의 달인",
+    "mood": "normal",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/communication-pro.png",
+    "hat": "🤝",
+    "prop": "💬",
+    "lines": [
+      { "icon": "🤝", "text": "일정 조율이나 업무 분담에서 내 페이스를 잃지 않고 합의해요." },
+      { "icon": "🛡️", "text": "무리한 요청은 기분 상하지 않게 거절하는 지혜가 발휘돼요." },
+      { "icon": "✨", "text": "차분하고 논리적인 말투가 상대방의 수긍을 이끌어내요." }
+    ],
+    "scores": { "focus": 4, "teamwork": 4, "communication": 5 },
+    "luckyItem": "민트 사탕",
+    "message": "부드러운 미소 뒤에 명확한 기준을 함께 전달해 보세요."
+  },
+  {
+    "id": "calm-organizer",
+    "title": "복잡한 실타래를 푸는 정리왕",
+    "mood": "normal",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/double-check.png",
+    "hat": "🗂️",
+    "prop": "📋",
+    "lines": [
+      { "icon": "🗂️", "text": "뒤엉켜 있던 폴더와 히스토리를 깔끔하게 정돈해 속이 시원해요." },
+      { "icon": "🧭", "text": "우선순위를 다시 세우니 무엇부터 해야 할지 명확해져요." },
+      { "icon": "🔒", "text": "미리 챙겨둔 백업과 기록이 나중에 큰 효자 노릇을 해요." }
+    ],
+    "scores": { "focus": 4, "teamwork": 3, "communication": 4 },
+    "luckyItem": "클리어 화일·바인더",
+    "message": "10분만 투자해 바탕화면과 폴더를 먼저 정리해 보세요."
+  },
+  {
+    "id": "mental-shield",
+    "title": "흔들리지 않는 평온 멘탈 수호자",
+    "mood": "caution",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/recharge-day.png",
+    "hat": "🍵",
+    "prop": "🌿",
+    "lines": [
+      { "icon": "🌿", "text": "주변이 분주해도 내 마음의 평정심을 단단하게 지킬 수 있어요." },
+      { "icon": "🍵", "text": "급한 일일수록 한 템포 숨을 고르면 훨씬 매끄럽게 해결돼요." },
+      { "icon": "🛡️", "text": "남의 감정에 휘둘리지 않고 내 리듬대로 하루를 완주해요." }
+    ],
+    "scores": { "focus": 3, "teamwork": 4, "communication": 4 },
+    "luckyItem": "향긋한 허브티 티백",
+    "message": "심호흡 한 번으로 내 마음의 방어막을 든든히 켜두세요."
+  },
+  {
+    "id": "lunch-jackpot",
+    "title": "소확행 맛집과 간식운이 터지는 날",
+    "mood": "humor",
+    "cardColor": "purple",
+    "characterImage": "/assets/owl/coffee-monday.png",
+    "hat": "🍽️",
+    "prop": "☕",
+    "lines": [
+      { "icon": "🍽️", "text": "오늘 고르는 점심 메뉴가 대기 없이 완벽하게 성공해요." },
+      { "icon": "🍩", "text": "누군가 사 온 간식이나 커피 타임으로 오후 텐션이 확 살아나요." },
+      { "icon": "😄", "text": "맛있는 에너지가 채워지니 오후 업무까지 기분 좋게 마무리돼요." }
+    ],
+    "scores": { "focus": 3, "teamwork": 5, "communication": 4 },
+    "luckyItem": "립밤·민트 케어",
+    "message": "오늘 점심은 평소 먹고 싶었던 메뉴를 자신 있게 골라보세요."
   }
 ]

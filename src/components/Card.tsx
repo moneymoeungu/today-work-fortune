@@ -7,7 +7,7 @@ import type { Fortune } from "@/lib/types";
 
 interface FrontProps {
   color?: string;
-  variant?: 0 | 1 | 2;
+  variant?: 0 | 1 | 2 | 3 | 4;
   charge?: number; // 0 ~ 100 기운 모으기 게이지
   className?: string;
 }
@@ -30,6 +30,18 @@ const TAROT_ARCANA = [
     label: "III · SUN",
     aura: "rgba(255, 182, 145, 0.42)",
     innerTop: "#7d3bc8",
+  },
+  {
+    owlSrc: "/assets/owl/intro-owl.png",
+    label: "IV · FATE",
+    aura: "rgba(196, 148, 255, 0.42)",
+    innerTop: "#6435c9",
+  },
+  {
+    owlSrc: "/assets/owl/hidden-mvp.png",
+    label: "V · CROWN",
+    aura: "rgba(255, 210, 140, 0.42)",
+    innerTop: "#7338c6",
   },
 ] as const;
 
@@ -135,6 +147,16 @@ export function CardFront({ variant = 0, charge = 0, className = "" }: FrontProp
                 strokeWidth="2"
                 strokeLinecap="round"
               />
+            </svg>
+          )}
+          {variant === 3 && (
+            <svg aria-hidden viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current drop-shadow">
+              <path d="M12 2L16 8L22 12L16 16L12 22L8 16L2 12L8 8L12 2Z" />
+            </svg>
+          )}
+          {variant === 4 && (
+            <svg aria-hidden viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current drop-shadow">
+              <path d="M3 18h18v2H3v-2Zm0-2L5 7l4.5 4L12 5l2.5 6L19 7l2 9H3Z" />
             </svg>
           )}
           <span className="text-[8px] opacity-80">✧</span>
@@ -393,7 +415,7 @@ export function CardBack({ fortune }: { fortune: Fortune }) {
 
 interface CardProps {
   color: string;
-  variant: 0 | 1 | 2;
+  variant: 0 | 1 | 2 | 3 | 4;
   index: number;
   dimmed: boolean;
   disabled: boolean;
@@ -403,7 +425,7 @@ interface CardProps {
   onChargeEnd: (cancelled: boolean) => void;
 }
 
-/** 카드 고르기 화면의 카드 1장: 부채꼴 등장 + 꾹 눌러 기운 모으기 + 카드 섞기 모션 */
+/** 카드 고르기 화면의 5장 부채꼴(Fan Spread) 타로 카드 1장 */
 export default function Card({
   color,
   variant,
@@ -416,8 +438,10 @@ export default function Card({
   onChargeEnd,
 }: CardProps) {
   const reduce = useReducedMotion();
-  const rotate = (index - 1) * 8;
-  const centerOffset = (1 - index) * 105;
+  const offsetFromCenter = index - 2; // -2, -1, 0, +1, +2
+  const rotate = offsetFromCenter * 8.5;
+  const arcY = Math.abs(offsetFromCenter) * Math.abs(offsetFromCenter) * 4.5;
+  const centerOffset = (2 - index) * 68;
   const isCharging = charge > 0;
 
   return (
@@ -449,17 +473,17 @@ export default function Card({
         shuffling && !reduce
           ? {
               x: [0, centerOffset, -centerOffset * 0.45, centerOffset * 0.85, 0],
-              y: [0, -18, -8, -14, 0],
-              rotate: [rotate, 0, (1 - index) * 12, (index - 1) * 6, rotate],
-              scale: [1, 0.96, 1.03, 0.98, 1],
+              y: [arcY, -16, -6, -12, arcY],
+              rotate: [rotate, 0, -rotate * 0.8, rotate * 0.6, rotate],
+              scale: [1, 0.95, 1.03, 0.98, 1],
               opacity: 1,
             }
           : {
               x: 0,
               opacity: dimmed ? 0.25 : 1,
-              y: isCharging ? -14 : 0,
-              rotate: reduce ? 0 : isCharging ? rotate * 0.35 : rotate,
-              scale: dimmed ? 0.9 : isCharging ? 1.06 + charge * 0.0006 : 1,
+              y: isCharging ? arcY - 18 : arcY,
+              rotate: reduce ? 0 : isCharging ? rotate * 0.3 : rotate,
+              scale: dimmed ? 0.9 : isCharging ? 1.12 + charge * 0.0008 : 1,
             }
       }
       transition={
@@ -469,13 +493,13 @@ export default function Card({
             ? { duration: 0.12 }
             : { duration: 0.5, ease: "easeOut" }
       }
-      className="relative aspect-[3/4.4] w-[30%] min-h-[44px] touch-none"
+      className="relative -mx-[1.8%] aspect-[3/4.4] w-[23.5%] min-h-[44px] touch-none"
       style={{
-        transformOrigin: "50% 100%",
-        zIndex: isCharging ? 25 : shuffling && index === 1 ? 20 : 10,
+        transformOrigin: "50% 110%",
+        zIndex: isCharging ? 35 : shuffling && index === 2 ? 25 : 10 + index,
       }}
     >
-      <div className="float h-full w-full" style={{ animationDelay: `${index * 0.5}s` }}>
+      <div className="float h-full w-full" style={{ animationDelay: `${index * 0.35}s` }}>
         <CardFront color={color} variant={variant} charge={charge} />
       </div>
     </motion.button>

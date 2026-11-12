@@ -18,8 +18,8 @@ export interface DrawnCard {
   fortune: Fortune;
   /** 카드 앞면(뽑기 전) 색상 이름 */
   frontColor: string;
-  /** 카드 앞면 부엉이 타로 의상 테마 (0: 달의 점술가, 1: 별의 마법사, 2: 태양의 왕관) */
-  tarotVariant: 0 | 1 | 2;
+  /** 5장 부채꼴 타로 카드 앞면 아르카나 번호 (0~4) */
+  tarotVariant: 0 | 1 | 2 | 3 | 4;
 }
 
 export interface LuckyLunch {

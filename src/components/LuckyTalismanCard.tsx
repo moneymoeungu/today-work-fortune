@@ -117,6 +117,90 @@ export function getFortuneCardMeta(fortuneId: string): {
         owlAdvice: "시원한 커피 한 모금으로 먼저 예열해 보세요. 오후부터 텐션이 쑥 올라가요!",
         themeKey: "amethyst",
       };
+    case "bonus-windfall":
+      return {
+        line1: "보상의 기운",
+        line2: "두둑하게 쌓이소서",
+        owlAdvice: "그동안 공들인 노력이 눈에 보이는 실적과 기분 좋은 보상으로 돌아올 거예요!",
+        themeKey: "violet",
+      };
+    case "meeting-shortener":
+      return {
+        line1: "속전속결 기운",
+        line2: "시원하게 끝나소서",
+        owlAdvice: "회의 시작할 때 결론 한 줄만 먼저 던져보세요. 회의 시간이 절반으로 줄어들어요!",
+        themeKey: "plum",
+      };
+    case "praise-relay":
+      return {
+        line1: "칭찬의 기운",
+        line2: "사방에서 쏟아지소서",
+        owlAdvice: "오늘 내 이름이 좋은 일로 오르내릴 거예요. 기분 좋게 미소로 화답해 보세요!",
+        themeKey: "violet",
+      };
+    case "creative-spark":
+      return {
+        line1: "문장의 기운",
+        line2: "막힘없이 써지소서",
+        owlAdvice: "첫 문장만 가볍게 적어 내려가면 마지막 페이지까지 단숨에 완성될 거예요!",
+        themeKey: "indigo",
+      };
+    case "career-jump":
+      return {
+        line1: "도약의 기운",
+        line2: "한 단계 레벨업하소서",
+        owlAdvice: "오늘 해결한 까다로운 과제가 내 몸값을 높여주는 가장 든든한 무기가 돼요!",
+        themeKey: "amethyst",
+      };
+    case "lucky-helper":
+      return {
+        line1: "귀인의 기운",
+        line2: "든든하게 도우소서",
+        owlAdvice: "점심이나 티타임에 나눈 가벼운 대화 속에서 찾던 해답을 얻게 될 거예요!",
+        themeKey: "plum",
+      };
+    case "deadline-clear":
+      return {
+        line1: "완주의 기운",
+        line2: "시원하게 비워내소서",
+        owlAdvice: "가장 쉬운 할 일 하나부터 체크 표시로 지워보세요. 순식간에 올클리어할 수 있어요!",
+        themeKey: "indigo",
+      };
+    case "evening-freedom":
+      return {
+        line1: "자유의 기운",
+        line2: "저녁을 만끽하소서",
+        owlAdvice: "근무 시간 안에 딱 집중해 끝내고, 오늘 저녁은 온전히 나를 위해 써보세요!",
+        themeKey: "violet",
+      };
+    case "negotiation-master":
+      return {
+        line1: "설득의 기운",
+        line2: "부드럽게 이끄소서",
+        owlAdvice: "무리한 일정 요청에는 대안 일정을 먼저 제시해 보세요. 상대방도 흔쾌히 수긍해요!",
+        themeKey: "amethyst",
+      };
+    case "calm-organizer":
+      return {
+        line1: "정돈의 기운",
+        line2: "명쾌하게 정리되소서",
+        owlAdvice: "바탕화면과 탭만 먼저 정리해도 머릿속이 맑아지며 일 처리가 2배 빨라져요!",
+        themeKey: "indigo",
+      };
+    case "mental-shield":
+      return {
+        line1: "방어의 기운",
+        line2: "평온하게 지키소서",
+        owlAdvice: "주변이 소란스러워도 내 페이스만 지키면 아무런 스트레스 없이 지나갈 거예요!",
+        themeKey: "violet",
+      };
+    case "lunch-jackpot":
+      return {
+        line1: "미식의 기운",
+        line2: "맛있게 충전하소서",
+        owlAdvice: "오늘 점심 메뉴 선택은 100점 만점이에요! 든든하게 먹고 오후도 가볍게 넘겨보세요!",
+        themeKey: "plum",
+      };
     case "hidden-mvp":
     default:
       return {

@@ -42,7 +42,7 @@ export default function Home() {
     fromName: string;
     note: string;
   } | null>(null);
-  const lastId = useRef<string | null>(null);
+  const recentIds = useRef<string[]>([]);
 
   useEffect(() => {
     const saved = loadProfile();
@@ -84,14 +84,14 @@ export default function Home() {
     saveProfile(p);
     setProfile(p);
     track("input_complete");
-    const nextCards = drawCards(lastId.current);
+    const nextCards = drawCards(recentIds.current);
     preloadImages(nextCards.map((c) => c.fortune.characterImage));
     setCards(nextCards);
     setStep("pick");
   };
 
   const shuffleCards = () => {
-    const nextCards = drawCards(lastId.current);
+    const nextCards = drawCards(recentIds.current);
     preloadImages(nextCards.map((c) => c.fortune.characterImage));
     setCards(nextCards);
   };
@@ -100,7 +100,7 @@ export default function Home() {
     const picked = cards[index];
     track("card_select", { fortune: picked.fortune.id });
     const r = buildResult(picked.fortune, profile.name, profile.team);
-    lastId.current = picked.fortune.id;
+    recentIds.current = [picked.fortune.id, ...recentIds.current.filter((id) => id !== picked.fortune.id)].slice(0, 6);
     setCollected(addToHistory(picked.fortune.id));
     setResult(r);
   };
@@ -112,7 +112,7 @@ export default function Home() {
 
   const retry = () => {
     track("retry");
-    const nextCards = drawCards(lastId.current);
+    const nextCards = drawCards(recentIds.current);
     preloadImages(nextCards.map((c) => c.fortune.characterImage));
     setCards(nextCards);
     setResult(null);

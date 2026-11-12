@@ -158,7 +158,7 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
     }
     if (hintMsg) return hintMsg;
     if (shuffleCount > 0) return `카드를 ${shuffleCount}번 새로 섞었어요! 마음에 드는 카드를 꾹 눌러보세요 🔮`;
-    return "달·별·태양 부엉이 카드 중 하나를 1초간 꾹~ 눌러보세요 ✨";
+    return "5장의 부채꼴 타로 카드 중 끌리는 한 장을 1초간 꾹~ 눌러보세요 ✨";
   })();
 
   return (
@@ -209,7 +209,7 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
         </motion.p>
       </motion.div>
 
-      <div className="mt-auto flex w-full items-end justify-center gap-[3.5%] pb-4 pt-8">
+      <div className="mt-auto flex w-full items-end justify-center pb-8 pt-6">
         {cards.map((c, i) => (
           <Card
             key={i}

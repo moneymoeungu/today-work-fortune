@@ -285,14 +285,14 @@ export default function ResultScreen({
           </div>
         </motion.section>
 
-        {/* 섹션 5: 12종 부엉이 도감 */}
+        {/* 섹션 5: 24종 운세 도감 */}
         <motion.section {...item(6)} className="rounded-3xl bg-white/10 p-4">
           <div className="mb-2 text-center">
             <p className="text-sm font-bold text-white/90">
-              🦉 부엉이 캐릭터 도감 ({collectedCount}/{total}종 발견)
+              🦉 오늘의 운세 도감 ({collectedCount}/{total}종 발견)
             </p>
             <p className="mt-0.5 text-[11px] text-white/60">
-              총 12가지 코스튬의 운세 부엉이가 숨어 있어요! 다시 뽑기로 모아보세요
+              총 {total}가지 업무 운세 카드가 숨어 있어요! 다시 뽑기로 모아보세요
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-1.5">
