@@ -141,11 +141,14 @@ export default function ResultScreen({
         <button
           type="button"
           onClick={toggleOwlBubble}
-          className="mt-2.5 rounded-full bg-white/10 px-3.5 py-1 text-xs text-amber-100/90 backdrop-blur transition hover:bg-white/15"
+          className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-purple-200/15 bg-white/[0.07] px-3.5 py-1 text-[11.5px] font-medium text-purple-100/80 backdrop-blur transition hover:bg-white/[0.12] hover:text-white"
         >
-          {bubbleOpen
-            ? "💬 부엉이를 다시 누르면 말풍선이 닫혀요"
-            : "👆 카드 속 부엉이를 누르면 오늘의 한마디 말풍선이 나와요"}
+          <span className="text-[10px] text-[#f3dc99]">✦</span>
+          <span>
+            {bubbleOpen
+              ? "부엉이를 다시 누르면 말풍선이 닫혀요"
+              : "카드 속 부엉이를 누르면 오늘의 한마디가 나와요"}
+          </span>
         </button>
       </motion.div>
 

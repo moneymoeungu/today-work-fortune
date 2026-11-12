@@ -32,7 +32,7 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   amethyst: UNIFIED_PURPLE_THEME,
 };
 
-/** 운세 ID별 레퍼런스 스타일 2줄 기원 문구 & 그 운세에 딱 맞는 1줄 부엉이 말풍선 조언 */
+/** 운세 ID별 레퍼런스 스타일 2줄 기원 문구 & 그 운세에 딱 맞는 1줄(자연스러운 2행) 부엉이 말풍선 조언 */
 export function getFortuneCardMeta(fortuneId: string): {
   line1: string;
   line2: string;
@@ -44,161 +44,161 @@ export function getFortuneCardMeta(fortuneId: string): {
       return {
         line1: "말발의 기운",
         line2: "시원하게 터지소서",
-        owlAdvice: "첫 문장만 당당하게 꺼내면 오늘 회의실 분위기는 완전히 내 편이에요!",
+        owlAdvice: "첫 문장만 당당하게 꺼내 보세요\n오늘 회의실 분위기는 완전히 내 편이에요",
         themeKey: "plum",
       };
     case "approval-smooth":
       return {
         line1: "결재의 기운",
         line2: "단번에 통과하소서",
-        owlAdvice: "망설이던 보고서나 요청이 있다면 오전에 바로 올려보세요. 한 번에 통과돼요!",
+        owlAdvice: "망설이던 보고서는 오전에 바로 올려보세요\n수정 없이 한 번에 기분 좋게 통과돼요",
         themeKey: "violet",
       };
     case "idea-planner":
       return {
         line1: "영감의 기운",
         line2: "반짝이게 샘솟으소서",
-        owlAdvice: "스쳐 지나간 엉뚱한 생각도 메모해 두세요. 오늘 최고의 기획안이 될 거예요!",
+        owlAdvice: "스쳐 지나간 작은 생각도 메모해 두세요\n오늘 가장 빛나는 메인 기획안이 될 거예요",
         themeKey: "indigo",
       };
     case "smart-growth":
       return {
         line1: "성장의 기운",
         line2: "거침없이 오르소서",
-        owlAdvice: "어제 막혔던 문제도 오늘은 퍼즐 맞추듯 명쾌하게 해결될 거예요!",
+        owlAdvice: "어제 막혔던 문제도 다시 펼쳐 보세요\n오늘은 퍼즐 맞추듯 명쾌하게 해결돼요",
         themeKey: "amethyst",
       };
     case "teamwork-synergy":
       return {
         line1: "호흡의 기운",
         line2: "찰떡같이 맞으소서",
-        owlAdvice: "혼자 고민하지 말고 옆자리 동료에게 가볍게 물어보면 10분 만에 풀려요!",
+        owlAdvice: "혼자 고민하지 말고 동료에게 가볍게 물어보세요\n대화가 시작되면 10분 만에 실마리가 풀려요",
         themeKey: "plum",
       };
     case "focus-master":
       return {
         line1: "몰입의 기운",
         line2: "단숨에 끝내소서",
-        owlAdvice: "이어폰을 끼고 딱 40분만 몰입해 보세요. 오늘 할 일의 절반이 끝날 거예요!",
+        owlAdvice: "이어폰을 끼고 딱 40분만 몰입해 보세요\n오늘 할 일의 절반이 순식간에 끝날 거예요",
         themeKey: "indigo",
       };
     case "early-leave-fairy":
       return {
         line1: "칼퇴의 기운",
         line2: "가볍게 퇴근하소서",
-        owlAdvice: "오후 4시 전에 핵심 업무만 먼저 체크해 두면 오늘 정시 퇴근은 확정이에요!",
+        owlAdvice: "오후 4시 전에 핵심 업무만 먼저 끝내 두세요\n오늘은 가벼운 발걸음으로 정시 퇴근 확정이에요",
         themeKey: "violet",
       };
     case "communication-pro":
       return {
         line1: "소통의 기운",
         line2: "물 흐르듯 풀리소서",
-        owlAdvice: "까다로운 협의나 메일 답장도 오늘 보내면 상대방이 흔쾌히 오케이할 거예요!",
+        owlAdvice: "까다로운 협의나 메일도 오늘 먼저 보내보세요\n상대방이 흔쾌히 고개를 끄덕일 거예요",
         themeKey: "amethyst",
       };
     case "double-check":
       return {
         line1: "철벽의 기운",
         line2: "빈틈없이 지키소서",
-        owlAdvice: "전송 버튼을 누르기 전에 딱 3초만 첨부파일과 숫자를 확인하면 완벽해요!",
+        owlAdvice: "전송 버튼을 누르기 전 딱 3초만 더 확인해 보세요\n작은 디테일 하나가 내 완벽함을 지켜줘요",
         themeKey: "indigo",
       };
     case "recharge-day":
       return {
         line1: "평온의 기운",
         line2: "여유롭게 채우소서",
-        owlAdvice: "오늘은 완벽함보다 내 컨디션이 먼저예요. 틈틈이 스트레칭하며 쉬어가세요!",
+        owlAdvice: "오늘은 완벽함보다 내 컨디션이 먼저예요\n따뜻한 차 한 잔과 함께 여유롭게 쉬어가세요",
         themeKey: "violet",
       };
     case "coffee-monday":
       return {
         line1: "활력의 기운",
         line2: "상쾌하게 깨어나소서",
-        owlAdvice: "시원한 커피 한 모금으로 먼저 예열해 보세요. 오후부터 텐션이 쑥 올라가요!",
+        owlAdvice: "시원한 커피 한 모금으로 가볍게 예열해 보세요\n오후부터 집중력과 텐션이 쑥 올라가요",
         themeKey: "amethyst",
       };
     case "bonus-windfall":
       return {
         line1: "보상의 기운",
         line2: "두둑하게 쌓이소서",
-        owlAdvice: "그동안 공들인 노력이 눈에 보이는 실적과 기분 좋은 보상으로 돌아올 거예요!",
+        owlAdvice: "그동안 공들인 노력이 결실을 맺는 날이에요\n눈에 보이는 성과와 기분 좋은 보상이 따라와요",
         themeKey: "violet",
       };
     case "meeting-shortener":
       return {
         line1: "속전속결 기운",
         line2: "시원하게 끝나소서",
-        owlAdvice: "회의 시작할 때 결론 한 줄만 먼저 던져보세요. 회의 시간이 절반으로 줄어들어요!",
+        owlAdvice: "회의 시작할 때 결론 한 줄만 먼저 꺼내 보세요\n길어지던 회의가 절반으로 짧아질 거예요",
         themeKey: "plum",
       };
     case "praise-relay":
       return {
         line1: "칭찬의 기운",
         line2: "사방에서 쏟아지소서",
-        owlAdvice: "오늘 내 이름이 좋은 일로 오르내릴 거예요. 기분 좋게 미소로 화답해 보세요!",
+        owlAdvice: "오늘 내 이름이 좋은 일로 자주 오르내릴 거예요\n칭찬이 들려오면 환한 미소로 화답해 보세요",
         themeKey: "violet",
       };
     case "creative-spark":
       return {
         line1: "문장의 기운",
         line2: "막힘없이 써지소서",
-        owlAdvice: "첫 문장만 가볍게 적어 내려가면 마지막 페이지까지 단숨에 완성될 거예요!",
+        owlAdvice: "첫 문장만 가볍게 적어 내려가 보세요\n마지막 페이지까지 막힘없이 술술 완성돼요",
         themeKey: "indigo",
       };
     case "career-jump":
       return {
         line1: "도약의 기운",
         line2: "한 단계 레벨업하소서",
-        owlAdvice: "오늘 해결한 까다로운 과제가 내 몸값을 높여주는 가장 든든한 무기가 돼요!",
+        owlAdvice: "오늘 해낸 까다로운 과제가 큰 자산이 돼요\n내 가치를 높여주는 가장 든든한 무기가 될 거예요",
         themeKey: "amethyst",
       };
     case "lucky-helper":
       return {
         line1: "귀인의 기운",
         line2: "든든하게 도우소서",
-        owlAdvice: "점심이나 티타임에 나눈 가벼운 대화 속에서 찾던 해답을 얻게 될 거예요!",
+        owlAdvice: "점심이나 티타임의 가벼운 대화를 놓치지 마세요\n뜻밖의 동료에게서 찾던 해답을 얻게 돼요",
         themeKey: "plum",
       };
     case "deadline-clear":
       return {
         line1: "완주의 기운",
         line2: "시원하게 비워내소서",
-        owlAdvice: "가장 쉬운 할 일 하나부터 체크 표시로 지워보세요. 순식간에 올클리어할 수 있어요!",
+        owlAdvice: "가장 쉬운 할 일 하나부터 먼저 지워보세요\n탄력이 붙어 밀린 숙제를 단숨에 끝낼 수 있어요",
         themeKey: "indigo",
       };
     case "evening-freedom":
       return {
         line1: "자유의 기운",
         line2: "저녁을 만끽하소서",
-        owlAdvice: "근무 시간 안에 딱 집중해 끝내고, 오늘 저녁은 온전히 나를 위해 써보세요!",
+        owlAdvice: "근무 시간 안에 에너지를 딱 모아 끝내 보세요\n오늘 저녁 시간은 온전히 나를 위한 선물이에요",
         themeKey: "violet",
       };
     case "negotiation-master":
       return {
         line1: "설득의 기운",
         line2: "부드럽게 이끄소서",
-        owlAdvice: "무리한 일정 요청에는 대안 일정을 먼저 제시해 보세요. 상대방도 흔쾌히 수긍해요!",
+        owlAdvice: "무리한 요청엔 대안 일정을 먼저 제시해 보세요\n부드러운 말투가 상대방의 수긍을 이끌어내요",
         themeKey: "amethyst",
       };
     case "calm-organizer":
       return {
         line1: "정돈의 기운",
         line2: "명쾌하게 정리되소서",
-        owlAdvice: "바탕화면과 탭만 먼저 정리해도 머릿속이 맑아지며 일 처리가 2배 빨라져요!",
+        owlAdvice: "바탕화면과 열린 탭부터 가볍게 정리해 보세요\n머릿속이 맑아지며 일 처리 속도가 두 배 빨라져요",
         themeKey: "indigo",
       };
     case "mental-shield":
       return {
         line1: "방어의 기운",
         line2: "평온하게 지키소서",
-        owlAdvice: "주변이 소란스러워도 내 페이스만 지키면 아무런 스트레스 없이 지나갈 거예요!",
+        owlAdvice: "주변이 분주해도 내 호흡과 페이스만 지켜보세요\n어떠한 스트레스도 나를 흔들지 못하는 날이에요",
         themeKey: "violet",
       };
     case "lunch-jackpot":
       return {
         line1: "미식의 기운",
         line2: "맛있게 충전하소서",
-        owlAdvice: "오늘 점심 메뉴 선택은 100점 만점이에요! 든든하게 먹고 오후도 가볍게 넘겨보세요!",
+        owlAdvice: "오늘 점심 메뉴 선택은 백점 만점이에요\n맛있게 에너지 채우고 오후도 가볍게 넘겨보세요",
         themeKey: "plum",
       };
     case "hidden-mvp":
@@ -206,7 +206,7 @@ export function getFortuneCardMeta(fortuneId: string): {
       return {
         line1: "대박의 기운",
         line2: "활활 타오르소서",
-        owlAdvice: "묵묵히 해오던 내 노력이 드디어 빛을 발해 기분 좋은 칭찬으로 돌아올 거예요!",
+        owlAdvice: "묵묵히 챙겨 온 디테일이 드디어 빛을 발해요\n오늘 기분 좋은 인정과 칭찬으로 돌아올 거예요",
         themeKey: "plum",
       };
   }
@@ -415,21 +415,37 @@ export function LuckyTalismanCard({
         {/* 부엉이 말풍선 (클릭 시 on/off 토글, 저장용 카드에서는 렌더링되지 않음) */}
         <AnimatePresence>
           {speechBubble && (
-            <motion.div
-              key="owl-bubble"
-              initial={{ opacity: 0, y: 8, scale: 0.92 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 6, scale: 0.92 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute -top-5 left-1/2 z-30 w-[238px] -translate-x-1/2 rounded-2xl bg-white px-3.5 py-2.5 text-center text-[12px] font-bold leading-snug text-[#231152] shadow-[0_10px_28px_rgba(0,0,0,0.38)]"
-            >
-              <span>{speechBubble}</span>
-              {/* 말풍선 아래 꼬리 */}
-              <span
-                aria-hidden
-                className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 bg-white"
-              />
-            </motion.div>
+            <div className="pointer-events-none absolute -inset-x-10 -top-2 z-30 flex justify-center">
+              <motion.div
+                key="owl-bubble"
+                initial={{ opacity: 0, y: 6, scale: 0.94 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 4, scale: 0.94 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(31, 15, 74, 0.94) 0%, rgba(19, 8, 48, 0.96) 100%)",
+                  border: "1px solid rgba(243, 220, 153, 0.42)",
+                  boxShadow:
+                    "0 12px 28px rgba(8, 3, 24, 0.65), 0 0 18px rgba(192, 132, 252, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16)",
+                }}
+                className="relative w-max max-w-[262px] rounded-2xl px-4 py-2.5 text-center backdrop-blur-md"
+              >
+                <p className="whitespace-pre-line text-[12px] font-medium leading-[1.48] tracking-tight text-purple-50/95">
+                  {speechBubble}
+                </p>
+                {/* 말풍선 아래 꼬리 (정중앙 고정) */}
+                <span
+                  aria-hidden
+                  style={{
+                    background: "rgba(19, 8, 48, 0.96)",
+                    borderRight: "1px solid rgba(243, 220, 153, 0.42)",
+                    borderBottom: "1px solid rgba(243, 220, 153, 0.42)",
+                  }}
+                  className="absolute -bottom-[5px] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45"
+                />
+              </motion.div>
+            </div>
           )}
         </AnimatePresence>
 
