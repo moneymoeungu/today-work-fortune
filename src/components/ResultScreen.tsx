@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Owl from "./Owl";
 import ShareCard from "./ShareCard";
+import { TalismanGiftModal } from "./TalismanGiftModal";
 import { cardGlow } from "@/lib/colors";
 import { FORTUNES } from "@/lib/fortune";
 import { track } from "@/lib/analytics";
@@ -54,6 +55,7 @@ export default function ResultScreen({
   const [saving, setSaving] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [petIdx, setPetIdx] = useState<number | null>(null);
+  const [giftOpen, setGiftOpen] = useState(false);
 
   const showToast = (msg: string) => {
     setToast(msg);
@@ -276,25 +278,35 @@ export default function ResultScreen({
           <p className="mt-2.5 text-[15px] font-bold leading-snug text-amber-100">“{fortune.message}”</p>
         </motion.section>
 
-        {/* 동료에게 해보라고 공유하기 전용 섹션 */}
+        {/* 동료에게 부적 선물하기 & 공유하기 전용 섹션 */}
         <motion.section
           {...item(5)}
           className="rounded-3xl border border-amber-200/35 bg-gradient-to-br from-brand/35 to-purple-900/40 p-5 backdrop-blur"
         >
           <p className="text-center text-sm font-bold text-amber-100">
-            💌 팀 동료에게도 해보라고 공유해 보세요!
+            🎁 팀 동료에게 행운을 나눠보세요!
           </p>
           <p className="mt-1 text-center text-xs text-white/75">
-            아래 버튼을 누르면 메신저·단톡방에 바로 붙여넣을 수 있는 초대 링크가 복사돼요
+            동료 이름을 넣어 맞춤 부엉이 부적을 선물하거나 운세 링크를 공유할 수 있어요
           </p>
-          <button
-            type="button"
-            onClick={copyInviteLink}
-            className="pill-btn mt-3 flex w-full items-center justify-center gap-2 bg-white text-[15px] text-night-800 shadow-md"
-          >
-            <span>🔗</span>
-            <span>다른 사람도 해보게 공유 링크 복사하기</span>
-          </button>
+          <div className="mt-3 flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={() => setGiftOpen(true)}
+              className="pill-btn flex w-full items-center justify-center gap-2 bg-gradient-to-r from-amber-300 to-amber-400 text-[15px] font-extrabold text-night-900 shadow-lg"
+            >
+              <span>🧧</span>
+              <span>동료에게 부엉이 부적 한 장 선물하기</span>
+            </button>
+            <button
+              type="button"
+              onClick={copyInviteLink}
+              className="pill-btn flex w-full items-center justify-center gap-2 border border-white/25 bg-white/15 text-[14px] text-white"
+            >
+              <span>🔗</span>
+              <span>다른 사람도 해보게 공유 링크만 복사하기</span>
+            </button>
+          </div>
         </motion.section>
 
         {/* 12종 부엉이 도감 */}
@@ -363,6 +375,15 @@ export default function ResultScreen({
             닫기
           </button>
         </div>
+      )}
+
+      {giftOpen && (
+        <TalismanGiftModal
+          senderName={result.name}
+          senderTeam={result.team}
+          onClose={() => setGiftOpen(false)}
+          onToast={showToast}
+        />
       )}
 
       {/* 이미지 저장용 (화면 밖) */}

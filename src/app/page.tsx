@@ -6,6 +6,7 @@ import IntroScreen from "@/components/IntroScreen";
 import PickScreen from "@/components/PickScreen";
 import ResultScreen from "@/components/ResultScreen";
 import StarField from "@/components/StarField";
+import { ReceivedGiftModal } from "@/components/TalismanGiftModal";
 import { buildResult, drawCards, FORTUNES } from "@/lib/fortune";
 import { addToHistory, getTodayHistory, loadProfile, saveProfile, type Profile } from "@/lib/storage";
 import { track } from "@/lib/analytics";
@@ -35,6 +36,12 @@ export default function Home() {
   const [cards, setCards] = useState<DrawnCard[]>([]);
   const [result, setResult] = useState<FortuneResult | null>(null);
   const [collected, setCollected] = useState<string[]>([]);
+  const [receivedGift, setReceivedGift] = useState<{
+    giftId: string;
+    toName: string;
+    fromName: string;
+    note: string;
+  } | null>(null);
   const lastId = useRef<string | null>(null);
 
   useEffect(() => {
@@ -42,6 +49,21 @@ export default function Home() {
     if (saved) setProfile(saved);
     setCollected(getTodayHistory());
     track("start");
+
+    // 동료가 보낸 부적 선물 링크(?gift=...)가 있는지 확인
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const giftId = params.get("gift");
+      if (giftId) {
+        const toName = params.get("to") ?? "소중한 동료";
+        const fromName = params.get("from") ?? "동료";
+        const note = params.get("note") ?? "오늘도 행운 가득한 하루 보내세요!";
+        setReceivedGift({ giftId, toName, fromName, note });
+        if (!saved?.name && toName && toName !== "소중한 동료") {
+          setProfile((prev) => ({ ...prev, name: toName }));
+        }
+      }
+    }
 
     // 1순위: 인트로 및 타로 카드 앞면 3종 부엉이 즉시 로딩
     preloadImages([
@@ -141,6 +163,21 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {receivedGift && (
+        <ReceivedGiftModal
+          giftId={receivedGift.giftId}
+          toName={receivedGift.toName}
+          fromName={receivedGift.fromName}
+          note={receivedGift.note}
+          onClose={() => {
+            setReceivedGift(null);
+            if (typeof window !== "undefined") {
+              window.history.replaceState({}, "", window.location.pathname);
+            }
+          }}
+        />
+      )}
     </main>
   );
 }
