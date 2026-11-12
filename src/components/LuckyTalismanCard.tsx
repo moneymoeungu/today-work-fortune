@@ -15,41 +15,23 @@ export interface CardTheme {
 }
 
 /**
- * 밤하늘 보라색 배경과 자연스럽게 어우러지는 은은한 벨벳 퍼플·인디고·플럼 톤 팔레트
+ * 모든 12종 운세 카드와 선물 부적 카드에 동일하게 적용되는
+ * 밤하늘 시그니처 로얄 벨벳 퍼플(Unified Royal Velvet Purple) 테마
  */
+const UNIFIED_PURPLE_THEME: CardTheme = {
+  bgGrad: "linear-gradient(180deg, #5c3da8 0%, #3b217d 54%, #231152 100%)",
+  pillBg: "rgba(22, 9, 56, 0.65)",
+  emblemColor: "#7c4dff",
+  sheetBg: "linear-gradient(180deg, #251454 0%, #160b36 100%)",
+  sheetText: "#f3e8ff",
+  buttonBg: "#7c4dff",
+};
+
 export const CARD_THEMES: Record<string, CardTheme> = {
-  violet: {
-    bgGrad: "linear-gradient(180deg, #5e3fac 0%, #3d2380 54%, #241254 100%)",
-    pillBg: "rgba(23, 10, 58, 0.62)",
-    emblemColor: "#7c4dff",
-    sheetBg: "linear-gradient(180deg, #251454 0%, #160b36 100%)",
-    sheetText: "#f3e8ff",
-    buttonBg: "#7c4dff",
-  },
-  indigo: {
-    bgGrad: "linear-gradient(180deg, #4f48a3 0%, #322b7a 54%, #1d1850 100%)",
-    pillBg: "rgba(18, 14, 54, 0.62)",
-    emblemColor: "#6366f1",
-    sheetBg: "linear-gradient(180deg, #211b54 0%, #130f36 100%)",
-    sheetText: "#e0e7ff",
-    buttonBg: "#6366f1",
-  },
-  plum: {
-    bgGrad: "linear-gradient(180deg, #6b3e91 0%, #462369 54%, #291145 100%)",
-    pillBg: "rgba(32, 11, 54, 0.62)",
-    emblemColor: "#9333ea",
-    sheetBg: "linear-gradient(180deg, #2a144a 0%, #170a2e 100%)",
-    sheetText: "#f5d0fe",
-    buttonBg: "#8b5cf6",
-  },
-  amethyst: {
-    bgGrad: "linear-gradient(180deg, #654ab0 0%, #432b87 54%, #271659 100%)",
-    pillBg: "rgba(26, 12, 62, 0.62)",
-    emblemColor: "#8b5cf6",
-    sheetBg: "linear-gradient(180deg, #261656 0%, #150b34 100%)",
-    sheetText: "#ede9fe",
-    buttonBg: "#7c4dff",
-  },
+  violet: UNIFIED_PURPLE_THEME,
+  indigo: UNIFIED_PURPLE_THEME,
+  plum: UNIFIED_PURPLE_THEME,
+  amethyst: UNIFIED_PURPLE_THEME,
 };
 
 /** 운세 ID별 레퍼런스 스타일 2줄 기원 문구 & 은은한 퍼플 카드 테마 */

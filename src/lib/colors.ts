@@ -1,17 +1,17 @@
-/** 카드 색상 팔레트: [밝은색, 진한색, 글로우] */
+/** 카드 색상 팔레트: 모든 카드에 보라·라벤더 계열의 통일된 밤하늘 오라 적용 */
 export const CARD_COLORS: Record<string, [string, string, string]> = {
-  gold: ["#ffe08a", "#e0a526", "#ffcf5c"],
-  red: ["#ff8a8a", "#d62f4b", "#ff5d73"],
-  yellow: ["#fff39a", "#f2c200", "#ffe53d"],
-  purple: ["#c9a6ff", "#7c4dff", "#a97bff"],
-  orange: ["#ffbe85", "#f2701c", "#ff9a4d"],
-  blue: ["#9ccbff", "#2f7be0", "#5aa2ff"],
-  mint: ["#a6f0d8", "#1fb893", "#4de0b8"],
-  pink: ["#ffb3d1", "#e6458d", "#ff7fb2"],
-  green: ["#b5ee9a", "#3fa535", "#7ad65f"],
-  lavender: ["#ddd0ff", "#9b82e6", "#bba8ff"],
-  brown: ["#e0b995", "#8a5a33", "#c28a5a"],
-  navy: ["#8aa0ff", "#24378f", "#5a74e6"],
+  gold: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  red: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  yellow: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  purple: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  orange: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  blue: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  mint: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  pink: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  green: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  lavender: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  brown: ["#e9d5ff", "#7c4dff", "#c084fc"],
+  navy: ["#e9d5ff", "#7c4dff", "#c084fc"],
 };
 
 /** 뽑기 전 카드 앞면에 쓰는 색 (서로 다른 3장을 랜덤으로 구성) */
