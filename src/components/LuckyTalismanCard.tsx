@@ -1,14 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Owl from "./Owl";
 import { track } from "@/lib/analytics";
 
 export interface CardTheme {
   bgGrad: string;
   pillBg: string;
-  emblemColor: string;
   sheetBg: string;
   sheetText: string;
   buttonBg: string;
@@ -21,7 +20,6 @@ export interface CardTheme {
 const UNIFIED_PURPLE_THEME: CardTheme = {
   bgGrad: "linear-gradient(180deg, #5c3da8 0%, #3b217d 54%, #231152 100%)",
   pillBg: "rgba(22, 9, 56, 0.65)",
-  emblemColor: "#7c4dff",
   sheetBg: "linear-gradient(180deg, #251454 0%, #160b36 100%)",
   sheetText: "#f3e8ff",
   buttonBg: "#7c4dff",
@@ -34,39 +32,99 @@ export const CARD_THEMES: Record<string, CardTheme> = {
   amethyst: UNIFIED_PURPLE_THEME,
 };
 
-/** 운세 ID별 레퍼런스 스타일 2줄 기원 문구 & 은은한 퍼플 카드 테마 */
+/** 운세 ID별 레퍼런스 스타일 2줄 기원 문구 & 그 운세에 딱 맞는 1줄 부엉이 말풍선 조언 */
 export function getFortuneCardMeta(fortuneId: string): {
   line1: string;
   line2: string;
+  owlAdvice: string;
   themeKey: keyof typeof CARD_THEMES;
-  emblemType: "flame" | "clover" | "star" | "bolt";
 } {
   switch (fortuneId) {
     case "presentation-king":
-      return { line1: "말발의 기운", line2: "시원하게 터지소서", themeKey: "plum", emblemType: "flame" };
+      return {
+        line1: "말발의 기운",
+        line2: "시원하게 터지소서",
+        owlAdvice: "첫 문장만 당당하게 꺼내면 오늘 회의실 분위기는 완전히 내 편이에요!",
+        themeKey: "plum",
+      };
     case "approval-smooth":
-      return { line1: "결재의 기운", line2: "단번에 통과하소서", themeKey: "violet", emblemType: "clover" };
+      return {
+        line1: "결재의 기운",
+        line2: "단번에 통과하소서",
+        owlAdvice: "망설이던 보고서나 요청이 있다면 오전에 바로 올려보세요. 한 번에 통과돼요!",
+        themeKey: "violet",
+      };
     case "idea-planner":
-      return { line1: "영감의 기운", line2: "반짝이게 샘솟으소서", themeKey: "indigo", emblemType: "star" };
+      return {
+        line1: "영감의 기운",
+        line2: "반짝이게 샘솟으소서",
+        owlAdvice: "스쳐 지나간 엉뚱한 생각도 메모해 두세요. 오늘 최고의 기획안이 될 거예요!",
+        themeKey: "indigo",
+      };
     case "smart-growth":
-      return { line1: "성장의 기운", line2: "거침없이 오르소서", themeKey: "amethyst", emblemType: "bolt" };
+      return {
+        line1: "성장의 기운",
+        line2: "거침없이 오르소서",
+        owlAdvice: "어제 막혔던 문제도 오늘은 퍼즐 맞추듯 명쾌하게 해결될 거예요!",
+        themeKey: "amethyst",
+      };
     case "teamwork-synergy":
-      return { line1: "호흡의 기운", line2: "찰떡같이 맞으소서", themeKey: "plum", emblemType: "clover" };
+      return {
+        line1: "호흡의 기운",
+        line2: "찰떡같이 맞으소서",
+        owlAdvice: "혼자 고민하지 말고 옆자리 동료에게 가볍게 물어보면 10분 만에 풀려요!",
+        themeKey: "plum",
+      };
     case "focus-master":
-      return { line1: "몰입의 기운", line2: "단숨에 끝내소서", themeKey: "indigo", emblemType: "bolt" };
+      return {
+        line1: "몰입의 기운",
+        line2: "단숨에 끝내소서",
+        owlAdvice: "이어폰을 끼고 딱 40분만 몰입해 보세요. 오늘 할 일의 절반이 끝날 거예요!",
+        themeKey: "indigo",
+      };
     case "early-leave-fairy":
-      return { line1: "칼퇴의 기운", line2: "가볍게 퇴근하소서", themeKey: "violet", emblemType: "clover" };
+      return {
+        line1: "칼퇴의 기운",
+        line2: "가볍게 퇴근하소서",
+        owlAdvice: "오후 4시 전에 핵심 업무만 먼저 체크해 두면 오늘 정시 퇴근은 확정이에요!",
+        themeKey: "violet",
+      };
     case "communication-pro":
-      return { line1: "소통의 기운", line2: "물 흐르듯 풀리소서", themeKey: "amethyst", emblemType: "star" };
+      return {
+        line1: "소통의 기운",
+        line2: "물 흐르듯 풀리소서",
+        owlAdvice: "까다로운 협의나 메일 답장도 오늘 보내면 상대방이 흔쾌히 오케이할 거예요!",
+        themeKey: "amethyst",
+      };
     case "double-check":
-      return { line1: "철벽의 기운", line2: "빈틈없이 지키소서", themeKey: "indigo", emblemType: "star" };
+      return {
+        line1: "철벽의 기운",
+        line2: "빈틈없이 지키소서",
+        owlAdvice: "전송 버튼을 누르기 전에 딱 3초만 첨부파일과 숫자를 확인하면 완벽해요!",
+        themeKey: "indigo",
+      };
     case "recharge-day":
-      return { line1: "평온의 기운", line2: "여유롭게 채우소서", themeKey: "violet", emblemType: "clover" };
+      return {
+        line1: "평온의 기운",
+        line2: "여유롭게 채우소서",
+        owlAdvice: "오늘은 완벽함보다 내 컨디션이 먼저예요. 틈틈이 스트레칭하며 쉬어가세요!",
+        themeKey: "violet",
+      };
     case "coffee-monday":
-      return { line1: "활력의 기운", line2: "상쾌하게 깨어나소서", themeKey: "amethyst", emblemType: "bolt" };
+      return {
+        line1: "활력의 기운",
+        line2: "상쾌하게 깨어나소서",
+        owlAdvice: "시원한 커피 한 모금으로 먼저 예열해 보세요. 오후부터 텐션이 쑥 올라가요!",
+        themeKey: "amethyst",
+      };
     case "hidden-mvp":
     default:
-      return { line1: "대박의 기운", line2: "활활 타오르소서", themeKey: "plum", emblemType: "flame" };
+      return {
+        line1: "대박의 기운",
+        line2: "활활 타오르소서",
+        owlAdvice: "묵묵히 해오던 내 노력이 드디어 빛을 발해 기분 좋은 칭찬으로 돌아올 거예요!",
+        themeKey: "plum",
+      };
   }
 }
 
@@ -77,13 +135,15 @@ interface LuckyCardProps {
   line2: string;
   subText?: string;
   themeKey?: keyof typeof CARD_THEMES;
-  emblemType?: "flame" | "clover" | "star" | "bolt";
+  speechBubble?: string | null;
   onClickOwl?: () => void;
   compact?: boolean;
 }
 
 /**
  * 첨부 레퍼런스(토스 행운 카드) 레이아웃에 맞춘 밤하늘 벨벳 퍼플 행운 카드
+ * - 번개 원형 배지 제거로 부엉이 소품과 3D 링이 깔끔하게 보이도록 구성
+ * - 결과 화면에서 부엉이를 클릭하면 말풍선(speechBubble)이 on/off 토글됨 (이미지 저장 시에는 미노출)
  */
 export function LuckyTalismanCard({
   badgeText = "행운 카드",
@@ -92,12 +152,11 @@ export function LuckyTalismanCard({
   line2,
   subText,
   themeKey = "violet",
-  emblemType = "flame",
+  speechBubble = null,
   onClickOwl,
   compact = false,
 }: LuckyCardProps) {
   const theme = CARD_THEMES[themeKey] ?? CARD_THEMES.violet;
-  const uid = `${themeKey}-${emblemType}`;
 
   return (
     <div
@@ -126,7 +185,7 @@ export function LuckyTalismanCard({
         {badgeText}
       </div>
 
-      {/* 2. 중앙 3D 링 아크 + 부엉이 + 중앙 원형 엠블럼 */}
+      {/* 2. 중앙 3D 링 아크 + 부엉이 + (토글 시 나타나는 부엉이 말풍선) */}
       <div
         onClick={onClickOwl}
         className={`relative my-3.5 flex items-center justify-center ${
@@ -134,60 +193,54 @@ export function LuckyTalismanCard({
         }`}
         style={{ width: compact ? 182 : 206, height: compact ? 182 : 206 }}
       >
+        {/* 부엉이 말풍선 (클릭 시 on/off 토글, 저장용 카드에서는 렌더링되지 않음) */}
+        <AnimatePresence>
+          {speechBubble && (
+            <motion.div
+              key="owl-bubble"
+              initial={{ opacity: 0, y: 8, scale: 0.92 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 6, scale: 0.92 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className=" absolute -top-5 left-1/2 z-30 w-[238px] -translate-x-1/2 rounded-2xl bg-white px-3.5 py-2.5 text-center text-[12px] font-bold leading-snug text-[#231152] shadow-[0_10px_28px_rgba(0,0,0,0.38)]"
+            >
+              <span>{speechBubble}</span>
+              {/* 말풍선 아래 꼬리 */}
+              <span
+                aria-hidden
+                className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 bg-white"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <svg
           viewBox="0 0 220 220"
           className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
           aria-hidden
         >
           <defs>
-            <linearGradient id={`ringGrad-${uid}`} x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id={`ringGrad-${themeKey}`} x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
               <stop offset="55%" stopColor="#e9d5ff" stopOpacity="0.85" />
               <stop offset="100%" stopColor="#c084fc" stopOpacity="0.55" />
             </linearGradient>
-            <filter id={`ringShadow-${uid}`} x="-20%" y="-20%" width="140%" height="140%">
+            <filter id={`ringShadow-${themeKey}`} x="-20%" y="-20%" width="140%" height="140%">
               <feDropShadow dx="0" dy="6" stdDeviation="6" floodColor="#09031c" floodOpacity="0.4" />
             </filter>
           </defs>
           <path
             d="M 72 184 A 82 82 0 1 1 188 134"
             fill="none"
-            stroke={`url(#ringGrad-${uid})`}
+            stroke={`url(#ringGrad-${themeKey})`}
             strokeWidth="10.5"
             strokeLinecap="round"
-            filter={`url(#ringShadow-${uid})`}
+            filter={`url(#ringShadow-${themeKey})`}
           />
         </svg>
 
         <div className="relative z-10 translate-y-1">
-          <Owl src={owlSrc} alt={line1} size={compact ? 140 : 160} priority />
-        </div>
-
-        {/* 부엉이 가슴 중앙에서 빛나는 원형 기운 엠블럼 */}
-        <div
-          className="pointer-events-none absolute bottom-5 left-1/2 z-20 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full bg-white shadow-[0_0_18px_rgba(255,255,255,0.9),0_4px_10px_rgba(0,0,0,0.25)]"
-          style={{ color: theme.emblemColor }}
-        >
-          {emblemType === "flame" && (
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-              <path d="M12 2C9.5 6 7 8.5 7 13a5 5 0 0 0 10 0c0-2-1-4-2.5-5.5-.3 1.5-1.2 2.5-2.5 2.5-1.5 0-2.5-1.5-2-3.5C10.5 4.8 12 2 12 2Z" />
-            </svg>
-          )}
-          {emblemType === "clover" && (
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-              <path d="M12 11C9.5 6.5 5 8 6.5 11.5C3 10 1.5 14.5 6 15.5C3.5 19 8 21.5 10.5 17C11 19.5 11 21 12 22C13 21 13 19.5 13.5 17C16 21.5 20.5 19 18 15.5C22.5 14.5 21 10 17.5 11.5C19 8 14.5 6.5 12 11Z" />
-            </svg>
-          )}
-          {emblemType === "star" && (
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-              <path d="M12 2.5L14.6 9.4L21.5 12L14.6 14.6L12 21.5L9.4 14.6L2.5 12L9.4 9.4L12 2.5Z" />
-            </svg>
-          )}
-          {emblemType === "bolt" && (
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-              <path d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z" />
-            </svg>
-          )}
+          <Owl src={owlSrc} alt={line1} size={compact ? 144 : 164} priority />
         </div>
       </div>
 
@@ -215,7 +268,7 @@ export function LuckyTalismanCard({
 }
 
 /**
- * 내 행운 카드 프리뷰 & 이미지 저장 시트
+ * 내 행운 카드 프리뷰 & 이미지 저장 시트 (말풍선 없이 깔끔한 카드만 저장됨)
  */
 export function MyLuckyCardModal({
   name,
@@ -321,7 +374,6 @@ export function MyLuckyCardModal({
             line2={meta.line2}
             subText={fortuneTitle}
             themeKey={meta.themeKey}
-            emblemType={meta.emblemType}
           />
         </div>
 

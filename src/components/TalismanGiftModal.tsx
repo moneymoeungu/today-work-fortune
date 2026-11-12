@@ -15,7 +15,6 @@ export interface TalismanPreset {
   desc: string;
   owlSrc: string;
   themeKey: keyof typeof CARD_THEMES;
-  emblemType: "flame" | "clover" | "star" | "bolt";
   defaultNote: string;
 }
 
@@ -29,7 +28,6 @@ export const TALISMAN_PRESETS: TalismanPreset[] = [
     desc: "오늘 맡은 업무가 막힘없이 마무리되고 가벼운 발걸음으로 정시에 퇴근하도록 돕는 수호 부적이에요.",
     owlSrc: "/assets/owl/early-leave-fairy.png",
     themeKey: "violet",
-    emblemType: "clover",
     defaultNote: "오늘도 칼퇴하고 편안한 저녁 보내세요!",
   },
   {
@@ -41,8 +39,62 @@ export const TALISMAN_PRESETS: TalismanPreset[] = [
     desc: "올리는 보고서와 기획안마다 수정 없이 한 번에 승인되고 칭찬이 따르는 행운의 부적이에요.",
     owlSrc: "/assets/owl/approval-smooth.png",
     themeKey: "plum",
-    emblemType: "flame",
     defaultNote: "오늘 올리는 안건마다 한 번에 통과되길!",
+  },
+  {
+    id: "fast-promotion",
+    shortTitle: "초고속 승진",
+    name: "커리어 점프 · 초고속 승진 부적",
+    line1: "승진의 기운",
+    line2: "높이 날아오르소서",
+    desc: "해내는 업무마다 실력을 확실히 인정받고 커리어가 한 단계 쑥 도약하는 승진 기원 부적이에요.",
+    owlSrc: "/assets/owl/smart-growth.png",
+    themeKey: "amethyst",
+    defaultNote: "올해 가장 높이 도약하고 승승장구하시길!",
+  },
+  {
+    id: "bonus-jackpot",
+    shortTitle: "성과급 대박",
+    name: "인센티브 폭발 · 성과급 부적",
+    line1: "보상의 기운",
+    line2: "두둑하게 쌓이소서",
+    desc: "땀 흘린 노력 이상으로 고과와 성과급, 기분 좋은 보상이 두둑하게 따라붙는 행운 부적이에요.",
+    owlSrc: "/assets/owl/hidden-mvp.png",
+    themeKey: "violet",
+    defaultNote: "최고의 성과와 두둑한 보상이 함께하길 응원해요!",
+  },
+  {
+    id: "presentation-win",
+    shortTitle: "발표 대박",
+    name: "언변 폭발 · 프레젠테이션 부적",
+    line1: "말발의 기운",
+    line2: "시원하게 터지소서",
+    desc: "중요한 보고와 미팅 자리에서 떨림 없이 핵심을 찌르고 박수갈채를 받는 발표 수호 부적이에요.",
+    owlSrc: "/assets/owl/presentation-king.png",
+    themeKey: "plum",
+    defaultNote: "오늘 발표와 미팅 완벽하게 빛나시길!",
+  },
+  {
+    id: "idea-genius",
+    shortTitle: "기획 천재",
+    name: "막힌 기획 뚫리는 아이디어 부적",
+    line1: "영감의 기운",
+    line2: "반짝이게 샘솟으소서",
+    desc: "답답하게 막혀 있던 기획안과 문서에 반짝이는 한 줄이 마법처럼 떠오르는 영감 부적이에요.",
+    owlSrc: "/assets/owl/idea-planner.png",
+    themeKey: "indigo",
+    defaultNote: "반짝이는 아이디어가 술술 떠오르는 하루 되세요!",
+  },
+  {
+    id: "mental-peace",
+    shortTitle: "멘탈 수호",
+    name: "스트레스 방어 · 평온 수호 부적",
+    line1: "평온의 기운",
+    line2: "여유롭게 채우소서",
+    desc: "바쁜 일정 속에서도 내 마음의 여유를 잃지 않고 평온하게 하루를 보내도록 지켜주는 부적이에요.",
+    owlSrc: "/assets/owl/recharge-day.png",
+    themeKey: "violet",
+    defaultNote: "오늘 하루 스트레스 없이 평온하고 여유롭길!",
   },
   {
     id: "coffee-boost",
@@ -50,23 +102,10 @@ export const TALISMAN_PRESETS: TalismanPreset[] = [
     name: "피로 소멸 · 에너지 만렙 부적",
     line1: "활력의 기운",
     line2: "상쾌하게 깨어나소서",
-    desc: "지치기 쉬운 오후 시간에도 맑은 집중력과 평온한 컨디션을 끝까지 지켜주는 충전 부적이에요.",
+    desc: "지치기 쉬운 오후 시간에도 맑은 집중력과 상쾌한 컨디션을 끝까지 지켜주는 충전 부적이에요.",
     owlSrc: "/assets/owl/coffee-monday.png",
     themeKey: "indigo",
-    emblemType: "bolt",
     defaultNote: "지치지 않는 상쾌한 하루 보내시길 응원해요!",
-  },
-  {
-    id: "super-mvp",
-    shortTitle: "만사형통",
-    name: "만사형통 · 오늘의 주인공 부적",
-    line1: "대박의 기운",
-    line2: "활활 타오르소서",
-    desc: "손대는 일마다 좋은 결과로 이어지고 기분 좋은 소식이 찾아오는 만능 행운 부적이에요.",
-    owlSrc: "/assets/owl/hidden-mvp.png",
-    themeKey: "amethyst",
-    emblemType: "star",
-    defaultNote: "오늘 하루도 가장 빛나는 주인공이 되세요!",
   },
 ];
 
@@ -114,10 +153,10 @@ export function TalismanGiftModal({ senderName, senderTeam, onClose, onToast }: 
   const copyGiftLink = async () => {
     track("share_click", { type: "talisman_gift_link", talisman: preset.id });
     const url = buildGiftUrl();
-    const text = `🧧 [부엉이 행운 부적 도착!]\n${senderTeam} ${senderName}님이 ${toName}님에게 「${preset.name}」을 선물했어요! 🦉✨\n\n💬 "${customNote.trim() || preset.defaultNote}"\n\n아래 링크를 눌러 부적을 확인하고 오늘의 업무 운세도 뽑아보세요 👇\n${url}`;
+    const text = `[부엉이 행운 부적 도착]\n${senderTeam} ${senderName}님이 ${toName}님에게 「${preset.name}」을 선물했어요!\n\n"${customNote.trim() || preset.defaultNote}"\n\n아래 링크를 눌러 부적을 확인하고 오늘의 업무 운세도 뽑아보세요\n${url}`;
     try {
       await navigator.clipboard.writeText(text);
-      onToast("🎁 부적 선물 링크가 복사되었어요! 동료에게 카톡/메신저로 붙여넣어 보세요");
+      onToast("부적 선물 링크가 복사되었어요! 동료에게 카톡/메신저로 붙여넣어 보세요");
     } catch {
       onToast("링크 복사에 실패했어요");
     }
@@ -144,7 +183,7 @@ export function TalismanGiftModal({ senderName, senderTeam, onClose, onToast }: 
         a.href = dataUrl;
         a.download = `부엉이-행운부적-${toName}님께.png`;
         a.click();
-        onToast("🧧 선물용 부적 이미지를 저장했어요! 동료에게 보내보세요");
+        onToast("선물용 부적 이미지를 저장했어요! 동료에게 보내보세요");
       }
     } catch {
       onToast("저장에 실패했어요. 화면을 캡처해 주세요");
@@ -161,16 +200,11 @@ export function TalismanGiftModal({ senderName, senderTeam, onClose, onToast }: 
         transition={{ duration: 0.22, ease: "easeOut" }}
         className="relative max-h-[92dvh] w-full max-w-[420px] overflow-y-auto rounded-[28px] border border-white/15 bg-[#160c30] p-5 text-white shadow-[0_24px_60px_rgba(0,0,0,0.65)]"
       >
-        {/* 상단 헤더 */}
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="text-[11px] font-medium tracking-[0.16em] text-[#e8cf8c]/80">
-              LUCKY OWL TALISMAN
-            </p>
-            <h3 className="mt-0.5 text-[18px] font-bold tracking-tight text-white">
-              🧧 동료에게 부엉이 부적 선물하기
-            </h3>
-          </div>
+        {/* 상단 헤더 (LUCKY OWL TALISMAN 및 이모지 제거) */}
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="text-[18px] font-bold tracking-tight text-white">
+            동료에게 부엉이 부적 선물하기
+          </h3>
           <button
             type="button"
             onClick={onClose}
@@ -183,7 +217,7 @@ export function TalismanGiftModal({ senderName, senderTeam, onClose, onToast }: 
           </button>
         </div>
 
-        {/* 1. 부적 종류 선택 (4열 미니 부엉이 탭) */}
+        {/* 1. 부적 종류 선택 (회사·업무 맞춤형 8종 / 4x2 그리드) */}
         <div className="mt-3.5 grid grid-cols-4 gap-1.5">
           {TALISMAN_PRESETS.map((t) => {
             const active = t.id === selectedId;
@@ -192,17 +226,17 @@ export function TalismanGiftModal({ senderName, senderTeam, onClose, onToast }: 
                 key={t.id}
                 type="button"
                 onClick={() => handleSelectPreset(t)}
-                className={`group relative flex flex-col items-center rounded-2xl border px-1.5 py-2 text-center transition-all ${
+                className={`group relative flex flex-col items-center rounded-2xl border px-1 py-2 text-center transition-all ${
                   active
                     ? "border-[#e8cf8c]/75 bg-gradient-to-b from-[#e8cf8c]/18 to-[#e8cf8c]/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]"
                     : "border-white/10 bg-white/[0.03] opacity-65 hover:border-white/20 hover:opacity-95"
                 }`}
               >
-                <div className="mb-1 flex h-9 w-9 items-center justify-center">
-                  <Owl src={t.owlSrc} alt={t.shortTitle} size={36} />
+                <div className="mb-1 flex h-8 w-8 items-center justify-center">
+                  <Owl src={t.owlSrc} alt={t.shortTitle} size={32} />
                 </div>
                 <span
-                  className={`text-[11.5px] font-semibold tracking-tight ${
+                  className={`text-[11px] font-semibold tracking-tight ${
                     active ? "text-[#f7e5b4]" : "text-white/80"
                   }`}
                 >
@@ -262,7 +296,6 @@ export function TalismanGiftModal({ senderName, senderTeam, onClose, onToast }: 
             line2={preset.line2}
             subText={`“${customNote.trim() || preset.defaultNote}”`}
             themeKey={preset.themeKey}
-            emblemType={preset.emblemType}
             compact
           />
         </div>
@@ -365,7 +398,6 @@ export function ReceivedGiftModal({
           line2={preset.line2}
           subText={`“${note || preset.defaultNote}”`}
           themeKey={preset.themeKey}
-          emblemType={preset.emblemType}
           compact
         />
 

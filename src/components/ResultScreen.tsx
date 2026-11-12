@@ -18,13 +18,6 @@ interface Props {
   onEditName: () => void;
 }
 
-const OWL_REACTIONS = [
-  "🦉 부엉! 오늘 하시는 일마다 술술 풀릴 거예요 ✨",
-  "🦉 부엉부엉! 오후에도 기분 좋은 소식이 찾아올 거예요 🍀",
-  "🦉 행운 기운 100% 전달 완료! 오늘도 응원해요 💛",
-  "🦉 오늘 퇴근길 발걸음은 유독 가벼울 거예요 🧚",
-];
-
 export default function ResultScreen({
   result,
   collectedCount,
@@ -35,7 +28,7 @@ export default function ResultScreen({
 }: Props) {
   const reduce = useReducedMotion();
   const [toast, setToast] = useState<string | null>(null);
-  const [petIdx, setPetIdx] = useState<number | null>(null);
+  const [bubbleOpen, setBubbleOpen] = useState(false);
   const [cloverBoosted, setCloverBoosted] = useState(false);
   const [myCardOpen, setMyCardOpen] = useState(false);
   const [giftOpen, setGiftOpen] = useState(false);
@@ -105,14 +98,14 @@ export default function ResultScreen({
     const inviteText = `🔮 [오늘의 업무 운세]\n카드를 한 장 뽑으면 부엉이가 오늘의 업무 운세와 행운 점심 메뉴를 알려줘요! 🦉✨\n\n👉 지금 바로 뽑아보기: ${url}`;
     try {
       await navigator.clipboard.writeText(inviteText);
-      showToast("🔗 공유 링크가 복사되었어요! 동료에게 붙여넣어 보세요");
+      showToast("공유 링크가 복사되었어요! 동료에게 붙여넣어 보세요");
     } catch {
       showToast("링크 복사에 실패했어요");
     }
   };
 
-  const handlePetOwl = () => {
-    setPetIdx((prev) => (prev === null ? 0 : (prev + 1) % OWL_REACTIONS.length));
+  const toggleOwlBubble = () => {
+    setBubbleOpen((prev) => !prev);
   };
 
   const metricRows: { label: string; score: number; pct: number }[] = [
@@ -122,22 +115,18 @@ export default function ResultScreen({
   ];
 
   return (
-    <div className="relative min-h-[100dvh] px-5 pb-40 pt-7">
-      {/* 상단 타이틀 헤더 */}
+    <div className="relative min-h-[100dvh] px-5 pb-40 pt-8">
+      {/* 상단 타이틀 헤더 (최상단 라운드바 제거) */}
       <motion.div {...item(0)} className="mb-5 flex flex-col items-center text-center">
-        <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-[#e8cf8c]/40 bg-[#e8cf8c]/10 px-3.5 py-1 text-xs font-semibold text-[#f3dc99] backdrop-blur">
-          <span>🧧</span>
-          <span>오늘의 부엉이 부적 · {result.talismanTitle}</span>
-        </span>
         <p className="text-[14px] font-medium text-white/75">
           {month}월 {day}일 {result.team} {result.name}님은
         </p>
-        <h1 className="mt-1 text-[25px] font-extrabold leading-snug tracking-tight text-white">
+        <h1 className="mt-1 text-[26px] font-extrabold leading-snug tracking-tight text-white">
           {fortune.title}
         </h1>
       </motion.div>
 
-      {/* 히어로: 밤하늘 보라색 톤과 자연스럽게 어우러지는 행운 카드 */}
+      {/* 히어로: 밤하늘 보라색 톤 행운 카드 + 부엉이 터치 시 말풍선 ON/OFF */}
       <motion.div {...item(1)} className="mb-6 flex flex-col items-center">
         <LuckyTalismanCard
           badgeText="오늘의 행운 카드"
@@ -146,16 +135,22 @@ export default function ResultScreen({
           line2={cardMeta.line2}
           subText={`정시퇴근 확률 ${effectiveLeaveRate}% · ${result.talismanTitle}`}
           themeKey={cardMeta.themeKey}
-          emblemType={cardMeta.emblemType}
-          onClickOwl={handlePetOwl}
+          speechBubble={bubbleOpen ? cardMeta.owlAdvice : null}
+          onClickOwl={toggleOwlBubble}
         />
-        <p className="mt-2.5 rounded-full bg-white/10 px-3.5 py-1 text-xs text-amber-100/90 backdrop-blur">
-          {petIdx !== null ? OWL_REACTIONS[petIdx] : "👆 카드 속 부엉이를 터치하면 행운의 한마디를 해줘요"}
-        </p>
+        <button
+          type="button"
+          onClick={toggleOwlBubble}
+          className="mt-2.5 rounded-full bg-white/10 px-3.5 py-1 text-xs text-amber-100/90 backdrop-blur transition hover:bg-white/15"
+        >
+          {bubbleOpen
+            ? "💬 부엉이를 다시 누르면 말풍선이 닫혀요"
+            : "👆 카드 속 부엉이를 누르면 오늘의 한마디 말풍선이 나와요"}
+        </button>
       </motion.div>
 
       <div className="space-y-3.5">
-        {/* 섹션 1: 오늘의 업무 흐름 (칭찬해주신 그대로 유지) */}
+        {/* 섹션 1: 오늘의 업무 흐름 */}
         <motion.section
           {...item(2)}
           className="rounded-[28px] border border-white/[0.08] bg-white/[0.06] p-6 backdrop-blur-md"
@@ -206,7 +201,7 @@ export default function ResultScreen({
           </div>
         </motion.section>
 
-        {/* 섹션 2: 오늘의 운세 높이기 (칭찬해주신 그대로 유지) */}
+        {/* 섹션 2: 오늘의 운세 높이기 */}
         <motion.section {...item(3)}>
           <CloverBoostCard
             baseLeaveRate={onTimeLeaveRate}
@@ -218,7 +213,7 @@ export default function ResultScreen({
           />
         </motion.section>
 
-        {/* 섹션 3: 오늘의 행운 가이드 (이모지와 컬러 포인트 복원) */}
+        {/* 섹션 3: 오늘의 행운 가이드 */}
         <motion.section
           {...item(4)}
           className="rounded-[28px] border border-white/[0.08] bg-white/[0.06] p-5 backdrop-blur-md"
@@ -261,7 +256,7 @@ export default function ResultScreen({
           </div>
         </motion.section>
 
-        {/* 섹션 4: 동료에게 부적 선물하기 & 공유하기 (이전 버전 디자인으로 복원) */}
+        {/* 섹션 4: 동료에게 부적 선물하기 & 공유하기 */}
         <motion.section
           {...item(5)}
           className="rounded-3xl border border-[#e8cf8c]/30 bg-gradient-to-br from-brand/35 to-purple-900/40 p-5 backdrop-blur"
@@ -270,7 +265,7 @@ export default function ResultScreen({
             🎁 팀 동료에게 행운을 나눠보세요!
           </p>
           <p className="mt-1 text-center text-xs text-white/75">
-            동료 이름을 넣어 맞춤 부엉이 부적을 선물하거나 운세 링크를 공유할 수 있어요
+            정시 칼퇴·승진·성과급 등 8종 부엉이 부적을 골라 선물하거나 링크를 공유할 수 있어요
           </p>
           <div className="mt-3.5 grid grid-cols-[1.25fr_1fr] gap-2.5">
             <button
@@ -278,19 +273,19 @@ export default function ResultScreen({
               onClick={() => setGiftOpen(true)}
               className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-[#f7e5b4]/50 bg-gradient-to-b from-[#f3dc99] to-[#d8b459] px-3.5 text-[13.5px] font-bold text-[#1b0e38] shadow-[0_8px_20px_-4px_rgba(216,180,89,0.35),inset_0_1px_0_rgba(255,255,255,0.65)] transition hover:brightness-105 active:scale-[0.98]"
             >
-              <span>🧧 동료에게 부적 선물</span>
+              <span>동료에게 부적 선물하기</span>
             </button>
             <button
               type="button"
               onClick={copyInviteLink}
               className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-white/20 bg-white/15 px-3 text-[13px] font-semibold text-white transition hover:bg-white/20 active:scale-[0.98]"
             >
-              <span>🔗 운세 링크 복사</span>
+              <span>운세 링크 복사</span>
             </button>
           </div>
         </motion.section>
 
-        {/* 섹션 5: 12종 부엉이 도감 (이전 버전 디자인으로 복원) */}
+        {/* 섹션 5: 12종 부엉이 도감 */}
         <motion.section {...item(6)} className="rounded-3xl bg-white/10 p-4">
           <div className="mb-2 text-center">
             <p className="text-sm font-bold text-white/90">
@@ -383,7 +378,7 @@ export default function ResultScreen({
         </div>
       )}
 
-      {/* 내 행운 카드 프리뷰 & 저장 시트 */}
+      {/* 내 행운 카드 프리뷰 & 저장 시트 (말풍선 미노출) */}
       {myCardOpen && (
         <MyLuckyCardModal
           name={result.name}
