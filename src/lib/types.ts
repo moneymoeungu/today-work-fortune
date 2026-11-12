@@ -20,10 +20,16 @@ export interface DrawnCard {
   frontColor: string;
 }
 
+export interface LuckyLunch {
+  menu: string;
+  tip: string;
+}
+
 export interface FortuneResult {
   fortune: Fortune;
   name: string;
   team: string;
   scores: { focus: number; teamwork: number; communication: number };
   teamLine: string;
+  luckyLunch: LuckyLunch;
 }

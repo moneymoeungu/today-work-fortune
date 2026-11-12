@@ -6,6 +6,7 @@ import { assetUrl } from "@/lib/asset";
 
 interface FrontProps {
   color?: string;
+  charge?: number; // 0 ~ 100 기운 모으기 게이지
   className?: string;
 }
 
@@ -13,18 +14,35 @@ interface FrontProps {
  * 고급스러운 보라색 타로 카드 앞면(뽑기 전):
  * 로열 벨벳 퍼플 그라데이션 + 골드 포일 이중 프레임 + 코너 아스트랄 오너먼트 +
  * 초승달·별자리 기하학 장식 + 중앙 타원 액자 속 귀여운 점술가 아기 부엉이 + TODAY 금박 레터링
+ * + 꾹 누를 때 차오르는 황금빛 마법 기운 게이지
  */
-export function CardFront({ className = "" }: FrontProps) {
+export function CardFront({ charge = 0, className = "" }: FrontProps) {
+  const isCharging = charge > 0;
+
   return (
     <div
-      className={`relative flex h-full w-full flex-col items-center justify-between overflow-hidden rounded-2xl p-[6px] select-none ${className}`}
+      className={`relative flex h-full w-full flex-col items-center justify-between overflow-hidden rounded-2xl p-[6px] select-none transition-shadow duration-150 ${className}`}
       style={{
         background:
           "linear-gradient(155deg, #4b278f 0%, #2b135c 48%, #180938 100%)",
-        boxShadow:
-          "0 14px 34px rgba(98, 54, 214, 0.52), 0 0 0 1.5px rgba(246, 214, 138, 0.72), inset 0 0 18px rgba(255, 223, 148, 0.22)",
+        boxShadow: isCharging
+          ? `0 0 ${18 + charge * 0.38}px rgba(255, 215, 110, ${0.45 + charge * 0.005}), 0 0 0 2px rgba(255, 232, 156, 0.95), inset 0 0 ${16 + charge * 0.25}px rgba(255, 223, 130, 0.55)`
+          : "0 14px 34px rgba(98, 54, 214, 0.52), 0 0 0 1.5px rgba(246, 214, 138, 0.72), inset 0 0 18px rgba(255, 223, 148, 0.22)",
       }}
     >
+      {/* 기운 모으기 중일 때 아래에서 위로 차오르는 황금빛 오라 */}
+      {isCharging && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-0 transition-all duration-75"
+          style={{
+            height: `${charge}%`,
+            background:
+              "linear-gradient(0deg, rgba(255, 214, 102, 0.42) 0%, rgba(196, 132, 255, 0.28) 65%, transparent 100%)",
+          }}
+        />
+      )}
+
       {/* 배경 은하수 라디얼 광채 */}
       <div
         className="pointer-events-none absolute inset-0"
@@ -85,7 +103,6 @@ export function CardFront({ className = "" }: FrontProps) {
 
         {/* 중앙 타로 아스트랄 타원 액자 & 귀여운 점술가 아기 부엉이 */}
         <div className="relative z-10 my-auto flex aspect-[3/3.7] w-[82%] items-center justify-center">
-          {/* 골드 타원 테두리 & 별 장식 */}
           <svg
             aria-hidden
             viewBox="0 0 120 150"
@@ -124,6 +141,24 @@ export function CardFront({ className = "" }: FrontProps) {
               stroke="url(#goldGrad)"
               strokeWidth="2.2"
             />
+
+            {/* 기운 모으기 프로그레스 타원 링 */}
+            {isCharging && (
+              <ellipse
+                cx="60"
+                cy="75"
+                rx="49"
+                ry="62"
+                fill="none"
+                stroke="#fff6cc"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                pathLength={100}
+                strokeDasharray={`${charge} 100`}
+                transform="rotate(-90 60 75)"
+              />
+            )}
+
             <ellipse
               cx="60"
               cy="75"
@@ -135,7 +170,6 @@ export function CardFront({ className = "" }: FrontProps) {
               opacity="0.55"
             />
 
-            {/* 상·하·좌·우 금빛 다이아몬드 스타 */}
             <polygon points="60,8 63,15 60,22 57,15" fill="url(#goldGrad)" />
             <polygon points="60,128 63,135 60,142 57,135" fill="url(#goldGrad)" />
             <polygon points="7,75 13,72 19,75 13,78" fill="url(#goldGrad)" />
@@ -143,7 +177,10 @@ export function CardFront({ className = "" }: FrontProps) {
           </svg>
 
           {/* 타원 액자 안 귀여운 3D 점술가 부엉이 */}
-          <div className="relative z-10 flex h-[74%] w-[74%] items-center justify-center overflow-hidden rounded-full">
+          <div
+            className="relative z-10 flex h-[74%] w-[74%] items-center justify-center overflow-hidden rounded-full transition-transform duration-150"
+            style={{ transform: isCharging ? `scale(${1 + charge * 0.0018})` : undefined }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={assetUrl("/assets/owl/fortune-teller-owl.png")}
@@ -154,9 +191,9 @@ export function CardFront({ className = "" }: FrontProps) {
           </div>
         </div>
 
-        {/* 하단 TODAY 금박 레터링 */}
+        {/* 하단 TODAY 금박 레터링 또는 기운 % 표시 */}
         <div
-          className="relative z-10 pb-0.5 text-[9.5px] font-extrabold tracking-[0.26em]"
+          className="relative z-10 pb-0.5 text-[9.5px] font-extrabold tracking-[0.22em]"
           style={{
             background: "linear-gradient(180deg, #fff5cc 0%, #e4b44c 100%)",
             WebkitBackgroundClip: "text",
@@ -164,7 +201,7 @@ export function CardFront({ className = "" }: FrontProps) {
             textShadow: "0 1px 6px rgba(246, 206, 108, 0.35)",
           }}
         >
-          TODAY
+          {isCharging ? `✦ ${Math.min(100, Math.round(charge))}% ✦` : "TODAY"}
         </div>
       </div>
 
@@ -206,22 +243,51 @@ interface CardProps {
   dimmed: boolean;
   disabled: boolean;
   shuffling?: boolean;
-  onPick: () => void;
+  charge?: number;
+  onChargeStart: () => void;
+  onChargeEnd: (cancelled: boolean) => void;
 }
 
-/** 카드 고르기 화면의 카드 1장: 부채꼴 등장 + 카드 섞기(셔플) 모션 + 둥실둥실 */
-export default function Card({ color, index, dimmed, disabled, shuffling = false, onPick }: CardProps) {
+/** 카드 고르기 화면의 카드 1장: 부채꼴 등장 + 꾹 눌러 기운 모으기 + 카드 섞기 모션 */
+export default function Card({
+  color,
+  index,
+  dimmed,
+  disabled,
+  shuffling = false,
+  charge = 0,
+  onChargeStart,
+  onChargeEnd,
+}: CardProps) {
   const reduce = useReducedMotion();
   const rotate = (index - 1) * 8;
-  // 가운데 카드를 기준으로 좌/우 카드가 중앙으로 모였다가 교차하는 오프셋
   const centerOffset = (1 - index) * 105;
+  const isCharging = charge > 0;
 
   return (
     <motion.button
       type="button"
-      aria-label={`${index + 1}번째 타로 카드 선택`}
+      aria-label={`${index + 1}번째 타로 카드 (꾹 눌러 기운 모으기)`}
       disabled={disabled || shuffling}
-      onClick={onPick}
+      onPointerDown={(e) => {
+        if (disabled || shuffling) return;
+        e.currentTarget.setPointerCapture?.(e.pointerId);
+        onChargeStart();
+      }}
+      onPointerUp={() => onChargeEnd(false)}
+      onPointerCancel={() => onChargeEnd(true)}
+      onKeyDown={(e) => {
+        if ((e.key === "Enter" || e.key === " ") && !disabled && !shuffling) {
+          e.preventDefault();
+          onChargeStart();
+        }
+      }}
+      onKeyUp={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onChargeEnd(false);
+        }
+      }}
       initial={reduce ? { opacity: 0 } : { opacity: 0, y: 80, rotate: 0, scale: 0.8 }}
       animate={
         shuffling && !reduce
@@ -235,23 +301,26 @@ export default function Card({ color, index, dimmed, disabled, shuffling = false
           : {
               x: 0,
               opacity: dimmed ? 0.25 : 1,
-              y: 0,
-              rotate: reduce ? 0 : rotate,
-              scale: dimmed ? 0.9 : 1,
+              y: isCharging ? -14 : 0,
+              rotate: reduce ? 0 : isCharging ? rotate * 0.35 : rotate,
+              scale: dimmed ? 0.9 : isCharging ? 1.06 + charge * 0.0006 : 1,
             }
       }
       transition={
         shuffling
           ? { duration: 0.68, ease: "easeInOut" }
-          : { duration: 0.55, delay: reduce ? 0 : 0.1 + index * 0.1, ease: "easeOut" }
+          : isCharging
+            ? { duration: 0.12 }
+            : { duration: 0.5, ease: "easeOut" }
       }
-      whileHover={disabled || shuffling ? undefined : { y: -8, scale: 1.04 }}
-      whileTap={{ scale: 1.06 }}
-      className="relative aspect-[3/4.4] w-[30%] min-h-[44px]"
-      style={{ transformOrigin: "50% 100%", zIndex: shuffling && index === 1 ? 20 : 10 }}
+      className="relative aspect-[3/4.4] w-[30%] min-h-[44px] touch-none"
+      style={{
+        transformOrigin: "50% 100%",
+        zIndex: isCharging ? 25 : shuffling && index === 1 ? 20 : 10,
+      }}
     >
       <div className="float h-full w-full" style={{ animationDelay: `${index * 0.5}s` }}>
-        <CardFront color={color} />
+        <CardFront color={color} charge={charge} />
       </div>
     </motion.button>
   );

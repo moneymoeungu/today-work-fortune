@@ -27,38 +27,50 @@ async function fireConfetti() {
   frame();
 }
 
+const CHARGE_DURATION_MS = 780;
+
 export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped }: Props) {
   const reduce = useReducedMotion();
   const [picked, setPicked] = useState<number | null>(null);
   const [flipped, setFlipped] = useState(false);
   const [shuffling, setShuffling] = useState(false);
   const [shuffleCount, setShuffleCount] = useState(0);
+
+  // 기운 모으기(Long press charge) 상태
+  const [chargingIdx, setChargingIdx] = useState<number | null>(null);
+  const [charge, setCharge] = useState(0);
+  const [hintMsg, setHintMsg] = useState<string | null>(null);
+
   const timers = useRef<number[]>([]);
+  const rafRef = useRef<number | null>(null);
+  const chargeStartRef = useRef<number>(0);
+  const lastTapRef = useRef<{ idx: number; time: number } | null>(null);
   const doneRef = useRef(onFlipped);
   doneRef.current = onFlipped;
 
   useEffect(() => {
     const t = timers.current;
-    return () => t.forEach(clearTimeout);
+    return () => {
+      t.forEach(clearTimeout);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
-  const handleShuffle = () => {
-    if (picked !== null || shuffling) return;
-    setShuffling(true);
-    setShuffleCount((c) => c + 1);
-    onShuffle();
-    timers.current.push(
-      window.setTimeout(() => {
-        setShuffling(false);
-      }, reduce ? 150 : 700),
-    );
+  const stopChargeLoop = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
   };
 
-  const pick = (i: number) => {
-    if (picked !== null || shuffling) return;
+  const commitPick = (i: number) => {
+    if (picked !== null) return;
+    stopChargeLoop();
+    setChargingIdx(null);
+    setCharge(100);
     setPicked(i);
     onSelect(i);
-    // 터치(0.3s) → 뒤집기(0.9s) → 결과 전환
+
     timers.current.push(
       window.setTimeout(() => {
         setFlipped(true);
@@ -69,7 +81,84 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
     );
   };
 
+  const startCharge = (i: number) => {
+    if (picked !== null || shuffling) return;
+    if (reduce) {
+      commitPick(i);
+      return;
+    }
+
+    // 빠르게 두 번 탭한 경우 즉시 오픈
+    const now = performance.now();
+    if (lastTapRef.current && lastTapRef.current.idx === i && now - lastTapRef.current.time < 380) {
+      commitPick(i);
+      return;
+    }
+    lastTapRef.current = { idx: i, time: now };
+
+    stopChargeLoop();
+    setHintMsg(null);
+    setChargingIdx(i);
+    setCharge(8);
+    chargeStartRef.current = now;
+
+    const tick = (t: number) => {
+      const elapsed = t - chargeStartRef.current;
+      const pct = Math.min(100, 8 + (elapsed / CHARGE_DURATION_MS) * 92);
+      setCharge(pct);
+      if (pct >= 100) {
+        commitPick(i);
+      } else {
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    };
+    rafRef.current = requestAnimationFrame(tick);
+  };
+
+  const endCharge = (i: number, cancelled: boolean) => {
+    if (picked !== null || chargingIdx !== i) return;
+    stopChargeLoop();
+    // 거의 다 모았으면(75% 이상) 그대로 오픈!
+    if (!cancelled && charge >= 75) {
+      commitPick(i);
+      return;
+    }
+    setChargingIdx(null);
+    setCharge(0);
+    if (!cancelled) {
+      setHintMsg("👆 카드를 1초간 꾹~ 누르고 있으면 행운 기운이 100% 충전되며 열려요! ✨");
+    }
+  };
+
+  const handleShuffle = () => {
+    if (picked !== null || shuffling) return;
+    stopChargeLoop();
+    setChargingIdx(null);
+    setCharge(0);
+    setHintMsg(null);
+    setShuffling(true);
+    setShuffleCount((c) => c + 1);
+    onShuffle();
+    timers.current.push(
+      window.setTimeout(() => {
+        setShuffling(false);
+      }, reduce ? 150 : 700),
+    );
+  };
+
   const selected = picked !== null ? cards[picked] : null;
+
+  const statusText = (() => {
+    if (shuffling) return "수리수리… 별빛으로 카드를 섞고 있어요 ✨";
+    if (chargingIdx !== null) {
+      if (charge < 45) return `🔮 찌릿찌릿… 카드에 행운의 기운을 모으는 중! (${Math.round(charge)}%)`;
+      if (charge < 85) return `✨ 칼퇴와 대박의 기운이 차오르고 있어요! (${Math.round(charge)}%)`;
+      return "🌟 기운 충전 완료! 운명의 카드가 열립니다!";
+    }
+    if (hintMsg) return hintMsg;
+    if (shuffleCount > 0) return `카드를 ${shuffleCount}번 새로 섞었어요! 마음에 드는 카드를 꾹 눌러보세요 🔮`;
+    return "마음이 끌리는 카드를 1초간 꾹~ 눌러 기운을 모아보세요 ✨";
+  })();
 
   return (
     <div className="flex min-h-[100dvh] flex-col items-center px-5 pb-10 pt-10">
@@ -94,41 +183,58 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
           float
         />
         <motion.p
-          key={shuffling ? "shuffling" : shuffleCount}
+          key={chargingIdx !== null ? "charging" : statusText}
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-xs text-purple-100/90 backdrop-blur"
+          className={`mt-2 rounded-full border px-3.5 py-1.5 text-center text-xs backdrop-blur transition-colors ${
+            chargingIdx !== null
+              ? "border-amber-300/70 bg-amber-400/20 font-bold text-amber-100"
+              : "border-white/15 bg-white/10 text-purple-100/90"
+          }`}
         >
-          {shuffling
-            ? "수리수리… 별빛으로 카드를 섞고 있어요 ✨"
-            : shuffleCount > 0
-              ? `카드를 ${shuffleCount}번 새로 섞었어요! 이제 한 장을 골라보세요 🔮`
-              : "마음이 끌리는 타로 카드를 한 장 터치해 보세요"}
+          {statusText}
         </motion.p>
       </motion.div>
 
-      <div className="mt-auto flex w-full items-end justify-center gap-[3.5%] pb-5 pt-8">
+      <div className="mt-auto flex w-full items-end justify-center gap-[3.5%] pb-4 pt-8">
         {cards.map((c, i) => (
           <Card
             key={i}
             index={i}
             color={c.frontColor}
-            dimmed={picked !== null && picked !== i}
+            dimmed={
+              (picked !== null && picked !== i) ||
+              (chargingIdx !== null && chargingIdx !== i)
+            }
             disabled={picked !== null}
             shuffling={shuffling}
-            onPick={() => pick(i)}
+            charge={chargingIdx === i ? charge : 0}
+            onChargeStart={() => startCharge(i)}
+            onChargeEnd={(cancelled) => endCharge(i, cancelled)}
           />
         ))}
+      </div>
+
+      {/* 기운 모으기 게이지 바 */}
+      <div className="mb-3 h-2 w-48 overflow-hidden rounded-full bg-white/10">
+        <div
+          className="h-full rounded-full transition-all duration-75"
+          style={{
+            width: `${chargingIdx !== null ? charge : 0}%`,
+            background: "linear-gradient(90deg, #a97bff 0%, #ffd86b 55%, #fff5cc 100%)",
+            boxShadow: chargingIdx !== null ? "0 0 12px #ffd86b" : "none",
+          }}
+        />
       </div>
 
       {/* 카드 섞기 버튼 */}
       <button
         type="button"
         onClick={handleShuffle}
-        disabled={picked !== null || shuffling}
-        className="mt-1 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-amber-200/45 bg-white/10 px-5 py-2 text-sm font-semibold text-amber-100 shadow-md backdrop-blur transition hover:bg-white/20 active:scale-95 disabled:opacity-40"
+        disabled={picked !== null || shuffling || chargingIdx !== null}
+        className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-amber-200/45 bg-white/10 px-5 py-2 text-sm font-semibold text-amber-100 shadow-md backdrop-blur transition hover:bg-white/20 active:scale-95 disabled:opacity-40"
       >
-        <span className={shuffling ? " inline-block animate-spin" : ""}>🔀</span>
+        <span className={shuffling ? "inline-block animate-spin" : ""}>🔀</span>
         <span>{shuffling ? "카드 섞는 중…" : "카드 다시 섞기"}</span>
       </button>
 
@@ -163,7 +269,7 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
                   {reduce && flipped ? (
                     <CardBack color={selected.fortune.cardColor} emoji={selected.fortune.hat} />
                   ) : (
-                    <CardFront color={selected.frontColor} />
+                    <CardFront color={selected.frontColor} charge={100} />
                   )}
                 </div>
                 <div className="backface-hidden absolute inset-0" style={{ transform: "rotateY(180deg)" }}>

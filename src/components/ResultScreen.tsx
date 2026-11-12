@@ -30,7 +30,7 @@ const OWL_REACTIONS = [
 
 export default function ResultScreen({ result, collectedCount, collectedIds, total, onRetry, onEditName }: Props) {
   const reduce = useReducedMotion();
-  const { fortune, scores } = result;
+  const { fortune, scores, luckyLunch } = result;
   const glow = cardGlow(fortune.cardColor);
   const exportRef = useRef<HTMLDivElement>(null);
   const [toast, setToast] = useState("");
@@ -47,7 +47,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
   const item = (i: number) => ({
     initial: reduce ? { opacity: 0 } : { opacity: 0, y: -16 },
     animate: { opacity: 1, y: 0 },
-    transition: { delay: 0.2 + i * 0.16, duration: 0.5, ease: "easeOut" as const },
+    transition: { delay: 0.2 + i * 0.15, duration: 0.5, ease: "easeOut" as const },
   });
 
   const getShareUrl = () => {
@@ -95,7 +95,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
   const shareResult = async () => {
     track("share_click", { fortune: fortune.id });
     const url = getShareUrl();
-    const text = `${result.team} ${result.name}님의 오늘 업무 운세는 「${fortune.title}」! 🦉\n당신의 오늘 업무 운세도 뽑아보세요 👇`;
+    const text = `${result.team} ${result.name}님의 오늘 업무 운세는 「${fortune.title}」! 🦉\n오늘의 행운 점심: ${luckyLunch.menu}\n당신의 오늘 업무 운세도 뽑아보세요 👇`;
     try {
       if (navigator.share) {
         await navigator.share({ title: "오늘의 업무 운세", text, url });
@@ -116,7 +116,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
   const copyInviteLink = async () => {
     track("share_click", { fortune: fortune.id, type: "invite_link" });
     const url = getShareUrl();
-    const inviteText = `🔮 [오늘의 업무 운세] 부엉이가 알려주는 내 오늘의 업무 타로는?\n나는 「${fortune.title}」 나왔어! 너도 10초 만에 뽑아봐 👇\n${url}`;
+    const inviteText = `🔮 [오늘의 업무 운세] 부엉이가 알려주는 내 오늘의 업무 타로는?\n나는 「${fortune.title}」 (행운 점심: ${luckyLunch.menu}) 나왔어! 너도 10초 만에 뽑아봐 👇\n${url}`;
     try {
       await navigator.clipboard.writeText(inviteText);
       showToast("동료에게 보낼 추천 링크가 복사되었어요! 단체방에 붙여넣어 보세요 🔗");
@@ -194,7 +194,13 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
               </span>
             </div>
           ))}
-          <p className="mt-3 border-t border-white/15 pt-3 text-[15px]">🍀 행운의 업무템: {fortune.luckyItem}</p>
+          <div className="mt-3 space-y-2 border-t border-white/15 pt-3 text-[15px]">
+            <p>🍀 행운의 업무템: <span className="font-semibold text-amber-100">{fortune.luckyItem}</span></p>
+            <div className="rounded-2xl bg-white/10 px-3.5 py-2.5">
+              <p className="font-bold text-amber-200">🍽️ 오늘의 행운 점심 메뉴: {luckyLunch.menu}</p>
+              <p className="mt-0.5 text-xs text-white/80">{luckyLunch.tip}</p>
+            </div>
+          </div>
         </motion.section>
 
         <motion.section {...item(4)} className="rounded-3xl bg-white/15 p-5 backdrop-blur">
@@ -223,7 +229,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
           </button>
         </motion.section>
 
-        {/* 12종 부엉이 도감 (왜 12개인지 명확히 설명) */}
+        {/* 12종 부엉이 도감 */}
         <motion.section {...item(6)} className="rounded-3xl bg-white/10 p-4">
           <div className="mb-2 text-center">
             <p className="text-sm font-bold text-white/90">
