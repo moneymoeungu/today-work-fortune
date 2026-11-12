@@ -141,6 +141,7 @@ export default function Home() {
               onSelect={onSelect}
               onShuffle={shuffleCards}
               onFlipped={showResult}
+              onBackHome={editName}
             />
           </motion.div>
         )}

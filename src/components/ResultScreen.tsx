@@ -340,14 +340,17 @@ export default function ResultScreen({
         </motion.section>
       </div>
 
-      <motion.div {...item(7)} className="mt-6 flex flex-col items-center gap-3">
+      <motion.div {...item(7)} className="mt-6 flex flex-col items-center gap-2.5">
         <button onClick={onRetry} className="pill-btn w-full border-2 border-white/60 bg-white/10 text-lg text-white">
           🔄 카드 다시 뽑기
         </button>
-        <button onClick={onEditName} className="min-h-[44px] text-sm text-white/70 underline underline-offset-4">
-          이름/팀명 바꾸기
+        <button
+          onClick={onEditName}
+          className="pill-btn w-full border border-white/25 bg-white/5 text-sm font-semibold text-white/80 hover:bg-white/15"
+        >
+          🏠 첫 화면으로 돌아가기 (이름·팀명 변경)
         </button>
-        <p className="text-center text-xs text-white/50">재미로 보는 운세예요. 오늘도 힘내세요!</p>
+        <p className="mt-1 text-center text-xs text-white/50">재미로 보는 운세예요. 오늘도 힘내세요!</p>
       </motion.div>
 
       {/* 하단 고정 버튼: 내 운세 이미지 저장 + 내 결과 공유 */}

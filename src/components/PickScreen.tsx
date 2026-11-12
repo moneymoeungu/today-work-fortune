@@ -14,6 +14,7 @@ interface Props {
   onSelect: (index: number) => void;
   onShuffle: () => void;
   onFlipped: () => void;
+  onBackHome: () => void;
 }
 
 async function fireConfetti() {
@@ -29,7 +30,7 @@ async function fireConfetti() {
 
 const CHARGE_DURATION_MS = 780;
 
-export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped }: Props) {
+export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped, onBackHome }: Props) {
   const reduce = useReducedMotion();
   const [picked, setPicked] = useState<number | null>(null);
   const [flipped, setFlipped] = useState(false);
@@ -161,7 +162,19 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
   })();
 
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center px-5 pb-10 pt-10">
+    <div className="flex min-h-[100dvh] flex-col items-center px-5 pb-10 pt-6">
+      <div className="mb-2 flex w-full items-center justify-start">
+        <button
+          type="button"
+          onClick={onBackHome}
+          disabled={picked !== null}
+          className="inline-flex min-h-[36px] items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white/80 backdrop-blur transition hover:bg-white/20 hover:text-white disabled:opacity-40"
+        >
+          <span>←</span>
+          <span>첫 화면으로 (이름 변경)</span>
+        </button>
+      </div>
+
       <h2 className="text-center text-2xl font-extrabold leading-snug">
         {name}님,
         <br />
