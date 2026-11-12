@@ -28,9 +28,26 @@ const OWL_REACTIONS = [
   "쓰담쓰담 고마워요! 좋은 일만 생길 거예요 🦉",
 ];
 
-export default function ResultScreen({ result, collectedCount, collectedIds, total, onRetry, onEditName }: Props) {
+export default function ResultScreen({
+  result,
+  collectedCount,
+  collectedIds,
+  total,
+  onRetry,
+  onEditName,
+}: Props) {
   const reduce = useReducedMotion();
-  const { fortune, scores, luckyLunch, goldenTime, bestPartner } = result;
+  const {
+    fortune,
+    scores,
+    luckyLunch,
+    luckyDrink,
+    goldenTime,
+    bestPartner,
+    tabooAction,
+    onTimeLeaveRate,
+    talismanTitle,
+  } = result;
   const glow = cardGlow(fortune.cardColor);
   const exportRef = useRef<HTMLDivElement>(null);
   const [toast, setToast] = useState("");
@@ -47,7 +64,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
   const item = (i: number) => ({
     initial: reduce ? { opacity: 0 } : { opacity: 0, y: -16 },
     animate: { opacity: 1, y: 0 },
-    transition: { delay: 0.2 + i * 0.15, duration: 0.5, ease: "easeOut" as const },
+    transition: { delay: 0.2 + i * 0.14, duration: 0.5, ease: "easeOut" as const },
   });
 
   const getShareUrl = () => {
@@ -62,7 +79,6 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
     try {
       return await toPng(node, opts);
     } catch {
-      // 웹폰트를 읽지 못해도 이미지는 저장되게 한다.
       return await toPng(node, { ...opts, skipFonts: true });
     }
   };
@@ -76,14 +92,13 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
       const ua = navigator.userAgent;
       const needsLongPress = /KAKAOTALK|iPhone|iPad|iPod/i.test(ua);
       if (needsLongPress) {
-        // 카카오톡 인앱/iOS는 자동 다운로드가 막히는 경우가 있어 길게 눌러 저장 안내
         setPreviewUrl(dataUrl);
       } else {
         const a = document.createElement("a");
         a.href = dataUrl;
         a.download = `오늘의-업무-운세-${result.name}.png`;
         a.click();
-        showToast("내 운세 카드 이미지를 저장했어요 📸");
+        showToast("내 운세 부적 카드를 이미지로 저장했어요 📸");
       }
     } catch {
       showToast("저장에 실패했어요. 화면을 캡처해 주세요");
@@ -95,7 +110,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
   const shareResult = async () => {
     track("share_click", { fortune: fortune.id });
     const url = getShareUrl();
-    const text = `${result.team} ${result.name}님의 오늘 업무 운세는 「${fortune.title}」! 🦉\n🍽️ 행운 점심: ${luckyLunch.menu}\n⏰ 골든타임: ${goldenTime}\n당신의 오늘 업무 운세도 뽑아보세요 👇`;
+    const text = `${result.team} ${result.name}님의 오늘 업무 운세는 「${fortune.title}」! (칼퇴 확률 ${onTimeLeaveRate}%)\n🍽️ 행운 점심: ${luckyLunch.menu}\n☕ 수혈 음료: ${luckyDrink}\n당신의 오늘 업무 운세도 뽑아보세요 👇`;
     try {
       if (navigator.share) {
         await navigator.share({ title: "오늘의 업무 운세", text, url });
@@ -116,7 +131,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
   const copyInviteLink = async () => {
     track("share_click", { fortune: fortune.id, type: "invite_link" });
     const url = getShareUrl();
-    const inviteText = `🔮 [오늘의 업무 운세] 부엉이가 알려주는 내 오늘의 업무 타로는?\n나는 「${fortune.title}」 (행운 점심: ${luckyLunch.menu}) 나왔어! 너도 10초 만에 뽑아봐 👇\n${url}`;
+    const inviteText = `🔮 [오늘의 업무 운세] 부엉이가 알려주는 내 오늘의 업무 타로는?\n나는 「${fortune.title}」 (칼퇴 확률 ${onTimeLeaveRate}% · 행운 점심: ${luckyLunch.menu}) 나왔어! 너도 10초 만에 뽑아봐 👇\n${url}`;
     try {
       await navigator.clipboard.writeText(inviteText);
       showToast("동료에게 보낼 추천 링크가 복사되었어요! 단체방에 붙여넣어 보세요 🔗");
@@ -137,45 +152,69 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
 
   return (
     <div
-      className="relative min-h-[100dvh] px-5 pb-44 pt-9"
+      className="relative min-h-[100dvh] px-5 pb-44 pt-8"
       style={{ background: `radial-gradient(90% 45% at 50% 22%, ${glow}44 0%, transparent 70%)` }}
     >
-      <motion.div {...item(0)} className="text-center">
+      {/* 상단: 4번 행운 수호 부적 캡슐 배지 + 타이틀 */}
+      <motion.div {...item(0)} className="flex flex-col items-center text-center">
+        <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-amber-300/50 bg-amber-400/15 px-3.5 py-1 text-xs font-bold text-amber-200 shadow-sm backdrop-blur">
+          <span>🧧</span>
+          <span>오늘의 부엉이 부적 · {talismanTitle}</span>
+        </span>
         <p className="text-sm text-white/80">
           {result.team} {result.name}님은
         </p>
-        <h1 className="mt-1 text-[28px] font-extrabold leading-tight">{fortune.title}</h1>
+        <h1 className="mt-1 text-[27px] font-extrabold leading-tight">{fortune.title}</h1>
       </motion.div>
 
+      {/* 중앙: 3D 부엉이 + 3번 칼퇴 확률 결재 승인 도장(오버레이 스탬프) */}
       <motion.div
         initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.5, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 140, damping: 12, delay: 0.3 }}
-        className="my-5 flex flex-col items-center"
+        className="my-4 flex flex-col items-center"
       >
-        <button
-          type="button"
-          onClick={handlePetOwl}
-          aria-label="부엉이 쓰다듬기"
-          className="group relative transition-transform active:scale-95"
-        >
-          <Owl
-            src={fortune.characterImage}
-            hat={fortune.hat}
-            prop={fortune.prop}
-            alt={`${fortune.title} 부엉이`}
-            size={225}
-            float
-            priority
-          />
-        </button>
+        <div className="relative flex items-center justify-center">
+          <button
+            type="button"
+            onClick={handlePetOwl}
+            aria-label="부엉이 쓰다듬기"
+            className="group relative transition-transform active:scale-95"
+          >
+            <Owl
+              src={fortune.characterImage}
+              hat={fortune.hat}
+              prop={fortune.prop}
+              alt={`${fortune.title} 부엉이`}
+              size={220}
+              float
+              priority
+            />
+          </button>
+
+          {/* 3번: 정시퇴근(칼퇴) 확률 결재 도장 배지 */}
+          <motion.div
+            initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.8, rotate: -28 }}
+            animate={{ opacity: 1, scale: 1, rotate: -12 }}
+            transition={{ type: "spring", stiffness: 220, damping: 14, delay: 0.65 }}
+            className="pointer-events-none absolute -right-4 bottom-2 z-20 flex h-[78px] w-[78px] flex-col items-center justify-center rounded-full border-2 border-rose-300/90 bg-gradient-to-br from-rose-500/90 to-red-700/90 text-center shadow-[0_6px_20px_rgba(244,63,94,0.55)] backdrop-blur-sm"
+          >
+            <div className="flex h-[68px] w-[68px] flex-col items-center justify-center rounded-full border border-dashed border-rose-200/80">
+              <span className="text-[9px] font-bold tracking-wider text-rose-100">칼퇴확률</span>
+              <span className="text-[19px] font-black leading-none text-white">{onTimeLeaveRate}%</span>
+              <span className="mt-0.5 text-[8px] font-bold tracking-widest text-amber-200">✦ 승인완료 ✦</span>
+            </div>
+          </motion.div>
+        </div>
+
         <p className="mt-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-amber-100/90 backdrop-blur">
           {petIdx !== null ? OWL_REACTIONS[petIdx] : "👆 부엉이를 톡 터치하면 행운의 한마디를 해줘요"}
         </p>
       </motion.div>
 
       <div className="space-y-3">
-        <motion.section {...item(2)} className="space-y-3 rounded-3xl bg-white/15 p-5 backdrop-blur">
+        {/* 카드 1: 핵심 3줄 */}
+        <motion.section {...item(2)} className="space-y-2.5 rounded-3xl bg-white/15 p-5 backdrop-blur">
           {fortune.lines.map((l, i) => (
             <p key={i} className="flex items-start gap-3 text-[15px] leading-snug">
               <span className="text-xl">{l.icon}</span>
@@ -184,30 +223,57 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
           ))}
         </motion.section>
 
-        <motion.section {...item(3)} className="rounded-3xl bg-white/15 p-5 backdrop-blur">
-          <h2 className="mb-3 text-sm font-bold text-white/80">오늘의 업무 지수 & 행운 가이드</h2>
-          {rows.map(([label, v]) => (
-            <div key={label} className="mb-2 flex items-center justify-between text-[15px]">
-              <span>{label}</span>
-              <span aria-label={`${v}점 / 5점`} className="tracking-widest text-yellow-300">
-                {stars(v)}
-              </span>
+        {/* 카드 2: 업무 지수(가로 3칸 압축) + 2×2 벤토 그리드(업무템/골든타임/점심/음료) + 귀인/주의보 */}
+        <motion.section {...item(3)} className="rounded-3xl bg-white/15 p-4 backdrop-blur">
+          {/* 가로 3열 업무 지수 바 */}
+          <div className="grid grid-cols-3 gap-2 rounded-2xl bg-black/20 p-2.5 text-center">
+            {rows.map(([label, v]) => (
+              <div key={label} className="flex flex-col items-center">
+                <span className="text-[11px] font-semibold text-white/75">{label}</span>
+                <span aria-label={`${v}점 / 5점`} className="mt-0.5 text-xs tracking-wider text-yellow-300">
+                  {stars(v)}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* 2×2 벤토 그리드: 행운템 / 골든타임 / 행운 점심 / 수혈 음료(2번) */}
+          <div className="mt-2.5 grid grid-cols-2 gap-2">
+            <div className="rounded-2xl bg-white/10 p-3">
+              <p className="text-[11px] font-semibold text-white/65">🍀 행운의 업무템</p>
+              <p className="mt-1 text-[13.5px] font-bold leading-snug text-amber-100">{fortune.luckyItem}</p>
             </div>
-          ))}
-          <div className="mt-3 space-y-2 border-t border-white/15 pt-3 text-[14px]">
-            <p>🍀 행운의 업무템: <span className="font-semibold text-amber-100">{fortune.luckyItem}</span></p>
-            <p>⏰ 업무 골든타임: <span className="font-semibold text-sky-200">{goldenTime}</span></p>
-            <p>🤝 오늘의 귀인 동료: <span className="font-semibold text-pink-200">{bestPartner}</span></p>
-            <div className="mt-2 rounded-2xl bg-white/10 px-3.5 py-2.5">
-              <p className="font-bold text-amber-200">🍽️ 오늘의 행운 점심: {luckyLunch.menu}</p>
-              <p className="mt-0.5 text-xs text-white/80">{luckyLunch.tip}</p>
+            <div className="rounded-2xl bg-white/10 p-3">
+              <p className="text-[11px] font-semibold text-white/65">⏰ 업무 골든타임</p>
+              <p className="mt-1 text-[13.5px] font-bold leading-snug text-sky-200">{goldenTime}</p>
             </div>
+            <div className="rounded-2xl bg-white/10 p-3">
+              <p className="text-[11px] font-semibold text-white/65">🍽️ 오늘의 행운 점심</p>
+              <p className="mt-1 text-[13.5px] font-bold leading-snug text-amber-200">{luckyLunch.menu}</p>
+            </div>
+            <div className="rounded-2xl bg-white/10 p-3">
+              <p className="text-[11px] font-semibold text-white/65">☕ 영혼 수혈 음료</p>
+              <p className="mt-1 text-[13.5px] font-bold leading-snug text-emerald-200">{luckyDrink}</p>
+            </div>
+          </div>
+
+          {/* 하단 2줄 포인트: 오늘의 귀인 동료 & 1번 오늘의 업무 주의보(금지어) */}
+          <div className="mt-2.5 space-y-1.5 rounded-2xl bg-black/15 px-3.5 py-2.5 text-[13px]">
+            <p className="flex items-start gap-2 leading-snug">
+              <span className="shrink-0 font-bold text-pink-200">🤝 찰떡 동료</span>
+              <span className="text-white/90">{bestPartner}</span>
+            </p>
+            <p className="flex items-start gap-2 border-t border-white/10 pt-1.5 leading-snug">
+              <span className="shrink-0 font-bold text-rose-300">🚫 주의할 것</span>
+              <span className="text-white/90">{tabooAction}</span>
+            </p>
           </div>
         </motion.section>
 
+        {/* 카드 3: 팀 맞춤 한마디 + 응원 메시지 */}
         <motion.section {...item(4)} className="rounded-3xl bg-white/15 p-5 backdrop-blur">
           <p className="text-[15px] leading-snug">💼 {result.teamLine}</p>
-          <p className="mt-3 text-[15px] font-bold leading-snug">“{fortune.message}”</p>
+          <p className="mt-2.5 text-[15px] font-bold leading-snug text-amber-100">“{fortune.message}”</p>
         </motion.section>
 
         {/* 동료에게 해보라고 공유하기 전용 섹션 */}
@@ -275,7 +341,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
       {/* 하단 고정 버튼: 내 운세 이미지 저장 + 내 결과 공유 */}
       <div className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[480px] gap-3 bg-gradient-to-t from-night-900 via-night-900/95 to-transparent px-5 pb-5 pt-8">
         <button onClick={save} disabled={saving} className="pill-btn flex-1 bg-gray-100 text-[15px] text-night-800 shadow-lg">
-          {saving ? "이미지 만드는 중…" : "📸 카드로 이미지 저장"}
+          {saving ? "부적 만드는 중…" : "📸 부적 이미지 저장"}
         </button>
         <button onClick={shareResult} className="pill-btn flex-1 bg-brand text-[15px] text-white shadow-lg shadow-brand/40">
           📤 내 운세 공유하기

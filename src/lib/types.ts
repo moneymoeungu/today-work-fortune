@@ -34,6 +34,10 @@ export interface FortuneResult {
   scores: { focus: number; teamwork: number; communication: number };
   teamLine: string;
   luckyLunch: LuckyLunch;
+  luckyDrink: string;
   goldenTime: string;
   bestPartner: string;
+  tabooAction: string;
+  onTimeLeaveRate: number;
+  talismanTitle: string;
 }
