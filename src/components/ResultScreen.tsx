@@ -30,7 +30,7 @@ const OWL_REACTIONS = [
 
 export default function ResultScreen({ result, collectedCount, collectedIds, total, onRetry, onEditName }: Props) {
   const reduce = useReducedMotion();
-  const { fortune, scores, luckyLunch } = result;
+  const { fortune, scores, luckyLunch, goldenTime, bestPartner } = result;
   const glow = cardGlow(fortune.cardColor);
   const exportRef = useRef<HTMLDivElement>(null);
   const [toast, setToast] = useState("");
@@ -95,7 +95,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
   const shareResult = async () => {
     track("share_click", { fortune: fortune.id });
     const url = getShareUrl();
-    const text = `${result.team} ${result.name}님의 오늘 업무 운세는 「${fortune.title}」! 🦉\n오늘의 행운 점심: ${luckyLunch.menu}\n당신의 오늘 업무 운세도 뽑아보세요 👇`;
+    const text = `${result.team} ${result.name}님의 오늘 업무 운세는 「${fortune.title}」! 🦉\n🍽️ 행운 점심: ${luckyLunch.menu}\n⏰ 골든타임: ${goldenTime}\n당신의 오늘 업무 운세도 뽑아보세요 👇`;
     try {
       if (navigator.share) {
         await navigator.share({ title: "오늘의 업무 운세", text, url });
@@ -185,7 +185,7 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
         </motion.section>
 
         <motion.section {...item(3)} className="rounded-3xl bg-white/15 p-5 backdrop-blur">
-          <h2 className="mb-3 text-sm font-bold text-white/80">오늘의 업무 지수</h2>
+          <h2 className="mb-3 text-sm font-bold text-white/80">오늘의 업무 지수 & 행운 가이드</h2>
           {rows.map(([label, v]) => (
             <div key={label} className="mb-2 flex items-center justify-between text-[15px]">
               <span>{label}</span>
@@ -194,10 +194,12 @@ export default function ResultScreen({ result, collectedCount, collectedIds, tot
               </span>
             </div>
           ))}
-          <div className="mt-3 space-y-2 border-t border-white/15 pt-3 text-[15px]">
+          <div className="mt-3 space-y-2 border-t border-white/15 pt-3 text-[14px]">
             <p>🍀 행운의 업무템: <span className="font-semibold text-amber-100">{fortune.luckyItem}</span></p>
-            <div className="rounded-2xl bg-white/10 px-3.5 py-2.5">
-              <p className="font-bold text-amber-200">🍽️ 오늘의 행운 점심 메뉴: {luckyLunch.menu}</p>
+            <p>⏰ 업무 골든타임: <span className="font-semibold text-sky-200">{goldenTime}</span></p>
+            <p>🤝 오늘의 귀인 동료: <span className="font-semibold text-pink-200">{bestPartner}</span></p>
+            <div className="mt-2 rounded-2xl bg-white/10 px-3.5 py-2.5">
+              <p className="font-bold text-amber-200">🍽️ 오늘의 행운 점심: {luckyLunch.menu}</p>
               <p className="mt-0.5 text-xs text-white/80">{luckyLunch.tip}</p>
             </div>
           </div>

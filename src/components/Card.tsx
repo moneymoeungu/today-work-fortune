@@ -3,21 +3,43 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { cardGlow, cardGradient } from "@/lib/colors";
 import { assetUrl } from "@/lib/asset";
+import type { Fortune } from "@/lib/types";
 
 interface FrontProps {
   color?: string;
+  variant?: 0 | 1 | 2;
   charge?: number; // 0 ~ 100 기운 모으기 게이지
   className?: string;
 }
 
+const TAROT_ARCANA = [
+  {
+    owlSrc: "/assets/owl/fortune-teller-owl.png",
+    label: "I · MOON",
+    aura: "rgba(130, 185, 255, 0.42)",
+    innerTop: "#5a38c2",
+  },
+  {
+    owlSrc: "/assets/owl/tarot-star-owl.png",
+    label: "II · STAR",
+    aura: "rgba(255, 222, 130, 0.42)",
+    innerTop: "#6c3fd1",
+  },
+  {
+    owlSrc: "/assets/owl/tarot-sun-owl.png",
+    label: "III · SUN",
+    aura: "rgba(255, 182, 145, 0.42)",
+    innerTop: "#7d3bc8",
+  },
+] as const;
+
 /**
  * 고급스러운 보라색 타로 카드 앞면(뽑기 전):
- * 로열 벨벳 퍼플 그라데이션 + 골드 포일 이중 프레임 + 코너 아스트랄 오너먼트 +
- * 초승달·별자리 기하학 장식 + 중앙 타원 액자 속 귀여운 점술가 아기 부엉이 + TODAY 금박 레터링
- * + 꾹 누를 때 차오르는 황금빛 마법 기운 게이지
+ * 카드마다 서로 다른 타로 아르카나(달·별·태양) 의상의 아기 부엉이와 천체 심볼이 연출된다.
  */
-export function CardFront({ charge = 0, className = "" }: FrontProps) {
+export function CardFront({ variant = 0, charge = 0, className = "" }: FrontProps) {
   const isCharging = charge > 0;
+  const arcana = TAROT_ARCANA[variant] ?? TAROT_ARCANA[0];
 
   return (
     <div
@@ -47,8 +69,7 @@ export function CardFront({ charge = 0, className = "" }: FrontProps) {
       <div
         className="pointer-events-none absolute inset-0"
         style={{
-          background:
-            "radial-gradient(circle at 50% 44%, rgba(168, 118, 255, 0.34) 0%, rgba(88, 42, 179, 0.12) 48%, transparent 75%)",
+          background: `radial-gradient(circle at 50% 44%, ${arcana.aura} 0%, rgba(88, 42, 179, 0.14) 50%, transparent 75%)`,
         }}
       />
 
@@ -68,13 +89,13 @@ export function CardFront({ charge = 0, className = "" }: FrontProps) {
           className="pointer-events-none absolute inset-0 h-full w-full"
         >
           <defs>
-            <linearGradient id="tarotGold" x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id={`tarotGold-${variant}`} x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#fff1b8" />
               <stop offset="50%" stopColor="#e5b857" />
               <stop offset="100%" stopColor="#b98728" />
             </linearGradient>
           </defs>
-          <g stroke="url(#tarotGold)" strokeWidth="0.95" fill="none" opacity="0.88">
+          <g stroke={`url(#tarotGold-${variant})`} strokeWidth="0.95" fill="none" opacity="0.88">
             <path d="M4,14 L4,4 L14,4" />
             <path d="M96,14 L96,4 L86,4" />
             <path d="M4,136 L4,146 L14,146" />
@@ -92,30 +113,48 @@ export function CardFront({ charge = 0, className = "" }: FrontProps) {
           </g>
         </svg>
 
-        {/* 상단 천체(초승달 + 별빛) 심볼 */}
+        {/* 상단 천체 심볼 (카드별 달 / 별 / 태양 다르게 연출) */}
         <div className="relative z-10 flex w-full items-center justify-center gap-1 pt-0.5 text-[#f7dca1]">
           <span className="text-[8px] opacity-80">✧</span>
-          <svg aria-hidden viewBox="0 0 24 24" className="h-3 w-3 fill-current drop-shadow">
-            <path d="M14.5 3.5a8.5 8.5 0 1 0 6 14.5 7 7 0 1 1-6-14.5Z" />
-          </svg>
+          {variant === 0 && (
+            <svg aria-hidden viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current drop-shadow">
+              <path d="M14.5 3.5a8.5 8.5 0 1 0 6 14.5 7 7 0 1 1-6-14.5Z" />
+            </svg>
+          )}
+          {variant === 1 && (
+            <svg aria-hidden viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current drop-shadow">
+              <path d="M12 2 L14.4 9.6 L22 12 L14.4 14.4 L12 22 L9.6 14.4 L2 12 L9.6 9.6 Z" />
+            </svg>
+          )}
+          {variant === 2 && (
+            <svg aria-hidden viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current drop-shadow">
+              <circle cx="12" cy="12" r="5" />
+              <path
+                d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          )}
           <span className="text-[8px] opacity-80">✧</span>
         </div>
 
-        {/* 중앙 타로 아스트랄 타원 액자 & 귀여운 점술가 아기 부엉이 */}
-        <div className="relative z-10 my-auto flex aspect-[3/3.7] w-[82%] items-center justify-center">
+        {/* 중앙 타로 아스트랄 타원 액자 & 카드별 의상을 입은 아기 부엉이 */}
+        <div className="relative z-10 my-auto flex aspect-[3/3.7] w-[84%] items-center justify-center">
           <svg
             aria-hidden
             viewBox="0 0 120 150"
             className="pointer-events-none absolute inset-0 h-full w-full overflow-visible drop-shadow-[0_2px_10px_rgba(255,215,128,0.3)]"
           >
             <defs>
-              <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient id={`goldGrad-${variant}`} x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0%" stopColor="#fff3c4" />
                 <stop offset="45%" stopColor="#eab954" />
                 <stop offset="100%" stopColor="#b57e1d" />
               </linearGradient>
-              <radialGradient id="innerOrb" cx="50%" cy="46%" r="54%">
-                <stop offset="0%" stopColor="#6c3fd1" stopOpacity="0.92" />
+              <radialGradient id={`innerOrb-${variant}`} cx="50%" cy="46%" r="54%">
+                <stop offset="0%" stopColor={arcana.innerTop} stopOpacity="0.94" />
                 <stop offset="65%" stopColor="#2c1366" stopOpacity="0.96" />
                 <stop offset="100%" stopColor="#160738" stopOpacity="1" />
               </radialGradient>
@@ -127,7 +166,7 @@ export function CardFront({ charge = 0, className = "" }: FrontProps) {
               rx="53"
               ry="67"
               fill="none"
-              stroke="url(#goldGrad)"
+              stroke={`url(#goldGrad-${variant})`}
               strokeWidth="0.9"
               strokeDasharray="2.2 3"
               opacity="0.75"
@@ -137,8 +176,8 @@ export function CardFront({ charge = 0, className = "" }: FrontProps) {
               cy="75"
               rx="47"
               ry="60"
-              fill="url(#innerOrb)"
-              stroke="url(#goldGrad)"
+              fill={`url(#innerOrb-${variant})`}
+              stroke={`url(#goldGrad-${variant})`}
               strokeWidth="2.2"
             />
 
@@ -165,25 +204,25 @@ export function CardFront({ charge = 0, className = "" }: FrontProps) {
               rx="42"
               ry="55"
               fill="none"
-              stroke="url(#goldGrad)"
+              stroke={`url(#goldGrad-${variant})`}
               strokeWidth="0.7"
               opacity="0.55"
             />
 
-            <polygon points="60,8 63,15 60,22 57,15" fill="url(#goldGrad)" />
-            <polygon points="60,128 63,135 60,142 57,135" fill="url(#goldGrad)" />
-            <polygon points="7,75 13,72 19,75 13,78" fill="url(#goldGrad)" />
-            <polygon points="101,75 107,72 113,75 107,78" fill="url(#goldGrad)" />
+            <polygon points="60,8 63,15 60,22 57,15" fill={`url(#goldGrad-${variant})`} />
+            <polygon points="60,128 63,135 60,142 57,135" fill={`url(#goldGrad-${variant})`} />
+            <polygon points="7,75 13,72 19,75 13,78" fill={`url(#goldGrad-${variant})`} />
+            <polygon points="101,75 107,72 113,75 107,78" fill={`url(#goldGrad-${variant})`} />
           </svg>
 
-          {/* 타원 액자 안 귀여운 3D 점술가 부엉이 */}
+          {/* 타원 액자 안 서로 다른 타로 의상을 입은 3D 아기 부엉이 */}
           <div
-            className="relative z-10 flex h-[74%] w-[74%] items-center justify-center overflow-hidden rounded-full transition-transform duration-150"
+            className="relative z-10 flex h-[76%] w-[76%] items-center justify-center overflow-hidden rounded-full transition-transform duration-150"
             style={{ transform: isCharging ? `scale(${1 + charge * 0.0018})` : undefined }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={assetUrl("/assets/owl/fortune-teller-owl.png")}
+              src={assetUrl(arcana.owlSrc)}
               alt=""
               draggable={false}
               className="h-full w-full object-contain drop-shadow-[0_4px_8px_rgba(12,4,30,0.65)]"
@@ -191,9 +230,9 @@ export function CardFront({ charge = 0, className = "" }: FrontProps) {
           </div>
         </div>
 
-        {/* 하단 TODAY 금박 레터링 또는 기운 % 표시 */}
+        {/* 하단 아르카나 라벨 또는 기운 % 표시 */}
         <div
-          className="relative z-10 pb-0.5 text-[9.5px] font-extrabold tracking-[0.22em]"
+          className="relative z-10 pb-0.5 text-[9px] font-extrabold tracking-[0.2em]"
           style={{
             background: "linear-gradient(180deg, #fff5cc 0%, #e4b44c 100%)",
             WebkitBackgroundClip: "text",
@@ -201,7 +240,7 @@ export function CardFront({ charge = 0, className = "" }: FrontProps) {
             textShadow: "0 1px 6px rgba(246, 206, 108, 0.35)",
           }}
         >
-          {isCharging ? `✦ ${Math.min(100, Math.round(charge))}% ✦` : "TODAY"}
+          {isCharging ? `✦ ${Math.min(100, Math.round(charge))}% ✦` : arcana.label}
         </div>
       </div>
 
@@ -217,28 +256,144 @@ export function CardFront({ charge = 0, className = "" }: FrontProps) {
   );
 }
 
-/** 카드 뒷면(뒤집힌 뒤): 결과 유형의 색상 + 신비로운 타로 프레임 */
-export function CardBack({ color, emoji }: { color: string; emoji: string }) {
+/**
+ * 카드 뒷면(뒤집힌 순간 나타나는 운명의 타로 앞면):
+ * 기존 시스템 이모지 대신, 정교한 골드 마법진(Sacred Geometry SVG)과
+ * 뽑힌 운세의 실제 3D 부엉이 캐릭터 + 운세 타이틀 리본이 화려하게 등장한다.
+ */
+export function CardBack({ fortune }: { fortune: Fortune }) {
+  const glow = cardGlow(fortune.cardColor);
+
   return (
     <div
-      className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl p-2"
+      className="relative flex h-full w-full flex-col items-center justify-between overflow-hidden rounded-2xl p-[7px] select-none"
       style={{
-        background: cardGradient(color),
-        boxShadow: `0 0 60px ${cardGlow(color)}, 0 0 0 2px rgba(255, 236, 179, 0.85)`,
+        background: "linear-gradient(160deg, #2e1563 0%, #1b0b3d 55%, #110629 100%)",
+        boxShadow: `0 0 65px ${glow}, 0 0 0 2px rgba(255, 228, 150, 0.92), inset 0 0 28px ${glow}55`,
       }}
     >
-      <div className="flex h-full w-full flex-col items-center justify-center rounded-xl border border-white/60 bg-black/15 backdrop-blur-[2px]">
-        <span className="text-[11px] tracking-[0.3em] text-white/80">✦ DESTINY ✦</span>
-        <span className="my-3 text-[68px] drop-shadow-lg">{emoji}</span>
-        <span className="text-[10px] font-bold tracking-[0.25em] text-white/90">OPEN</span>
+      {/* 운세 컬러 후광 */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: `radial-gradient(circle at 50% 45%, ${glow}66 0%, transparent 68%)`,
+        }}
+      />
+
+      {/* 내부 골드 아르카나 프레임 */}
+      <div
+        className="relative flex h-full w-full flex-col items-center justify-between rounded-xl px-3 py-3"
+        style={{
+          border: "1.5px solid rgba(255, 224, 142, 0.72)",
+          boxShadow: "inset 0 0 0 3px rgba(255, 224, 142, 0.16)",
+        }}
+      >
+        {/* 배경 신성 기하학 마법진 & 별자리 링 SVG */}
+        <svg
+          aria-hidden
+          viewBox="0 0 200 280"
+          className="pointer-events-none absolute inset-0 h-full w-full"
+        >
+          <defs>
+            <linearGradient id="revealGold" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#fff6cc" />
+              <stop offset="50%" stopColor="#f0c15a" />
+              <stop offset="100%" stopColor="#b88121" />
+            </linearGradient>
+          </defs>
+
+          {/* 코너 장식 */}
+          <g stroke="url(#revealGold)" strokeWidth="1.2" fill="none" opacity="0.85">
+            <path d="M8,24 L8,8 L24,8" />
+            <path d="M192,24 L192,8 L176,8" />
+            <path d="M8,256 L8,272 L24,272" />
+            <path d="M192,256 L192,272 L176,272" />
+          </g>
+
+          {/* 중앙 회전 마법진 (Sacred Geometry) */}
+          <g transform="translate(100, 128)" stroke="url(#revealGold)" fill="none">
+            <circle cx="0" cy="0" r="72" strokeWidth="0.9" strokeDasharray="3 3" opacity="0.65" />
+            <circle cx="0" cy="0" r="64" strokeWidth="1.4" opacity="0.85" />
+            <circle cx="0" cy="0" r="52" strokeWidth="0.7" opacity="0.5" />
+            {/* 8각 별 만다라 */}
+            <rect x="-44" y="-44" width="88" height="88" strokeWidth="0.8" opacity="0.45" />
+            <rect x="-44" y="-44" width="88" height="88" strokeWidth="0.8" opacity="0.45" transform="rotate(45)" />
+            {/* 동서남북 다이아몬드 광선 */}
+            <polygon points="0,-78 4,-68 0,-58 -4,-68" fill="url(#revealGold)" stroke="none" />
+            <polygon points="0,78 4,68 0,58 -4,68" fill="url(#revealGold)" stroke="none" />
+            <polygon points="-78,0 -68,-4 -58,0 -68,4" fill="url(#revealGold)" stroke="none" />
+            <polygon points="78,0 68,-4 58,0 68,4" fill="url(#revealGold)" stroke="none" />
+          </g>
+        </svg>
+
+        {/* 상단 아르카나 헤더 */}
+        <div className="relative z-10 flex items-center gap-1.5 pt-0.5">
+          <span className="text-[10px] text-[#ffe8a3]">✦</span>
+          <span
+            className="text-[10px] font-extrabold tracking-[0.26em]"
+            style={{
+              background: "linear-gradient(180deg, #fff7d6 0%, #e7b951 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            TODAY&apos;S ARCANA
+          </span>
+          <span className="text-[10px] text-[#ffe8a3]">✦</span>
+        </div>
+
+        {/* 중앙 뽑힌 운세의 실제 3D 부엉이 캐릭터 */}
+        <div className="relative z-10 my-auto flex h-[168px] w-[168px] items-center justify-center">
+          <div
+            className="absolute inset-2 rounded-full blur-xl"
+            style={{ background: cardGradient(fortune.cardColor), opacity: 0.55 }}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={assetUrl(fortune.characterImage)}
+            alt={fortune.title}
+            draggable={false}
+            className="relative z-10 h-full w-full object-contain drop-shadow-[0_10px_18px_rgba(10,4,28,0.75)]"
+          />
+        </div>
+
+        {/* 하단 골드 타로 타이틀 플레이트 */}
+        <div
+          className="relative z-10 w-full rounded-xl px-2.5 py-2 text-center"
+          style={{
+            background: "linear-gradient(180deg, rgba(35, 16, 78, 0.92) 0%, rgba(20, 8, 48, 0.96) 100%)",
+            border: "1px solid rgba(255, 223, 138, 0.75)",
+            boxShadow: "0 4px 14px rgba(0,0,0,0.45)",
+          }}
+        >
+          <p
+            className="truncate text-[13px] font-extrabold tracking-tight"
+            style={{
+              background: "linear-gradient(180deg, #ffffff 0%, #ffe6a3 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            {fortune.title}
+          </p>
+        </div>
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/45 via-transparent to-transparent" />
+
+      {/* 유리 광택 */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.28) 0%, transparent 45%, rgba(255,224,142,0.14) 100%)",
+        }}
+      />
     </div>
   );
 }
 
 interface CardProps {
   color: string;
+  variant: 0 | 1 | 2;
   index: number;
   dimmed: boolean;
   disabled: boolean;
@@ -251,6 +406,7 @@ interface CardProps {
 /** 카드 고르기 화면의 카드 1장: 부채꼴 등장 + 꾹 눌러 기운 모으기 + 카드 섞기 모션 */
 export default function Card({
   color,
+  variant,
   index,
   dimmed,
   disabled,
@@ -320,7 +476,7 @@ export default function Card({
       }}
     >
       <div className="float h-full w-full" style={{ animationDelay: `${index * 0.5}s` }}>
-        <CardFront color={color} charge={charge} />
+        <CardFront color={color} variant={variant} charge={charge} />
       </div>
     </motion.button>
   );

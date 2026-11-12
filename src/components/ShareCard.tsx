@@ -9,7 +9,7 @@ const stars = (n: number) => "★".repeat(n) + "☆".repeat(5 - n);
  * html-to-image 호환을 위해 인라인 스타일만 사용한다.
  */
 export default function ShareCard({ result, url }: { result: FortuneResult; url: string }) {
-  const { fortune, scores, luckyLunch } = result;
+  const { fortune, scores, luckyLunch, goldenTime, bestPartner } = result;
   const glow = cardGlow(fortune.cardColor);
   const font = "Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif";
 
@@ -24,7 +24,7 @@ export default function ShareCard({ result, url }: { result: FortuneResult; url:
       style={{
         width: 1080,
         height: 1920,
-        padding: "95px 80px 60px",
+        padding: "85px 80px 55px",
         boxSizing: "border-box",
         display: "flex",
         flexDirection: "column",
@@ -38,12 +38,12 @@ export default function ShareCard({ result, url }: { result: FortuneResult; url:
       <div style={{ fontSize: 38, opacity: 0.85 }}>
         {result.team} {result.name}님은
       </div>
-      <div style={{ fontSize: 80, fontWeight: 800, textAlign: "center", marginTop: 16, lineHeight: 1.2 }}>
+      <div style={{ fontSize: 78, fontWeight: 800, textAlign: "center", marginTop: 14, lineHeight: 1.2 }}>
         {fortune.title}
       </div>
 
-      <div style={{ marginTop: 50, marginBottom: 40 }}>
-        <Owl src={fortune.characterImage} hat={fortune.hat} prop={fortune.prop} alt={fortune.title} size={480} />
+      <div style={{ marginTop: 40, marginBottom: 34 }}>
+        <Owl src={fortune.characterImage} hat={fortune.hat} prop={fortune.prop} alt={fortune.title} size={450} />
       </div>
 
       <div
@@ -51,15 +51,15 @@ export default function ShareCard({ result, url }: { result: FortuneResult; url:
           width: "100%",
           background: "rgba(255,255,255,0.14)",
           borderRadius: 44,
-          padding: "38px 48px",
+          padding: "36px 46px",
           display: "flex",
           flexDirection: "column",
-          gap: 22,
+          gap: 20,
         }}
       >
         {fortune.lines.map((l, i) => (
-          <div key={i} style={{ display: "flex", alignItems: "center", gap: 26, fontSize: 38, lineHeight: 1.35 }}>
-            <span style={{ fontSize: 48 }}>{l.icon}</span>
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 24, fontSize: 36, lineHeight: 1.35 }}>
+            <span style={{ fontSize: 46 }}>{l.icon}</span>
             <span>{l.text}</span>
           </div>
         ))}
@@ -68,28 +68,30 @@ export default function ShareCard({ result, url }: { result: FortuneResult; url:
       <div
         style={{
           width: "100%",
-          marginTop: 28,
+          marginTop: 26,
           background: "rgba(255,255,255,0.14)",
           borderRadius: 44,
-          padding: "36px 48px",
-          fontSize: 36,
+          padding: "34px 46px",
+          fontSize: 34,
         }}
       >
         {rows.map(([label, v]) => (
-          <div key={label} style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
+          <div key={label} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
             <span>{label}</span>
             <span style={{ color: "#ffd86b", letterSpacing: 4 }}>{stars(v)}</span>
           </div>
         ))}
-        <div style={{ marginTop: 18, opacity: 0.92 }}>🍀 행운의 업무템: {fortune.luckyItem}</div>
-        <div style={{ marginTop: 12, opacity: 0.95 }}>🍽️ 행운 점심 메뉴: {luckyLunch.menu}</div>
+        <div style={{ marginTop: 16, opacity: 0.92 }}>🍀 행운의 업무템: {fortune.luckyItem}</div>
+        <div style={{ marginTop: 10, opacity: 0.92 }}>⏰ 업무 골든타임: {goldenTime}</div>
+        <div style={{ marginTop: 10, opacity: 0.92 }}>🤝 오늘의 귀인 동료: {bestPartner}</div>
+        <div style={{ marginTop: 10, opacity: 0.96, color: "#ffe599" }}>🍽️ 행운 점심 메뉴: {luckyLunch.menu}</div>
       </div>
 
-      <div style={{ marginTop: 32, fontSize: 36, textAlign: "center", opacity: 0.95 }}>
+      <div style={{ marginTop: 28, fontSize: 34, textAlign: "center", opacity: 0.95 }}>
         “{fortune.message}”
       </div>
 
-      <div style={{ marginTop: "auto", fontSize: 28, opacity: 0.6 }}>{url}</div>
+      <div style={{ marginTop: "auto", fontSize: 26, opacity: 0.6 }}>{url}</div>
     </div>
   );
 }

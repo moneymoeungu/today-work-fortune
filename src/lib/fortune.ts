@@ -20,6 +20,26 @@ const LUCKY_LUNCHES: LuckyLunch[] = [
   { menu: "초밥 모둠 세트 & 우동 🍣", tip: "오늘 나에게 주는 작은 보상이 큰 행운을 데려와요" },
 ];
 
+/** 오늘의 업무 골든 타임 풀 */
+const GOLDEN_TIMES: string[] = [
+  "오전 10:00 ~ 11:30 (오전 집중력 피크!)",
+  "오후 1:30 ~ 3:00 (점심 직후 아이디어 폭발)",
+  "오후 2:00 ~ 4:00 (결재·보고 일사천리 구간)",
+  "오후 3:00 ~ 5:00 (밀린 일 순삭 몰입 타임)",
+  "오전 10:30 ~ 12:00 (소통·미팅 성공률 최고)",
+  "오후 4:00 ~ 퇴근 전 (마무리 스퍼트 만렙)",
+];
+
+/** 오늘의 찰떡 케미 동료 유형 풀 */
+const BEST_PARTNERS: string[] = [
+  "리액션 부자 동료 (칭찬 한마디에 시너지 2배!)",
+  "커피 타임을 함께하는 단짝 동료 ☕",
+  "일정과 체크리스트를 잘 챙기는 꼼꼼파 동료",
+  "아이디어가 통통 튀는 기획·마케팅 동료 💡",
+  "묵묵히 핵심만 짚어주는 해결사 동료",
+  "유머 감각으로 회의장 공기를 풀어주는 동료 😊",
+];
+
 /** 분위기 그룹별 총 확률 가중치 (좋음/대박 65, 보통 20, 주의·유머 15) */
 const GROUP_WEIGHT = { positive: 65, normal: 20, low: 15 } as const;
 type Group = keyof typeof GROUP_WEIGHT;
@@ -72,11 +92,16 @@ function weightedPick(pool: Fortune[], n: number): Fortune[] {
   return picked;
 }
 
-/** 카드 3장 구성. 직전 운세는 제외하고, 앞면 색은 모두 고급스러운 보라색(purple) 타로 카드로 통일. */
+/** 카드 3장 구성. 직전 운세는 제외하고, 앞면은 서로 다른 타로 의상의 부엉이 3종(0, 1, 2)을 배치. */
 export function drawCards(lastFortuneId: string | null): DrawnCard[] {
   const pool = FORTUNES.filter((f) => f.id !== lastFortuneId);
   const fortunes = shuffle(weightedPick(pool, 3));
-  return fortunes.map((fortune) => ({ fortune, frontColor: "purple" }));
+  const variants = shuffle([0, 1, 2] as const);
+  return fortunes.map((fortune, i) => ({
+    fortune,
+    frontColor: "purple",
+    tarotVariant: variants[i],
+  }));
 }
 
 function jitter(base: number): number {
@@ -94,6 +119,8 @@ export function teamLineFor(team: string): string {
 
 export function buildResult(fortune: Fortune, name: string, team: string): FortuneResult {
   const luckyLunch = LUCKY_LUNCHES[Math.floor(Math.random() * LUCKY_LUNCHES.length)];
+  const goldenTime = GOLDEN_TIMES[Math.floor(Math.random() * GOLDEN_TIMES.length)];
+  const bestPartner = BEST_PARTNERS[Math.floor(Math.random() * BEST_PARTNERS.length)];
   return {
     fortune,
     name,
@@ -105,6 +132,8 @@ export function buildResult(fortune: Fortune, name: string, team: string): Fortu
     },
     teamLine: teamLineFor(team),
     luckyLunch,
+    goldenTime,
+    bestPartner,
   };
 }
 

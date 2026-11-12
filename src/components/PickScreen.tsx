@@ -157,7 +157,7 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
     }
     if (hintMsg) return hintMsg;
     if (shuffleCount > 0) return `카드를 ${shuffleCount}번 새로 섞었어요! 마음에 드는 카드를 꾹 눌러보세요 🔮`;
-    return "마음이 끌리는 카드를 1초간 꾹~ 눌러 기운을 모아보세요 ✨";
+    return "달·별·태양 부엉이 카드 중 하나를 1초간 꾹~ 눌러보세요 ✨";
   })();
 
   return (
@@ -202,6 +202,7 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
             key={i}
             index={i}
             color={c.frontColor}
+            variant={c.tarotVariant}
             dimmed={
               (picked !== null && picked !== i) ||
               (chargingIdx !== null && chargingIdx !== i)
@@ -255,25 +256,29 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
                 animate={
                   reduce
                     ? { scale: 1 }
-                    : { scale: flipped ? 1.25 : 1.1, rotateY: flipped ? 180 : 0 }
+                    : { scale: flipped ? 1.22 : 1.08, rotateY: flipped ? 180 : 0 }
                 }
                 transition={
                   flipped
                     ? { type: "spring", stiffness: 70, damping: 14, duration: 0.9 }
                     : { duration: 0.3, ease: "easeOut" }
                 }
-                className="relative h-[330px] w-[240px]"
+                className="relative h-[340px] w-[245px]"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <div className="backface-hidden absolute inset-0">
                   {reduce && flipped ? (
-                    <CardBack color={selected.fortune.cardColor} emoji={selected.fortune.hat} />
+                    <CardBack fortune={selected.fortune} />
                   ) : (
-                    <CardFront color={selected.frontColor} charge={100} />
+                    <CardFront
+                      color={selected.frontColor}
+                      variant={selected.tarotVariant}
+                      charge={100}
+                    />
                   )}
                 </div>
                 <div className="backface-hidden absolute inset-0" style={{ transform: "rotateY(180deg)" }}>
-                  <CardBack color={selected.fortune.cardColor} emoji={selected.fortune.hat} />
+                  <CardBack fortune={selected.fortune} />
                 </div>
               </motion.div>
             </div>

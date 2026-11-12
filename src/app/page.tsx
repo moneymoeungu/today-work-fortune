@@ -43,8 +43,12 @@ export default function Home() {
     setCollected(getTodayHistory());
     track("start");
 
-    // 1순위: 인트로/점술가 부엉이 즉시 로딩
-    preloadImages(["/assets/owl/fortune-teller-owl.png"]);
+    // 1순위: 인트로 및 타로 카드 앞면 3종 부엉이 즉시 로딩
+    preloadImages([
+      "/assets/owl/fortune-teller-owl.png",
+      "/assets/owl/tarot-star-owl.png",
+      "/assets/owl/tarot-sun-owl.png",
+    ]);
 
     // 2순위: 첫 화면 렌더링 이후 유휴 시간에 결과 부엉이 12종 전체 사전 로딩 (PRD 8.2)
     const timer = window.setTimeout(() => {
