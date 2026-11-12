@@ -19,10 +19,10 @@ interface Props {
 }
 
 const OWL_REACTIONS = [
-  "부엉! 오늘 하시는 일마다 술술 풀릴 거예요",
-  "부엉부엉! 오후에도 좋은 소식이 찾아올 거예요",
-  "행운 기운 100% 전달 완료! 오늘도 응원해요",
-  "오늘 퇴근길 발걸음은 유독 가벼울 거예요",
+  "🦉 부엉! 오늘 하시는 일마다 술술 풀릴 거예요 ✨",
+  "🦉 부엉부엉! 오후에도 기분 좋은 소식이 찾아올 거예요 🍀",
+  "🦉 행운 기운 100% 전달 완료! 오늘도 응원해요 💛",
+  "🦉 오늘 퇴근길 발걸음은 유독 가벼울 거예요 🧚",
 ];
 
 export default function ResultScreen({
@@ -80,8 +80,8 @@ export default function ResultScreen({
   const shareResult = async () => {
     track("share_click", { fortune: fortune.id, type: "my_result" });
     const url = getShareUrl();
-    const title = "오늘의 업무 운세";
-    const text = `${result.team} ${result.name}님의 오늘의 업무 운세는 「${fortune.title}」!\n(${cardMeta.line1} ${cardMeta.line2})\n\n당신의 오늘 업무 운세도 뽑아보세요`;
+    const title = "오늘의 업무 운세, 당신의 카드는?";
+    const text = `🦉 ${result.team} ${result.name}님의 오늘의 업무 운세는 「${fortune.title}」!\n(${cardMeta.line1} ${cardMeta.line2})\n\n👇 당신의 오늘 업무 운세도 뽑아보세요`;
 
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
@@ -93,7 +93,7 @@ export default function ResultScreen({
     }
     try {
       await navigator.clipboard.writeText(`${text}\n${url}`);
-      showToast("내 운세 결과와 링크가 복사되었어요");
+      showToast("내 운세 결과와 링크가 복사되었어요! 💌");
     } catch {
       showToast("공유 링크 복사에 실패했어요");
     }
@@ -102,10 +102,10 @@ export default function ResultScreen({
   const copyInviteLink = async () => {
     track("share_click", { fortune: fortune.id, type: "invite_link" });
     const url = getShareUrl();
-    const inviteText = `[오늘의 업무 운세]\n카드 한 장을 뽑으면 부엉이가 오늘의 업무 운세와 행운 점심 메뉴를 알려줘요.\n\n지금 바로 뽑아보기\n${url}`;
+    const inviteText = `🔮 [오늘의 업무 운세]\n카드를 한 장 뽑으면 부엉이가 오늘의 업무 운세와 행운 점심 메뉴를 알려줘요! 🦉✨\n\n👉 지금 바로 뽑아보기: ${url}`;
     try {
       await navigator.clipboard.writeText(inviteText);
-      showToast("공유 링크가 복사되었어요. 메신저에 붙여넣어 보세요");
+      showToast("🔗 공유 링크가 복사되었어요! 동료에게 붙여넣어 보세요");
     } catch {
       showToast("링크 복사에 실패했어요");
     }
@@ -123,38 +123,21 @@ export default function ResultScreen({
 
   return (
     <div className="relative min-h-[100dvh] px-5 pb-40 pt-7">
-      {/* 상단 네비게이션 바 */}
-      <div className="mb-4 flex items-center justify-between">
-        <button
-          type="button"
-          onClick={onRetry}
-          className="inline-flex h-9 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3.5 text-xs font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span>다시 뽑기</span>
-        </button>
-        <button
-          type="button"
-          onClick={onEditName}
-          className="inline-flex h-9 items-center gap-1 rounded-full border border-white/10 bg-white/[0.05] px-3.5 text-xs font-medium text-white/65 transition hover:bg-white/10 hover:text-white"
-        >
-          <span>이름 변경</span>
-        </button>
-      </div>
-
-      {/* 상단 타이틀 헤더 (토스 레퍼런스 감성의 정돈된 타이포그래피) */}
+      {/* 상단 타이틀 헤더 */}
       <motion.div {...item(0)} className="mb-5 flex flex-col items-center text-center">
-        <p className="text-[14px] font-semibold text-white/65">
-          {month}월 {day}일 {result.team} {result.name}님의 운세
+        <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-[#e8cf8c]/40 bg-[#e8cf8c]/10 px-3.5 py-1 text-xs font-semibold text-[#f3dc99] backdrop-blur">
+          <span>🧧</span>
+          <span>오늘의 부엉이 부적 · {result.talismanTitle}</span>
+        </span>
+        <p className="text-[14px] font-medium text-white/75">
+          {month}월 {day}일 {result.team} {result.name}님은
         </p>
-        <h1 className="mt-1.5 text-[24px] font-extrabold leading-snug tracking-tight text-white">
+        <h1 className="mt-1 text-[25px] font-extrabold leading-snug tracking-tight text-white">
           {fortune.title}
         </h1>
       </motion.div>
 
-      {/* 히어로: 레퍼런스 형식의 행운 카드 */}
+      {/* 히어로: 밤하늘 보라색 톤과 자연스럽게 어우러지는 행운 카드 */}
       <motion.div {...item(1)} className="mb-6 flex flex-col items-center">
         <LuckyTalismanCard
           badgeText="오늘의 행운 카드"
@@ -166,18 +149,18 @@ export default function ResultScreen({
           emblemType={cardMeta.emblemType}
           onClickOwl={handlePetOwl}
         />
-        <p className="mt-2.5 text-xs font-medium text-white/50">
-          {petIdx !== null ? OWL_REACTIONS[petIdx] : "카드 속 부엉이를 가볍게 터치해 보세요"}
+        <p className="mt-2.5 rounded-full bg-white/10 px-3.5 py-1 text-xs text-amber-100/90 backdrop-blur">
+          {petIdx !== null ? OWL_REACTIONS[petIdx] : "👆 카드 속 부엉이를 터치하면 행운의 한마디를 해줘요"}
         </p>
       </motion.div>
 
       <div className="space-y-3.5">
-        {/* 섹션 1: 오늘의 업무 리포트 (불필요한 이모지 없이 깔끔한 넘버링 + 프로그레스 바) */}
+        {/* 섹션 1: 오늘의 업무 흐름 (칭찬해주신 그대로 유지) */}
         <motion.section
           {...item(2)}
-          className="rounded-[28px] border border-white/[0.08] bg-white/[0.05] p-6 backdrop-blur-md"
+          className="rounded-[28px] border border-white/[0.08] bg-white/[0.06] p-6 backdrop-blur-md"
         >
-          <p className="text-[12px] font-semibold tracking-tight text-white/50">오늘의 업무 흐름</p>
+          <p className="text-[12px] font-semibold tracking-tight text-white/55">오늘의 업무 흐름</p>
           <div className="mt-3.5 space-y-3">
             {fortune.lines.map((l, i) => (
               <div key={i} className="flex items-start gap-3">
@@ -223,115 +206,114 @@ export default function ResultScreen({
           </div>
         </motion.section>
 
-        {/* 섹션 2: 오늘의 운세 높이기 (네잎클로버 투명 모형 -> 색상 채우기 인터랙션) */}
+        {/* 섹션 2: 오늘의 운세 높이기 (칭찬해주신 그대로 유지) */}
         <motion.section {...item(3)}>
           <CloverBoostCard
             baseLeaveRate={onTimeLeaveRate}
             boosted={cloverBoosted}
             onBoostComplete={() => {
               setCloverBoosted(true);
-              showToast("네잎클로버가 가득 채워져 정시퇴근 확률이 올라갔어요!");
+              showToast("🍀 네잎클로버가 가득 채워져 정시퇴근 확률이 올라갔어요!");
             }}
           />
         </motion.section>
 
-        {/* 섹션 3: 오늘의 행운 처방전 (깔끔한 2x2 벤토 그리드 + 동료/주의 포인트) */}
+        {/* 섹션 3: 오늘의 행운 가이드 (이모지와 컬러 포인트 복원) */}
         <motion.section
           {...item(4)}
-          className="rounded-[28px] border border-white/[0.08] bg-white/[0.05] p-6 backdrop-blur-md"
+          className="rounded-[28px] border border-white/[0.08] bg-white/[0.06] p-5 backdrop-blur-md"
         >
-          <p className="text-[12px] font-semibold tracking-tight text-white/50">오늘의 행운 가이드</p>
+          <p className="mb-3 text-[12px] font-semibold tracking-tight text-white/55">오늘의 행운 가이드</p>
 
-          <div className="mt-3.5 grid grid-cols-2 gap-2.5">
-            <div className="rounded-2xl border border-white/[0.06] bg-black/20 p-3.5">
-              <p className="text-[11.5px] font-medium text-white/50">행운의 업무템</p>
-              <p className="mt-1 text-[14px] font-bold leading-snug text-white">{fortune.luckyItem}</p>
+          <div className="grid grid-cols-2 gap-2.5">
+            <div className="rounded-2xl bg-white/10 p-3.5">
+              <p className="text-[11.5px] font-semibold text-white/65">🍀 행운의 업무템</p>
+              <p className="mt-1 text-[14px] font-bold leading-snug text-amber-100">{fortune.luckyItem}</p>
             </div>
-            <div className="rounded-2xl border border-white/[0.06] bg-black/20 p-3.5">
-              <p className="text-[11.5px] font-medium text-white/50">업무 골든타임</p>
-              <p className="mt-1 text-[14px] font-bold leading-snug text-white">{goldenTime}</p>
+            <div className="rounded-2xl bg-white/10 p-3.5">
+              <p className="text-[11.5px] font-semibold text-white/65">⏰ 업무 골든타임</p>
+              <p className="mt-1 text-[14px] font-bold leading-snug text-sky-200">{goldenTime}</p>
             </div>
-            <div className="rounded-2xl border border-white/[0.06] bg-black/20 p-3.5">
-              <p className="text-[11.5px] font-medium text-white/50">추천 점심 메뉴</p>
-              <p className="mt-1 text-[14px] font-bold leading-snug text-white">{luckyLunch.menu}</p>
+            <div className="rounded-2xl bg-white/10 p-3.5">
+              <p className="text-[11.5px] font-semibold text-white/65">🍽️ 오늘의 행운 점심</p>
+              <p className="mt-1 text-[14px] font-bold leading-snug text-amber-200">{luckyLunch.menu}</p>
             </div>
-            <div className="rounded-2xl border border-white/[0.06] bg-black/20 p-3.5">
-              <p className="text-[11.5px] font-medium text-white/50">충전 음료</p>
-              <p className="mt-1 text-[14px] font-bold leading-snug text-white">{luckyDrink}</p>
+            <div className="rounded-2xl bg-white/10 p-3.5">
+              <p className="text-[11.5px] font-semibold text-white/65">☕ 영혼 수혈 음료</p>
+              <p className="mt-1 text-[14px] font-bold leading-snug text-emerald-200">{luckyDrink}</p>
             </div>
           </div>
 
-          <div className="mt-3 space-y-2 rounded-2xl border border-white/[0.06] bg-black/20 p-4 text-[13.5px]">
-            <div className="flex items-start justify-between gap-4">
-              <span className="shrink-0 font-medium text-white/50">찰떡 동료</span>
-              <span className="text-right font-semibold text-white/90">{bestPartner}</span>
-            </div>
-            <div className="flex items-start justify-between gap-4 border-t border-white/[0.06] pt-2">
-              <span className="shrink-0 font-medium text-white/50">주의할 점</span>
-              <span className="text-right font-semibold text-white/90">{tabooAction}</span>
-            </div>
+          <div className="mt-2.5 space-y-2 rounded-2xl bg-black/20 px-4 py-3 text-[13px]">
+            <p className="flex items-start gap-2 leading-snug">
+              <span className="shrink-0 font-bold text-pink-200">🤝 찰떡 동료</span>
+              <span className="text-white/90">{bestPartner}</span>
+            </p>
+            <p className="flex items-start gap-2 border-t border-white/10 pt-2 leading-snug">
+              <span className="shrink-0 font-bold text-rose-300">🚫 주의할 점</span>
+              <span className="text-white/90">{tabooAction}</span>
+            </p>
           </div>
 
-          <div className="mt-4 rounded-2xl bg-white/[0.04] px-4 py-3.5">
-            <p className="text-[13.5px] leading-relaxed text-white/80">{result.teamLine}</p>
-            <p className="mt-1.5 text-[14px] font-bold text-[#f3dc99]">“{fortune.message}”</p>
+          <div className="mt-3 rounded-2xl bg-white/[0.06] px-4 py-3.5">
+            <p className="text-[14px] leading-snug text-white/90">💼 {result.teamLine}</p>
+            <p className="mt-2 text-[14.5px] font-bold leading-snug text-amber-100">“{fortune.message}”</p>
           </div>
         </motion.section>
 
-        {/* 섹션 4: 동료에게 행운 카드 선물하기 */}
+        {/* 섹션 4: 동료에게 부적 선물하기 & 공유하기 (이전 버전 디자인으로 복원) */}
         <motion.section
           {...item(5)}
-          className="rounded-[28px] border border-white/[0.08] bg-white/[0.05] p-6 backdrop-blur-md"
+          className="rounded-3xl border border-[#e8cf8c]/30 bg-gradient-to-br from-brand/35 to-purple-900/40 p-5 backdrop-blur"
         >
-          <p className="text-[12px] font-semibold tracking-tight text-white/50">행운 나누기</p>
-          <h3 className="mt-0.5 text-[16px] font-bold text-white">
-            동료에게도 오늘의 행운 카드를 보내보세요
-          </h3>
-          <p className="mt-1 text-[12.5px] text-white/60">
-            동료 이름을 담아 행운 카드를 이미지로 저장하거나 선물 링크를 전달할 수 있어요
+          <p className="text-center text-sm font-bold text-amber-100">
+            🎁 팀 동료에게 행운을 나눠보세요!
           </p>
-          <div className="mt-4 grid grid-cols-[1.25fr_1fr] gap-2.5">
+          <p className="mt-1 text-center text-xs text-white/75">
+            동료 이름을 넣어 맞춤 부엉이 부적을 선물하거나 운세 링크를 공유할 수 있어요
+          </p>
+          <div className="mt-3.5 grid grid-cols-[1.25fr_1fr] gap-2.5">
             <button
               type="button"
               onClick={() => setGiftOpen(true)}
-              className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-white px-4 text-[13.5px] font-bold text-night-900 shadow-sm transition hover:bg-white/90 active:scale-[0.98]"
+              className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-[#f7e5b4]/50 bg-gradient-to-b from-[#f3dc99] to-[#d8b459] px-3.5 text-[13.5px] font-bold text-[#1b0e38] shadow-[0_8px_20px_-4px_rgba(216,180,89,0.35),inset_0_1px_0_rgba(255,255,255,0.65)] transition hover:brightness-105 active:scale-[0.98]"
             >
-              <span>행운 카드 선물하기</span>
+              <span>🧧 동료에게 부적 선물</span>
             </button>
             <button
               type="button"
               onClick={copyInviteLink}
-              className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-white/15 bg-white/[0.06] px-3 text-[13.5px] font-semibold text-white/90 transition hover:bg-white/[0.12] active:scale-[0.98]"
+              className="flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-white/20 bg-white/15 px-3 text-[13px] font-semibold text-white transition hover:bg-white/20 active:scale-[0.98]"
             >
-              <span>운세 링크 복사</span>
+              <span>🔗 운세 링크 복사</span>
             </button>
           </div>
         </motion.section>
 
-        {/* 섹션 5: 12종 부엉이 도감 (절제된 미니멀 리스트) */}
-        <motion.section
-          {...item(6)}
-          className="rounded-[28px] border border-white/[0.08] bg-white/[0.04] p-5"
-        >
-          <div className="mb-3 flex items-center justify-between">
-            <span className="text-[13px] font-bold text-white/85">발견한 부엉이 도감</span>
-            <span className="text-[12px] font-semibold text-white/55">
-              {collectedCount} / {total}
-            </span>
+        {/* 섹션 5: 12종 부엉이 도감 (이전 버전 디자인으로 복원) */}
+        <motion.section {...item(6)} className="rounded-3xl bg-white/10 p-4">
+          <div className="mb-2 text-center">
+            <p className="text-sm font-bold text-white/90">
+              🦉 부엉이 캐릭터 도감 ({collectedCount}/{total}종 발견)
+            </p>
+            <p className="mt-0.5 text-[11px] text-white/60">
+              총 12가지 코스튬의 운세 부엉이가 숨어 있어요! 다시 뽑기로 모아보세요
+            </p>
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap justify-center gap-1.5">
             {FORTUNES.map((f) => {
               const got = collectedIds.includes(f.id);
               return (
                 <span
                   key={f.id}
-                  className={`rounded-full px-3 py-1 text-[11.5px] ${
+                  title={got ? f.title : "아직 만나지 못한 부엉이예요"}
+                  className={`rounded-full px-2.5 py-1 text-[11px] ${
                     got
-                      ? "bg-white/90 font-semibold text-night-900"
-                      : "border border-white/[0.06] bg-white/[0.03] text-white/35"
+                      ? "bg-white/90 font-semibold text-night-800"
+                      : "bg-white/10 text-white/40"
                   }`}
                 >
-                  {got ? f.title : "미발견"}
+                  {got ? `${f.hat} ${f.title}` : "🔒 미발견"}
                 </span>
               );
             })}
@@ -344,30 +326,31 @@ export default function ResultScreen({
         <div className="grid w-full grid-cols-2 gap-2.5">
           <button
             onClick={onRetry}
-            className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/[0.06] text-[13.5px] font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.98]"
+            className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/10 text-[14px] font-semibold text-white transition hover:bg-white/15 active:scale-[0.98]"
           >
-            <span>카드 다시 뽑기</span>
+            <span>🔄 카드 다시 뽑기</span>
           </button>
           <button
             onClick={onEditName}
-            className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] text-[13.5px] font-medium text-white/70 transition hover:bg-white/10 hover:text-white active:scale-[0.98]"
+            className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/[0.05] text-[13.5px] font-medium text-white/80 transition hover:bg-white/10 hover:text-white active:scale-[0.98]"
           >
-            <span>첫 화면으로 돌아가기</span>
+            <span>🏠 첫 화면으로 (이름 변경)</span>
           </button>
         </div>
+        <p className="mt-1 text-center text-xs text-white/50">재미로 보는 운세예요. 오늘도 힘내세요!</p>
       </motion.div>
 
-      {/* 하단 고정 액션 바: 행운 카드 이미지 저장(레퍼런스 모달 오픈) + 공유하기 */}
+      {/* 하단 고정 액션 바: 행운 카드 저장 + 내 운세 공유 */}
       <div className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-[480px] gap-2.5 bg-gradient-to-t from-night-900 via-night-900/95 to-transparent px-5 pb-5 pt-8">
         <button
           onClick={() => setMyCardOpen(true)}
-          className="flex h-[52px] flex-1 items-center justify-center gap-2 rounded-full bg-white text-[14.5px] font-bold text-night-900 shadow-lg transition hover:bg-white/95 active:scale-[0.98]"
+          className="flex h-[52px] flex-1 items-center justify-center gap-2 rounded-2xl border border-white/80 bg-white/95 text-[14.5px] font-bold text-night-900 shadow-lg transition hover:bg-white active:scale-[0.98]"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path
-              d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"
+              d="M12 4V15M12 15L8 11M12 15L16 11M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17"
               stroke="currentColor"
-              strokeWidth="2.2"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -376,7 +359,7 @@ export default function ResultScreen({
         </button>
         <button
           onClick={shareResult}
-          className="flex h-[52px] flex-1 items-center justify-center gap-2 rounded-full bg-[#6d47d9] text-[14.5px] font-bold text-white shadow-lg transition hover:brightness-110 active:scale-[0.98]"
+          className="flex h-[52px] flex-1 items-center justify-center gap-2 rounded-2xl border border-purple-300/35 bg-gradient-to-b from-[#8b5cf6] to-[#6d28d9] text-[14.5px] font-bold text-white shadow-[0_8px_20px_-4px_rgba(109,40,217,0.55),inset_0_1px_0_rgba(255,255,255,0.25)] transition hover:brightness-105 active:scale-[0.98]"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path
@@ -387,7 +370,7 @@ export default function ResultScreen({
               strokeLinejoin="round"
             />
           </svg>
-          <span>내 운세 공유</span>
+          <span>내 운세 공유하기</span>
         </button>
       </div>
 
@@ -400,7 +383,7 @@ export default function ResultScreen({
         </div>
       )}
 
-      {/* 내 행운 카드 프리뷰 & 저장 시트 (첨부 레퍼런스와 동일한 구성) */}
+      {/* 내 행운 카드 프리뷰 & 저장 시트 */}
       {myCardOpen && (
         <MyLuckyCardModal
           name={result.name}
@@ -412,7 +395,7 @@ export default function ResultScreen({
         />
       )}
 
-      {/* 동료에게 행운 카드 선물하기 시트 */}
+      {/* 동료에게 부엉이 부적 선물하기 시트 */}
       {giftOpen && (
         <TalismanGiftModal
           senderName={result.name}
