@@ -24,9 +24,26 @@ body {
   background: radial-gradient(120% 80% at 50% 0%, #3d2391 0%, #241356 45%, #140a2e 100%);
 }
 
-/* 웹소설 표지 스타일: 가늘고 섬세한 달빛 명조/세리프 타이틀 */
+/* 웹소설 표지 타이포용 고대비 세리프 웹폰트 (을유1945 / 부크크명조 CDN) */
+@font-face {
+  font-family: "Eulyoo1945";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/Eulyoo1945-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BookkMyungjo";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Lt.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 웹소설 표지 스타일: 가로획은 가늘고 세로획과 삐침(세리프)이 날렵한 정통 명조 디스플레이 */
 .webnovel-serif {
-  font-family: "Hahmlet", "Nanum Myeongjo", "Gowun Batang", "Batang", Georgia, serif;
+  font-family: "BookkMyungjo", "Eulyoo1945", "Song Myung", "Grandiflora One", "Gowun Batang", Georgia, serif;
   font-weight: 300;
 }
 
