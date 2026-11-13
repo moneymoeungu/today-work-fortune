@@ -252,7 +252,7 @@ export function LuckyTalismanCard({
           "0 20px 44px -12px rgba(8, 3, 24, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.22)",
       }}
       className={`relative mx-auto flex w-full select-none flex-col items-center justify-between overflow-hidden rounded-[34px] text-center text-white ${
-        compact ? "max-w-[295px] px-6 py-6" : "max-w-[325px] px-7 py-7"
+        compact ? "max-w-[295px] px-5 py-6 sm:px-6" : "max-w-[325px] px-5 py-7 sm:px-7"
       }`}
     >
       {/* 상단 은은한 라벤더 광원 */}
@@ -429,9 +429,9 @@ export function LuckyTalismanCard({
                   boxShadow:
                     "0 12px 28px rgba(8, 3, 24, 0.65), 0 0 18px rgba(192, 132, 252, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16)",
                 }}
-                className="relative w-max max-w-[262px] rounded-2xl px-4 py-2.5 text-center backdrop-blur-md"
+                className="relative w-max max-w-[258px] rounded-2xl px-3.5 py-2.5 text-center backdrop-blur-md sm:max-w-[268px] sm:px-4"
               >
-                <p className="whitespace-pre-line text-[12px] font-medium leading-[1.48] tracking-tight text-purple-50/95">
+                <p className="whitespace-pre-line text-[11.5px] font-medium leading-[1.48] tracking-tight text-purple-50/95 sm:text-[12px]">
                   {speechBubble}
                 </p>
                 {/* 말풍선 아래 꼬리 (정중앙 고정) */}
@@ -500,14 +500,16 @@ export function LuckyTalismanCard({
       </div>
 
       {/* 3. 하단 2줄 기원 카피 */}
-      <div className="relative z-10 mt-0.5">
-        <p className="text-[22px] font-extrabold leading-[1.28] tracking-tight text-white drop-shadow-sm">
+      <div className="relative z-10 mt-0.5 w-full">
+        <p className="whitespace-nowrap text-[20px] font-extrabold leading-[1.28] tracking-tight text-white drop-shadow-sm sm:text-[22px]">
           {line1}
           <br />
           {line2}
         </p>
         {subText && (
-          <p className="mt-2 text-[12px] font-medium text-purple-100/80">{subText}</p>
+          <p className="mt-2 whitespace-nowrap text-[11px] font-medium tracking-tight text-purple-100/80 sm:text-[12px]">
+            {subText}
+          </p>
         )}
       </div>
 

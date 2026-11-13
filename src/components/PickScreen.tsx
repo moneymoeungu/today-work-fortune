@@ -127,7 +127,7 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
     setChargingIdx(null);
     setCharge(0);
     if (!cancelled) {
-      setHintMsg("👆 카드를 1초간 꾹~ 누르고 있으면 행운 기운이 100% 충전되며 열려요! ✨");
+      setHintMsg("카드를 1초간 꾹 누르고 있으면 행운 기운이 충전되며 열려요");
     }
   };
 
@@ -150,15 +150,15 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
   const selected = picked !== null ? cards[picked] : null;
 
   const statusText = (() => {
-    if (shuffling) return "수리수리… 별빛으로 카드를 섞고 있어요 ✨";
+    if (shuffling) return "수리수리… 별빛으로 카드를 섞고 있어요";
     if (chargingIdx !== null) {
-      if (charge < 45) return `🔮 찌릿찌릿… 카드에 행운의 기운을 모으는 중! (${Math.round(charge)}%)`;
-      if (charge < 85) return `✨ 칼퇴와 대박의 기운이 차오르고 있어요! (${Math.round(charge)}%)`;
-      return "🌟 기운 충전 완료! 운명의 카드가 열립니다!";
+      if (charge < 45) return `🔮 찌릿찌릿… 카드에 행운의 기운을 모으는 중 (${Math.round(charge)}%)`;
+      if (charge < 85) return `✨ 칼퇴와 대박의 기운이 차오르고 있어요 (${Math.round(charge)}%)`;
+      return "🌟 기운 충전 완료! 운명의 카드가 열립니다";
     }
     if (hintMsg) return hintMsg;
-    if (shuffleCount > 0) return `카드를 ${shuffleCount}번 새로 섞었어요! 마음에 드는 카드를 꾹 눌러보세요 🔮`;
-    return "5장의 부채꼴 타로 카드 중 끌리는 한 장을 1초간 꾹~ 눌러보세요 ✨";
+    if (shuffleCount > 0) return `카드를 ${shuffleCount}번 새로 섞었어요! 끌리는 카드를 꾹 눌러보세요`;
+    return "5장의 타로 카드 중 끌리는 한 장을 1초간 꾹 눌러보세요";
   })();
 
   return (
@@ -199,7 +199,7 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
           key={chargingIdx !== null ? "charging" : statusText}
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`mt-2 rounded-full border px-3.5 py-1.5 text-center text-xs backdrop-blur transition-colors ${
+          className={`mt-2 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-center text-[11px] tracking-tight backdrop-blur transition-colors sm:text-xs ${
             chargingIdx !== null
               ? "border-amber-300/70 bg-amber-400/20 font-bold text-amber-100"
               : "border-white/15 bg-white/10 text-purple-100/90"
@@ -209,7 +209,7 @@ export default function PickScreen({ name, cards, onSelect, onShuffle, onFlipped
         </motion.p>
       </motion.div>
 
-      <div className="mt-auto flex w-full items-end justify-center pb-8 pt-6">
+      <div className="-mx-2 mt-auto flex w-[calc(100%+16px)] items-end justify-center pb-8 pt-6 sm:mx-0 sm:w-full">
         {cards.map((c, i) => (
           <Card
             key={i}

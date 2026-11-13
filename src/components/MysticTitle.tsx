@@ -79,7 +79,7 @@ export default function MysticTitle() {
 
       {/* 2행: '오늘의 업무 운세' */}
       <p
-        className="fortune-heavy-serif relative z-10 mt-1.5 whitespace-nowrap text-[38px] leading-[1.12] tracking-[-0.04em] text-white sm:text-[42px]"
+        className="fortune-heavy-serif relative z-10 mt-1.5 whitespace-nowrap text-[clamp(30px,8.8vw,42px)] leading-[1.12] tracking-[-0.04em] text-white"
         style={{
           WebkitTextStroke: "0.7px #ffffff",
           textShadow:

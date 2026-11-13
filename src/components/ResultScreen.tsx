@@ -267,7 +267,7 @@ export default function ResultScreen({
           <p className="text-center text-sm font-bold text-amber-100">
             🎁 팀 동료에게 행운을 나눠보세요!
           </p>
-          <p className="mt-1.5 text-center text-xs leading-relaxed text-white/75">
+          <p className="mt-1.5 whitespace-nowrap text-center text-[11px] leading-relaxed tracking-tight text-white/75 sm:text-xs">
             정시 칼퇴·승진·성과급 등 8종 부엉이 부적을 골라
             <br />
             동료에게 선물하거나 운세 링크를 공유할 수 있어요

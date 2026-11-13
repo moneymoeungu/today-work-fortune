@@ -15,31 +15,31 @@ interface FrontProps {
 const TAROT_ARCANA = [
   {
     owlSrc: "/assets/owl/fortune-teller-owl.png",
-    label: "I · MOON",
+    label: "I\u00A0·\u00A0MOON",
     aura: "rgba(130, 185, 255, 0.42)",
     innerTop: "#5a38c2",
   },
   {
     owlSrc: "/assets/owl/tarot-star-owl.png",
-    label: "II · STAR",
+    label: "II\u00A0·\u00A0STAR",
     aura: "rgba(255, 222, 130, 0.42)",
     innerTop: "#6c3fd1",
   },
   {
     owlSrc: "/assets/owl/tarot-sun-owl.png",
-    label: "III · SUN",
+    label: "III\u00A0·\u00A0SUN",
     aura: "rgba(255, 182, 145, 0.42)",
     innerTop: "#7d3bc8",
   },
   {
     owlSrc: "/assets/owl/intro-owl.png",
-    label: "IV · FATE",
+    label: "IV\u00A0·\u00A0FATE",
     aura: "rgba(196, 148, 255, 0.42)",
     innerTop: "#6435c9",
   },
   {
     owlSrc: "/assets/owl/hidden-mvp.png",
-    label: "V · CROWN",
+    label: "V\u00A0·\u00A0CROWN",
     aura: "rgba(255, 210, 140, 0.42)",
     innerTop: "#7338c6",
   },
@@ -55,7 +55,7 @@ export function CardFront({ variant = 0, charge = 0, className = "" }: FrontProp
 
   return (
     <div
-      className={`relative flex h-full w-full flex-col items-center justify-between overflow-hidden rounded-2xl p-[6px] select-none transition-shadow duration-150 ${className}`}
+      className={`relative flex h-full w-full flex-col items-center justify-between overflow-hidden rounded-2xl p-[4.5px] sm:p-[6px] select-none transition-shadow duration-150 ${className}`}
       style={{
         background:
           "linear-gradient(155deg, #4b278f 0%, #2b135c 48%, #180938 100%)",
@@ -87,7 +87,7 @@ export function CardFront({ variant = 0, charge = 0, className = "" }: FrontProp
 
       {/* 내부 골드 포일 프레임 */}
       <div
-        className="relative flex h-full w-full flex-col items-center justify-between rounded-[11px] px-1.5 py-2"
+        className="relative flex h-full w-full flex-col items-center justify-between rounded-[11px] px-1 py-1.5 sm:px-1.5 sm:py-2"
         style={{
           border: "1px solid rgba(247, 217, 140, 0.58)",
           boxShadow: "inset 0 0 0 2px rgba(247, 217, 140, 0.16)",
@@ -252,9 +252,9 @@ export function CardFront({ variant = 0, charge = 0, className = "" }: FrontProp
           </div>
         </div>
 
-        {/* 하단 아르카나 라벨 또는 기운 % 표시 */}
+        {/* 하단 아르카나 라벨 또는 기운 % 표시 (모바일·PC 모두 줄바꿈 없이 한 줄 유지) */}
         <div
-          className="relative z-10 pb-0.5 text-[9px] font-extrabold tracking-[0.2em]"
+          className="relative z-10 whitespace-nowrap pb-0.5 text-[7.5px] font-extrabold leading-none tracking-[0.06em] sm:text-[9px] sm:tracking-[0.16em]"
           style={{
             background: "linear-gradient(180deg, #fff5cc 0%, #e4b44c 100%)",
             WebkitBackgroundClip: "text",
@@ -262,7 +262,7 @@ export function CardFront({ variant = 0, charge = 0, className = "" }: FrontProp
             textShadow: "0 1px 6px rgba(246, 206, 108, 0.35)",
           }}
         >
-          {isCharging ? `✦ ${Math.min(100, Math.round(charge))}% ✦` : arcana.label}
+          {isCharging ? `✦\u00A0${Math.min(100, Math.round(charge))}%\u00A0✦` : arcana.label}
         </div>
       </div>
 
@@ -493,7 +493,7 @@ export default function Card({
             ? { duration: 0.12 }
             : { duration: 0.5, ease: "easeOut" }
       }
-      className="relative -mx-[1.8%] aspect-[3/4.4] w-[23.5%] min-h-[44px] touch-none"
+      className="relative -mx-[2.1%] aspect-[3/4.4] w-[24.8%] min-h-[44px] touch-none sm:-mx-[1.8%] sm:w-[23.5%]"
       style={{
         transformOrigin: "50% 110%",
         zIndex: isCharging ? 35 : shuffling && index === 2 ? 25 : 10 + index,
