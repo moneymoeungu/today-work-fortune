@@ -109,6 +109,85 @@ export const TALISMAN_PRESETS: TalismanPreset[] = [
   },
 ];
 
+/**
+ * 한글 퍼센트 인코딩(%EB%AC%B8...)으로 인해 선물 링크가 6~7줄로 길어지는 현상을 막기 위해,
+ * 부적 인덱스(0~7)·받는이·보내는이·(직접 수정한 경우에만)응원 문구를 한글 2바이트 압축 Base64URL 토큰(?g=...)으로 인코딩
+ */
+export function encodeGiftToken(data: {
+  giftId: string;
+  toName: string;
+  fromName: string;
+  note: string;
+}): string {
+  const idx = Math.max(
+    0,
+    TALISMAN_PRESETS.findIndex((p) => p.id === data.giftId),
+  );
+  const preset = TALISMAN_PRESETS[idx] ?? TALISMAN_PRESETS[0];
+  const to = data.toName === "소중한 동료" ? "" : data.toName.trim();
+  const from = data.fromName.trim();
+  const trimmedNote = data.note.trim();
+  const note = trimmedNote === preset.defaultNote ? "" : trimmedNote;
+
+  const raw = note ? `${idx}\n${to}\n${from}\n${note}` : `${idx}\n${to}\n${from}`;
+  const bytes: number[] = [];
+  for (let i = 0; i < raw.length; i++) {
+    const code = raw.charCodeAt(i);
+    if (code < 0x80) {
+      bytes.push(code);
+    } else if (code >= 0xac00 && code <= 0xd7a3) {
+      const offset = code - 0xac00;
+      bytes.push(0x80 | (offset >> 8), offset & 0xff);
+    } else {
+      bytes.push(0xff, (code >> 8) & 0xff, code & 0xff);
+    }
+  }
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) {
+    bin += String.fromCharCode(bytes[i]);
+  }
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+export function decodeGiftToken(token: string): {
+  giftId: string;
+  toName: string;
+  fromName: string;
+  note: string;
+} | null {
+  try {
+    const b64 = token.replace(/-/g, "+").replace(/_/g, "/");
+    const pad = b64.length % 4 === 0 ? "" : "=".repeat(4 - (b64.length % 4));
+    const bin = atob(b64 + pad);
+    let raw = "";
+    let i = 0;
+    while (i < bin.length) {
+      const b = bin.charCodeAt(i++);
+      if (b < 0x80) {
+        raw += String.fromCharCode(b);
+      } else if (b === 0xff && i + 1 < bin.length) {
+        const hi = bin.charCodeAt(i++);
+        const lo = bin.charCodeAt(i++);
+        raw += String.fromCharCode((hi << 8) | lo);
+      } else if (i < bin.length) {
+        const lo = bin.charCodeAt(i++);
+        raw += String.fromCharCode(0xac00 + (((b & 0x7f) << 8) | lo));
+      }
+    }
+    const [idxStr = "0", to = "", from = "", note = ""] = raw.split("\n");
+    const idx = Number.parseInt(idxStr, 10);
+    const preset = TALISMAN_PRESETS[Number.isFinite(idx) ? idx : 0] ?? TALISMAN_PRESETS[0];
+    return {
+      giftId: preset.id,
+      toName: to || "소중한 동료",
+      fromName: from || "동료",
+      note: note || preset.defaultNote,
+    };
+  } catch {
+    return null;
+  }
+}
+
 interface GiftModalProps {
   senderName: string;
   senderTeam: string;
@@ -141,13 +220,13 @@ export function TalismanGiftModal({ senderName, senderTeam, onClose, onToast }: 
   const buildGiftUrl = () => {
     if (typeof window === "undefined") return "";
     const base = window.location.origin + window.location.pathname;
-    const params = new URLSearchParams({
-      gift: preset.id,
-      to: toName,
-      from: `${senderTeam} ${senderName}`.trim(),
+    const token = encodeGiftToken({
+      giftId: preset.id,
+      toName,
+      fromName: `${senderTeam} ${senderName}`.trim(),
       note: customNote.trim() || preset.defaultNote,
     });
-    return `${base}?${params.toString()}`;
+    return `${base}?g=${token}`;
   };
 
   const copyGiftLink = async () => {
